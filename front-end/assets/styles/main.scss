@@ -1,0 +1,139 @@
+$mainColor: #81DEA0;
+$lightenMainColor: #DFFBE9;
+$tabIconActive: #2f9150 ;
+$tabIconInactive: #7de9a1;
+$inputColor: $lightenMainColor;
+$green_color: $mainColor;
+
+:export {
+  mainColor: $mainColor;
+  lightenMainColor: $lightenMainColor;
+  tabIconActive: $tabIconActive;
+  tabIconInactive: $tabIconInactive;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.image {
+  height: 200px;
+  width: 200px;
+  margin-bottom: 40px;
+};
+
+.inputView {
+  background-color: $inputColor;
+  filter: brightness(50%);
+  border-radius: 10px;
+  width: 70%;
+  height: 45px;
+  margin-bottom: 20px;
+
+  align-items: center;
+};
+
+.textInput {
+  height: 50px;
+  flex: 1;
+  padding: 10px;
+  margin-left: 20px;
+};
+
+.forgot_button {
+  height: 30%;
+  margin-bottom: 30px;
+};
+
+.loginBtn {
+  width: 80%;
+  font-size: 15px;
+  border-radius: 10px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  background-color: $mainColor;
+  box-shadow: 10px 5px 5px black;
+};
+
+.errorMessage {
+  margin-top: 30px;
+}
+
+.currentUserMaker {
+  width: 62px;
+  height: 62px;
+}
+
+.userMarker {
+  width: 50px;
+  height: 50px;
+}
+
+.markerCardContainer {
+  align-items: center;
+}
+
+.markerCardTextContainer {
+  background-color: white;
+  border-radius: 10px;
+  height: auto;
+  width: 100px;
+  border: solid $green_color;
+  align-items: center;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.container {
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+
+.loaderContainer {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  width: 80%;
+  height: 80%;
+}
+
+.loaderImg {
+  width: 80%;
+  height: 400px;
+}
+
+.actionsContainer {
+  width: 30%;
+  z-index: 1;
+  right:10;
+  bottom: 10;
+  position: absolute;
+  background-color: blanchedalmond;
+}
+
+.actionBtn {
+  width: auto;
+  height: 45px;
+  font-size: 15px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: $green_color;
+}
+
+
+.markerActionsContainer {
+  // box-shadow: 10px 5px 5px black;
+}
