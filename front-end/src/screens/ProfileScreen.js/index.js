@@ -15,6 +15,7 @@ import ProfileCard from '../../components/ProfileCard';
 import { GET_CURRENT_USER } from './queries'
 import Loader from '../../components/Loader';
 import { Button } from 'react-native-elements';
+import ImageReader from "../../components/Image/ImageReader";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -42,6 +43,7 @@ const ProfileScreen = () => {
         <>
           <ProfileCard id={user?.id} />
           <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFIL_SCREEN", { id: user?.id })}/>
+          <ImageReader></ImageReader>
         </>
       :
         <Loader/>
