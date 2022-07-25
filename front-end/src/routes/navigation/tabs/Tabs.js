@@ -60,7 +60,7 @@ const TabNavigator = () => {
       },
     }}
     initialRouteName="Home"
-    swipeEnabled={false}
+    swipeEnabled={true}
   >
     <Tab.Screen name="Home" component={HomeNavigator} />
     <Tab.Screen name="Map" component={MapNavigator} />

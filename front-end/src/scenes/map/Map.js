@@ -25,14 +25,14 @@ import styles from './style'
 // import MarkerCard from './card/MakerCard'
 
 const Map = () => {
-   const [defautlLocation] = useState({
+   const [defaultLocation] = useState({
       latitude: 48.86,
       longitude: 2.34,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
    })
 
-   const [location, setLocation] = useState({ coords: defautlLocation })
+   const [location, setLocation] = useState({ coords: defaultLocation })
    const [loading, setLoading] = useState(true)
    const [errorMsg, setErrorMsg] = useState()
    const [isPressed, setIsPressed] = useState(false)
@@ -108,7 +108,7 @@ const Map = () => {
       return (
          <View>
             <Button title='Voir le profil'
-                    onPress={() => navigation.navigate('USER_PROFIL_SCREEN', { id: idUserPressed })} />
+                    onPress={() => navigation.navigate('USER_PROFILE_SCREEN', { id: idUserPressed })} />
          </View>
       )
    }, [idUserPressed])
@@ -172,7 +172,7 @@ const Map = () => {
          </View>
          <MapView
             style={Appstyles.map}
-            initialRegion={defautlLocation}
+            initialRegion={defaultLocation}
             // onPress={() => {
             //    console.log('taped hereeee')
             //    setIsPressed(false)

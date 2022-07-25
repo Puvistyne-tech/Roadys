@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { authenticate } from 'slices/app.slice'
+import { authenticate } from '../slices/app.slice'
 import Main from './navigation'
 
 const Routes = () => {
@@ -9,7 +9,7 @@ const Routes = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(authenticate({ loggedIn: true, checked: true }))
+    dispatch(authenticate(this.state,{ loggedIn: true, checked: true }))
   }, [])
 
   // TODO: switch router by loggedIn state
