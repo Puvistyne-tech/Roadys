@@ -42,8 +42,8 @@ const ProfileScreen = () => {
       { user ?
         <>
           <ProfileCard id={user?.id} />
-          <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFIL_SCREEN", { id: user?.id })}/>
-          {/*<ImageReader></ImageReader>*/}
+          <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", { id: user?.id })}/>
+          <ImageReader></ImageReader>
         </>
       :
         <Loader/>

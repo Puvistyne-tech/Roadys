@@ -47,6 +47,7 @@ const DrawerMenuContainer = (props) => {
             label="Profile"
             icon={({__,color,size}) => <FontIcon name="user" color={color} size={size}/>}
             onPress={() => navigation.navigate('Profile')}
+
          />
          <DrawerItem
             label="Partners"

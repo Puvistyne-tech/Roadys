@@ -5,20 +5,20 @@ import PropTypes from 'prop-types'
 import {
    View, Text, Image,
 } from 'react-native'
-import MapView, { Marker, Circle } from 'react-native-maps'
+import MapView, {Marker, Circle} from 'react-native-maps'
 import * as Location from 'expo-location'
 import {
    useQuery, useMutation,
 } from '@apollo/client'
-import { useNavigation } from '@react-navigation/native'
-import { useTheme, Button } from 'react-native-elements'
+import {useNavigation} from '@react-navigation/native'
+import {useTheme, Button} from 'react-native-elements'
 
 import Appstyles from '../../../assets/styles/main.scss'
 import StickManImg from '../../../assets/images/man.png'
 import CurrentUserStickMan from '../../../assets/images/current-stick-man.png'
 import Loader from '../../components/Loader'
 
-import { GET_USERS, UPDATE_LOCATION } from './queries'
+import {GET_USERS, UPDATE_LOCATION} from './queries'
 import styles from './style'
 
 //TODO ma propre card avec MODEL
@@ -32,14 +32,14 @@ const Map = () => {
       longitudeDelta: 0.0421,
    })
 
-   const [location, setLocation] = useState({ coords: defaultLocation })
+   const [location, setLocation] = useState({coords: defaultLocation})
    const [loading, setLoading] = useState(true)
    const [errorMsg, setErrorMsg] = useState()
    const [isPressed, setIsPressed] = useState(false)
    const [idUserPressed, setIdUserPressed] = useState()
-   const { theme } = useTheme()
+   const {theme} = useTheme()
 
-   const { data, refetch } = useQuery(GET_USERS, { variables: { excludeCurrentUser: true } })
+   const {data, refetch} = useQuery(GET_USERS, {variables: {excludeCurrentUser: true}})
    const [mutateUpdateLocation, {
       data: updateLocationData,
       loading: updateLocationLoading,
@@ -47,23 +47,23 @@ const Map = () => {
    }] = useMutation(UPDATE_LOCATION)
 
    const onLocationChange = useCallback((newLocation) => {
-      const { longitude, latitude } = newLocation.coords
+      const {longitude, latitude} = newLocation.coords
       refetch()
       setLocation(newLocation)
-      mutateUpdateLocation({ variables: { longitude, latitude } })
+      mutateUpdateLocation({variables: {longitude, latitude}})
    }, [refetch])
 
    useEffect(() => {
       (async () => {
          setLoading(true)
-         const { status } = await Location.requestForegroundPermissionsAsync()
+         const {status} = await Location.requestForegroundPermissionsAsync()
          if (status !== 'granted') {
             setLoading(false)
             setErrorMsg('Permission to access location was denied')
             return
          }
          setLoading(false)
-         await Location.watchPositionAsync({ accuracy: 3, distanceInterval: 1, timeInterval: 1000 }, onLocationChange)
+         await Location.watchPositionAsync({accuracy: 3, distanceInterval: 1, timeInterval: 1000}, onLocationChange)
       })()
    }, [refetch])
 
@@ -92,14 +92,14 @@ const Map = () => {
    //    }, [],
    // )
 
-   const MarkerCard = useCallback(({ elem }) => (
+   const MarkerCard = useCallback(({elem}) => (
       <View style={Appstyles.markerCardContainer}>
          <View style={Appstyles.markerCardTextContainer}>
             <Text style={Appstyles.title}>{elem.pseudo}</Text>
             <Text style={Appstyles.paragraph}>{elem.age}</Text>
             <Text style={Appstyles.paragraph}>{elem.nationality}</Text>
          </View>
-         <Image style={Appstyles.marker} source={StickManImg} />
+         <Image style={Appstyles.marker} source={StickManImg}/>
       </View>
    ), [])
 
@@ -108,25 +108,25 @@ const Map = () => {
       return (
          <View>
             <Button title='Voir le profil'
-                    onPress={() => navigation.navigate('USER_PROFILE_SCREEN', { id: idUserPressed })} />
+                    onPress={() => navigation.navigate('USER_PROFILE_SCREEN', {id: idUserPressed})}/>
          </View>
       )
    }, [idUserPressed])
 
-   const CustomMarker = useCallback(({ elem }) => (
+   const CustomMarker = useCallback(({elem}) => (
 
 
       <Marker
-         coordinate={{ latitude: elem.latitude, longitude: elem.longitude }}
+         coordinate={{latitude: elem.latitude, longitude: elem.longitude}}
          onPress={() => {
             setIsPressed(!isPressed)
             setIdUserPressed(elem.id)
          }}
 
       >
-         <Image style={Appstyles.userMarker} source={StickManImg} />
+         <Image style={Appstyles.userMarker} source={StickManImg}/>
          {/*{isPressed && idUserPressed === elem.id && <MarkerCard elem={elem} idUserPressed={idUserPressed} />*/}
-         {isPressed && idUserPressed === elem.id && <MarkerCard elem={elem} />
+         {isPressed && idUserPressed === elem.id && <MarkerCard elem={elem}/>
             // :
             // <></>
             // <Image style={Appstyles.marker} source={StickManImg} />
@@ -135,12 +135,15 @@ const Map = () => {
 
    ), [isPressed, idUserPressed])
 
-   const ListUsers = useMemo(() => data?.users?.map((elem, index) => (
-      <CustomMarker
-         key={index}
-         elem={elem}
-      />
-   )), [data, CustomMarker])
+   const ListUsers = useMemo(() => data?.users?.map((elem, index) => {
+      if (!elem.isVisibled) {
+         return (
+            <CustomMarker
+               key={index}
+               elem={elem}
+            />)
+      }else return <></>
+   }), [data, CustomMarker])
 
    const userMarker = useMemo(
       () => ({
@@ -161,14 +164,14 @@ const Map = () => {
    }
    if (loading) {
       return (
-         <Loader />
+         <Loader/>
       )
    }
 
    return (
       <View style={Appstyles.container}>
          <View style={theme.ActionsContainer}>
-            {isPressed && <MarkerActions />}
+            {isPressed && <MarkerActions/>}
          </View>
          <MapView
             style={Appstyles.map}
@@ -189,7 +192,7 @@ const Map = () => {
             <Marker
                coordinate={userMarker.coordinate}
             >
-               <Image style={Appstyles.currentUserMaker} source={CurrentUserStickMan} />
+               <Image style={Appstyles.currentUserMaker} source={CurrentUserStickMan}/>
             </Marker>
             {ListUsers}
          </MapView>
@@ -204,7 +207,7 @@ Map.propTypes = {
 }
 
 Map.defaultProps = {
-   navigation: { navigate: () => null },
+   navigation: {navigate: () => null},
 }
 
 export default Map

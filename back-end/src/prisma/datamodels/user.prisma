@@ -8,6 +8,7 @@ model User {
   latitude  Float?
   longitude Float?
   age Int?
+  image Bytes? @db.ByteA
   description String?
   nationality String?
   kindOfTrip String?

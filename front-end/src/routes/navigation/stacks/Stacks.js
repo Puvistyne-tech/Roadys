@@ -11,6 +11,9 @@ import HeaderRight from "./HeaderRight";
 import Appstyles from '../../../../assets/styles/main.scss';
 
 import PartnerScreen from '../../../scenes/partners/PartnerScreen'
+import DrawerNavigator from "../drawer";
+import MuseumScreen from "../../../scenes/modal/MapScreens/MuseumScreen";
+import BikeScreen from "../../../scenes/modal/MapScreens/BikeScreen";
 
 // ------------------------------------
 // Constants
@@ -80,8 +83,17 @@ export const ProfileNavigator = () => (
       <Stack.Screen
          name="PROFILE_SCREEN"
          component={ProfileScreen}
-         options={() => ({
+         options={({navigation}) => ({
             title: 'Profile',
+            headerShown: true,
+            // })}
+            // // name="HOME_SCREEN"
+            // // component={Home}
+            // // options={({navigation}) => ({
+            // //    title: 'Home',
+            headerLeft: () => <HeaderLeft navigation={navigation}/>,
+            headerTitle: () => <HeaderTitle/>,
+            headerRight: () => <HeaderRight/>
          })}
       />
       <Stack.Screen
@@ -100,33 +112,43 @@ export const PartnerNavigator = () => (
    <Stack.Navigator
       initialRouteName="PartnerScreen"
       headerMode="screen"
-      screenOptions={{...navigationProps, headerShown: true}}
+      screenOptions={{
+         ...navigationProps,
+         headerShown: true
+      }}
    >
       <Stack.Screen
          name="PARTNERS"
          component={PartnerScreen}
          options={({navigation}) => ({
             title: 'Partners',
+            headerShown:true,
             headerLeft: () => <HeaderLeft navigation={navigation}/>,
-            headerTitle: () => <HeaderTitle/>,
+            // headerTitle: () => <HeaderTitle/>,
             headerRight: () => <HeaderRight/>,
          })}
       />
       <Stack.Screen
          name="MUSEUMS"
-         component={PartnerScreen}
+         component={MuseumScreen}
          // component={CustomMapMuseum}
-         options={({route}) => ({
-            title: route.params,
+         options={({navigation}) => ({
+            title: 'Museum',
+            headerShown:true,
+            // headerLeft: () => <HeaderLeft navigation={navigation}/>,
+            // headerTitle: () => <HeaderTitle/>,
             headerRight: () => <HeaderRight/>,
          })}
       />
       <Stack.Screen
          name="BIKE_REPAIR"
-         component={PartnerScreen}
+         component={BikeScreen}
          // component={CustomMapBike}
-         options={({route}) => ({
-            title: route.params,
+         options={({navigation}) => ({
+            title: "Bike Repair",
+            headerShown:true,
+            // headerLeft: () => <HeaderLeft navigation={navigation}/>,
+            // headerTitle: () => <HeaderTitle/>,
             headerRight: () => <HeaderRight/>,
          })}
       />

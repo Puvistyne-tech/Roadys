@@ -26,6 +26,7 @@ import AboutRoadysScreen from "./scenes/modal/AboutRoadysScreen";
 import SettingsScreen from "./scenes/modal/SettingsScreen";
 import {HeaderTitle} from "@react-navigation/stack";
 import HeaderRight from "./routes/navigation/stacks/HeaderRight";
+import HeaderLeft from "./routes/navigation/stacks/HeaderLeft";
 
 const MyAppNavigation = () => {
    const Stack = createNativeStackNavigator();
@@ -59,13 +60,14 @@ const MyAppNavigation = () => {
                   <Stack.Screen
                      name='PartnerNavigator'
                      component={PartnerNavigator}
-                     option={{headerShown: false}}
+                     option={{headerShown: true}}
                   />
                   <Stack.Screen
                      name="Feedback"
                      component={FeedbackScreen}
                      options={({navigation}) => ({
                         title: 'Feedback',
+                        headerShown: true,
                         headerTitle: () => <HeaderTitle/>,
                         headerRight: () => <HeaderRight/>,
                      })}
@@ -74,6 +76,7 @@ const MyAppNavigation = () => {
                      name="About Roadys"
                      component={AboutRoadysScreen}
                      options={({navigation}) => ({
+                        headerShown: true,
                         title: 'About Roadys',
                         headerTitle: () => <HeaderTitle/>,
                         headerRight: () => <HeaderRight/>,
@@ -83,6 +86,7 @@ const MyAppNavigation = () => {
                      name="Settings"
                      component={SettingsScreen}
                      options={({navigation}) => ({
+                        headerShown: true,
                         title: 'Settings',
                         headerTitle: () => <HeaderTitle/>,
                         headerRight: () => <HeaderRight/>,
