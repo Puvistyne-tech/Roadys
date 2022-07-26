@@ -29,6 +29,7 @@
     "expo-cli": "^4.11.0",
     "expo-constants": "^13.1.1",
     "expo-font": "~10.0.3",
+    "expo-image-picker": "~11.0.3",
     "expo-location": "^13.0.4",
     "expo-status-bar": "^1.2.0",
     "global": "^4.4.0",

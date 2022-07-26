@@ -75,7 +75,7 @@ const ProfileCard = ({id}) => {
          {user ?
             <Card>
                <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
-               <Card.Image source={hexToBase64(user?.image)}></Card.Image>
+               {/*<Card.Image source={hexToBase64(user?.image)}></Card.Image>*/}
                <Card.Divider/>
                <View style={{flexDirection: "row"}}>
                   <Text style={Appstyles.loginText}>{user?.pseudo}</Text>
