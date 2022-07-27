@@ -3,7 +3,6 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
   TextInput,
   StyleSheet
 } from "react-native";
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontSize: 16,
     height: 40,
-    color: '#c0cbd3', 
+    color: '#c0cbd3',
   },
   label: {
     paddingVertical: 5,

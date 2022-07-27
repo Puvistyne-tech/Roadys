@@ -2,7 +2,7 @@ import React, {useEffect, useMemo} from 'react'
 import {
    Text,
    View,
-   StyleSheet
+   StyleSheet, Image
 } from "react-native";
 import {Card} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
@@ -36,9 +36,10 @@ const ProfileCard = ({id}) => {
       }, [refetch])
    );
 
-   const hexToBase64 = (str) => {
-      return 'data:image/jpeg;base64,' +Binary. btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-   }
+   // const hexToBase64 = (str) => {
+   //    return 'data:image/jpeg;base64,' +btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+   // }
+
 
    return (
 
@@ -71,11 +72,16 @@ const ProfileCard = ({id}) => {
       //       <Button title="Send message" onPress={onClick} />
       //    </View>
       // </View>
+
       <View style={styles.container}>
          {user ?
             <Card>
                <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
-               {/*<Card.Image source={hexToBase64(user?.image)}></Card.Image>*/}
+               <Card.Image source={{uri: user?.photo}}></Card.Image>
+               {/*<Image*/}
+               {/*   source={{uri: user.photo}}*/}
+               {/*   style={{width: 200, height: 200}}*/}
+               {/*/>*/}
                <Card.Divider/>
                <View style={{flexDirection: "row"}}>
                   <Text style={Appstyles.loginText}>{user?.pseudo}</Text>

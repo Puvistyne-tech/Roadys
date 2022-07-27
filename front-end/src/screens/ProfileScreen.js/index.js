@@ -1,55 +1,55 @@
-import React, { useEffect, useMemo } from 'react'
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import React, {useEffect, useMemo} from 'react'
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {
-  Text,
-  View,
-  TouchableOpacity
+   View,
 } from "react-native";
 import {
-  useQuery
+   useQuery
 } from "@apollo/client";
-import FlashMessage, {showMessage} from "react-native-flash-message";
+import  {showMessage} from "react-native-flash-message";
 
 import Appstyles from '../../../assets/styles/main.scss';
 import ProfileCard from '../../components/ProfileCard';
-import { GET_CURRENT_USER } from './queries'
+import {GET_CURRENT_USER} from './queries'
 import Loader from '../../components/Loader';
-import { Button } from 'react-native-elements';
-import ImageReader from "../../components/Image/ImageReader";
+import {Button} from 'react-native-elements';
+import ImageReader from "../../components/ImageReader";
 
 const ProfileScreen = () => {
-  const navigation = useNavigation();
-  const  { data, refetch, error } = useQuery(GET_CURRENT_USER);
-  const user = useMemo(() => data?.currentUser, [data])
+   const navigation = useNavigation();
+   const {data, refetch, error} = useQuery(GET_CURRENT_USER);
+   const user = useMemo(() => data?.currentUser, [data])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      refetch()
-    }, [refetch])
-  );
+   useFocusEffect(
+      React.useCallback(() => {
+         refetch()
+      }, [refetch])
+   );
 
-  useEffect(()=>{
-    error && showMessage({
-      message: "Error",
-      description: error.message,
-      type: "danger",
-      duration: 1000000
-    });
-  },[error]);
+   useEffect(() => {
+      error && showMessage({
+         message: "Error",
+         description: error.message,
+         type: "danger",
+         duration: 1000000
+      });
+   }, [error]);
 
-  return (
-    <View style={Appstyles.container}>
-      { user ?
-        <>
-          <ProfileCard id={user?.id} />
-          <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", { id: user?.id })}/>
-          <ImageReader></ImageReader>
-        </>
-      :
-        <Loader/>
-      }
-    </View>
-  );
+   return (
+      <>
+         {user ?
+            <View
+               style={Appstyles.container}
+            >
+               <ProfileCard id={user?.id}/>
+               <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
+               <ImageReader id={user?.id}></ImageReader>
+            </View>
+            :
+            <Loader/>
+         }
+      </>
+   );
 }
 
 export default ProfileScreen;
