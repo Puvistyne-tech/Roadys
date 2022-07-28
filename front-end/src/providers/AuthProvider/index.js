@@ -37,13 +37,13 @@ export const AuthProvider = ({children}) => {
   }, [signupData, onTokenChange])
 
   const value = useMemo(() => ({
-    signin: (login, password) => { 
+    signin: (login, password) => {
       return mutateSignIn({variables: {login, password}});
     },
-    signup: (pseudo, email, password) => { 
+    signup: (pseudo, email, password) => {
       return mutateSignUp({variables: {pseudo, email, password}});
     },
-    deconnection: () => {
+     disconnect: () => {
       setToken(null)
       AsyncStorage.removeItem('token');
     },

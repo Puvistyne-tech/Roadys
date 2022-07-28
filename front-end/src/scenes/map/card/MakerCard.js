@@ -1,99 +1,92 @@
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 import {
-  Alert, Modal, StyleSheet, Text, Pressable, View,
+   StyleSheet, Text, View, ActivityIndicator,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import {Card} from "react-native-elements";
 
 
-const MarkerCard = (props) => {
-  const [modalVisible, setModalVisible] = useState(true)
-  const { elam, idUserPressed } = props
-  const navigation = useNavigation()
+const MarkerCard = ({elem}) => {
 
-  return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="fade"
-        transparent
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')
-          setModalVisible(!modalVisible)
-        }}
-        onPress={() => {
-          setModalVisible(false)
-          console.log('taped press out')
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.textStyle}>{elam?.pseudo}</Text>
-            <Text>{elam?.age}</Text>
-            <Text>{elam?.nationality}</Text>
-            <Pressable
-              style={[styles.button, styles.buttonOpen]}
-              onPress={() => {
-                setModalVisible(false)
-                navigation.navigate('USER_PROFIL_SCREEN', { id: idUserPressed })
-              }}
+   console.log(elem.photo)
+
+   return (
+      <>
+         <View
+            style={styles.card}
+         >
+            <Card.Image
+               style={styles.cardImage}
+               source={{uri: elem.photo}}
+               PlaceholderContent={<ActivityIndicator/>}
+            />
+            <View
+               style={styles.cardSeparator}
+            />
+            <View
+               style={styles.cardRightSide}
             >
-              <Text style={styles.textStyle}>Profile</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-      {/* <Pressable */}
-      {/*   style={[styles.button, styles.buttonOpen]} */}
-      {/*   onPress={() => setModalVisible(true)} */}
-      {/* > */}
-      {/*   <Text style={styles.textStyle}>Show Modal</Text> */}
-      {/* </Pressable> */}
-    </View>
-  )
+               <Card.Title>{elem.pseudo}</Card.Title>
+               <Text
+                  style={styles.cardText}
+               >{elem.age}</Text>
+               <Text>{elem.nationality}</Text>
+            </View>
+         </View>
+      </>
+   )
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#50aa67',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
+   cardText: {
+      alignContent: "center",
+      textAlign: "center"
+   },
+   cardSeparator: {
+      justifyContent: "center",
+      height: 100,
+      width: 'auto',
+      margin: 5,
+      padding: 5,
+      // backgroundColor:"#dede53"
+
+   },
+   cardImage: {
+      borderWidth: 1,
+      height: 80,
+      width: 1,
+      maxWidth: 1,
+      margin: 10,
+      borderColor: "#bbbbbb"
+   },
+   cardRightSide: {
+      flexDirection: "column",
+      // borderWidth: 4,
+      borderColor: "#32b968",
+      borderRadius: 30,
+      height: 60,
+      width: 60
+   },
+   card: {
+      display: 'flex',
+      flexDirection: "row",
+      justifyContent: 'flex-start',
+      alignItems: "center",
+
+      backgroundColor: "#ffffff",
+      height: 100,
+      padding: 10,
+      borderRadius: 10,
+      borderColor: "#7dce9a",
+      borderWidth: 2,
+      shadowColor: "#606060",
+      shadowOpacity: 0.8,
+      // shadowOffset: {
+      //    width: 0,
+      //    height: 2,
+      // },
+      // shadowRadius: 4,
+      // elevation: 5,
+   }
 })
 
 export default MarkerCard

@@ -14,10 +14,10 @@ const ImageReader = ({id}) => {
    const _pickImg = async () => {
       let res = await ImagePicker.launchImageLibraryAsync({
          base64: true,
-         allowsEditing: true,
-         aspect: [4, 3],
+         allowsEditing: false,
+         // aspect: [4, 3],
          exif: true,
-         quality: 0
+         // quality: 0
       });
 
       if (res&&res.cancelled===false) {

@@ -3,7 +3,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import {
-   View, Text, Image,
+   View, Text, Image, ActivityIndicator,
 } from 'react-native'
 import MapView, {Marker, Circle} from 'react-native-maps'
 import * as Location from 'expo-location'
@@ -11,15 +11,18 @@ import {
    useQuery, useMutation,
 } from '@apollo/client'
 import {useNavigation} from '@react-navigation/native'
-import {useTheme, Button} from 'react-native-elements'
+import {useTheme, Button, Card} from 'react-native-elements'
 
 import Appstyles from '../../../assets/styles/main.scss'
 import StickManImg from '../../../assets/images/man.png'
 import CurrentUserStickMan from '../../../assets/images/current-stick-man.png'
 import Loader from '../../components/Loader'
 
+
 import {GET_USERS, UPDATE_LOCATION} from './queries'
 import styles from './style'
+import ProfileCard from "../../components/ProfileCard";
+// import MarkerCard from "./card/MakerCard";
 
 //TODO ma propre card avec MODEL
 // import MarkerCard from './card/MakerCard'
@@ -82,7 +85,7 @@ const Map = () => {
    //                        title='Profile'
    //                        onPress={() => {
    //                           console.log('taped')
-   //                           navigation.navigate('USER_PROFIL_SCREEN', { id: idUserPressed })
+   //                           navigation.navigate('USER_PROFILE_SCREEN', { id: idUserPressed })
    //                        }}
    //                />
    //             </View>
@@ -92,16 +95,77 @@ const Map = () => {
    //    }, [],
    // )
 
-   const MarkerCard = useCallback(({elem}) => (
-      <View style={Appstyles.markerCardContainer}>
-         <View style={Appstyles.markerCardTextContainer}>
-            <Text style={Appstyles.title}>{elem.pseudo}</Text>
-            <Text style={Appstyles.paragraph}>{elem.age}</Text>
-            <Text style={Appstyles.paragraph}>{elem.nationality}</Text>
-         </View>
-         <Image style={Appstyles.marker} source={StickManImg}/>
-      </View>
-   ), [])
+   const MarkerCard = useCallback(({elem}) => {
+
+      // <ProfileCard id={elem?.id}/>
+      // console.log(elem.photo)
+
+      return (
+
+         <>
+            <View
+               style={{
+                  display: 'flex',
+                  flexDirection: "row",
+                  justifyContent: 'flex-start',
+                  alignItems: "center",
+
+                  backgroundColor: "#ffffff",
+                  height: 100,
+                  padding: 10,
+                  borderRadius: 10,
+                  borderColor: "#7dce9a",
+                  borderWidth: 2,
+                  shadowColor:"#606060",
+                  shadowOpacity:0.8
+               }}
+            >
+               <Card.Image
+                  style={{
+                     flexDirection: "column",
+                     // borderWidth: 4,
+                     borderColor: "#32b968",
+                     borderRadius: 30,
+                     height: 60,
+                     width: 60
+
+                  }}
+                  source={{uri: elem?.photo}}
+                  PlaceholderContent={<ActivityIndicator/>}
+               />
+               <View
+                  style={{
+                     borderWidth: 1,
+                     height:80,
+                     width:1,
+                     maxWidth:1,
+                     margin:10,
+                     borderColor: "#bbbbbb"
+                  }}
+               />
+               <View
+                  style={{
+                     justifyContent: "center",
+                     height: 100,
+                     width:'auto',
+                     margin:5,
+                     padding:5,
+                     // backgroundColor:"#dede53"
+                  }}
+               >
+                  <Card.Title>{elem.pseudo}</Card.Title>
+                  <Text
+                     style={{
+                        alignContent:"center",
+                        textAlign:"center"
+                     }}
+                  >{elem.age}</Text>
+                  <Text>{elem.nationality}</Text>
+               </View>
+            </View>
+         </>
+      )
+   }, [])
 
    const MarkerActions = useCallback(() => {
       const navigation = useNavigation()
@@ -124,13 +188,21 @@ const Map = () => {
          }}
 
       >
-         <Image style={Appstyles.userMarker} source={StickManImg}/>
-         {/*{isPressed && idUserPressed === elem.id && <MarkerCard elem={elem} idUserPressed={idUserPressed} />*/}
-         {isPressed && idUserPressed === elem.id && <MarkerCard elem={elem}/>
-            // :
-            // <></>
-            // <Image style={Appstyles.marker} source={StickManImg} />
-         }
+         <View
+            style={{
+               display: 'flex',
+               alignItems: "center"
+            }}
+         >
+
+            {/*{isPressed && idUserPressed === elem.id && <MarkerCard elem={elem} idUserPressed={idUserPressed} />*/}
+            {isPressed && idUserPressed === elem.id && <MarkerCard elem={elem}/>
+               // :
+               // <></>
+               // <Image style={Appstyles.marker} source={StickManImg} />
+            }
+            <Image style={Appstyles.userMarker} source={StickManImg}/>
+         </View>
       </Marker>
 
    ), [isPressed, idUserPressed])
@@ -142,7 +214,7 @@ const Map = () => {
                key={index}
                elem={elem}
             />)
-      }else return <></>
+      } else return <></>
    }), [data, CustomMarker])
 
    const userMarker = useMemo(

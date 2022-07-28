@@ -2,7 +2,7 @@ import React, {useEffect, useMemo} from 'react'
 import {
    Text,
    View,
-   StyleSheet, Image
+   StyleSheet
 } from "react-native";
 import {Card} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
@@ -36,67 +36,64 @@ const ProfileCard = ({id}) => {
       }, [refetch])
    );
 
-   // const hexToBase64 = (str) => {
-   //    return 'data:image/jpeg;base64,' +btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-   // }
-
 
    return (
 
-      //TODO il faut voir avec François
-
-      // <View style={style.container}>
-      //    <View style={styles.container}>
-      //       <Image source={{ uri: user?.imageUri }} style={styles.avatar} />
-      //       <Card>
-      //          <Card.Title>{user?.firstname} {user?.lastname}
-      //          </Card.Title>
-      //          <Card.Divider />
-      //          <View style={{ flexDirection: "row" }}>
-      //             <Text style={styles.input}>{user?.firstname}</Text>
-      //          </View>
-      //          <View style={{ flexDirection: "row" }}>
-      //             <Text style={styles.input}>{user?.age}</Text>
-      //          </View>
-      //          <View style={{ flexDirection: "row" }}>
-      //             <Text style={styles.input}>{user?.kindOfTrip}</Text>
-      //          </View>
-      //          <View style={{ flexDirection: "row" }}>
-      //             <Text style={styles.input}>{user?.nationality}</Text>
-      //          </View>
-      //          <View style={{ flexDirection: "row" }}>
-      //             <Text style={styles.input}>{user?.description}</Text>
-      //          </View>
-      //       </Card>
-      //
-      //       <Button title="Send message" onPress={onClick} />
-      //    </View>
-      // </View>
-
-      <View style={styles.container}>
+      <View
+         style={styles.container}
+      >
          {user ?
-            <Card>
-               <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
-               <Card.Image source={{uri: user?.photo}}></Card.Image>
-               {/*<Image*/}
-               {/*   source={{uri: user.photo}}*/}
-               {/*   style={{width: 200, height: 200}}*/}
-               {/*/>*/}
-               <Card.Divider/>
-               <View style={{flexDirection: "row"}}>
-                  <Text style={Appstyles.loginText}>{user?.pseudo}</Text>
-               </View>
-               <View style={{flexDirection: "row"}}>
-                  <Text style={Appstyles.loginText}>{user?.age}</Text>
-               </View>
-               <View style={{flexDirection: "row"}}>
-                  <Text style={Appstyles.loginText}>{user?.kindOfTrip}</Text>
-               </View>
-               <View style={{flexDirection: "row"}}>
-                  <Text style={Appstyles.loginText}>{user?.nationality}</Text>
-               </View>
-               <View style={{flexDirection: "row"}}>
-                  <Text style={Appstyles.loginText}>{user?.description}</Text>
+            <Card
+               containerStyle={{
+                  borderRadius: 10,
+                  shadowColor: "#969595",
+                  shadowRadius: 20,
+                  // padding:20
+               }}
+            >
+               <Card.Image
+                  resizeMode={"cover"}
+                  source={{uri: user?.photo}}
+                  PlaceholderContent={<Text>No Photo</Text>}
+                  style={{
+                     alignContent: "center",
+                     maxWidth: '100%',
+                     // height: 'auto',
+                     borderRadius: 8,
+                     marginBottom: 10
+                  }}
+               />
+               {/*<Card.Divider/>*/}
+               <View
+                  style={{
+                     padding: 20,
+                     display: "block",
+                     borderBlockColor: "#cccccc",
+                     borderRadius: 4,
+                     borderWidth: 1,
+                     borderColor: '#cecece',
+                     shadowColor: '#121211',
+
+                  }}
+               >
+                  <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
+
+                  <Card.Divider/>
+                  <View style={{flexDirection: "row"}}>
+                     <Text style={Appstyles.loginText}>{user?.pseudo}</Text>
+                  </View>
+                  <View style={{flexDirection: "row"}}>
+                     <Text style={Appstyles.loginText}>{user?.age}</Text>
+                  </View>
+                  <View style={{flexDirection: "row"}}>
+                     <Text style={Appstyles.loginText}>{user?.kindOfTrip}</Text>
+                  </View>
+                  <View style={{flexDirection: "row"}}>
+                     <Text style={Appstyles.loginText}>{user?.nationality}</Text>
+                  </View>
+                  <View style={{flexDirection: "row"}}>
+                     <Text style={Appstyles.loginText}>{user?.description}</Text>
+                  </View>
                </View>
             </Card>
             :
@@ -111,7 +108,9 @@ export default ProfileCard;
 const styles = StyleSheet.create({
    container: {
       // flex: 1,
-      justifyContent: 'center',
+      // display:'flex',
+      // flexDirection:'column',
+      // justifyContent: 'space-between',
       padding: 20,
       // backgroundColor: '#ecf0f1',
       width: '100%',

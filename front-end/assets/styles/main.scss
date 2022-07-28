@@ -1,4 +1,4 @@
-$mainColor: #81DEA0;
+$mainColor: #3aab61;
 $lightenMainColor: #DFFBE9;
 $tabIconActive: #2f9150 ;
 $tabIconInactive: #7de9a1;
@@ -79,9 +79,9 @@ $green_color: $mainColor;
 
 .markerCardTextContainer {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 15px;
   height: auto;
-  width: 100px;
+  width: 200px;
   border: solid $green_color;
   align-items: center;
 }

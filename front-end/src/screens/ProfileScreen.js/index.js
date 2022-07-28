@@ -6,7 +6,7 @@ import {
 import {
    useQuery
 } from "@apollo/client";
-import  {showMessage} from "react-native-flash-message";
+import {showMessage} from "react-native-flash-message";
 
 import Appstyles from '../../../assets/styles/main.scss';
 import ProfileCard from '../../components/ProfileCard';
@@ -39,11 +39,21 @@ const ProfileScreen = () => {
       <>
          {user ?
             <View
-               style={Appstyles.container}
+               // style={Appstyles.container}
+               style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  height: '100%'
+               }}
             >
-               <ProfileCard id={user?.id}/>
-               <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
-               <ImageReader id={user?.id}></ImageReader>
+               <View>
+                  <ProfileCard id={user?.id}/>
+               </View>
+               <View>
+                  <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
+                  <ImageReader id={user?.id}></ImageReader>
+               </View>
             </View>
             :
             <Loader/>
