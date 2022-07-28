@@ -58,7 +58,7 @@ const ProfileCard = ({id}) => {
                   style={{
                      alignContent: "center",
                      maxWidth: '100%',
-                     // height: 'auto',
+                     // height: '60%',
                      borderRadius: 8,
                      marginBottom: 10
                   }}
@@ -73,7 +73,6 @@ const ProfileCard = ({id}) => {
                      borderWidth: 1,
                      borderColor: '#cecece',
                      shadowColor: '#121211',
-
                   }}
                >
                   <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
