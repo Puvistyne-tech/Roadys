@@ -1,22 +1,19 @@
 import React, {useState} from 'react';
-import {Modal, View, StyleSheet, Alert} from 'react-native';
+import {
+   Modal,
+   View,
+   StyleSheet,
+   Alert,
+   // Button
+} from 'react-native';
 import {Octicons, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import Button from '../../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Colors from "../../../theme/colors";
 import Constants from "expo-constants";
+import AppStyles from '../../../../assets/styles/main.scss'
+import {Card} from "react-native-elements";
 
-
-const style = StyleSheet.create({
-   modalToggle: {
-      marginTop: 30,
-      color: 'white',
-      backgroundColor: Colors.light.tint,
-      padding: 10,
-      borderRadius: 10,
-      alignSelf: 'center',
-   },
-})
 
 function HeaderRight() {
    const [modalOpen, setModalOpen] = useState(false);
@@ -41,23 +38,28 @@ function HeaderRight() {
          <Octicons name="search" size={24} color={'white'}
                    onPress={onSearchPress}
          />
-         <MaterialCommunityIcons name="dots-vertical" size={24} color={'white'} onPress={() => setModalOpen(true)}/>
+         <MaterialCommunityIcons
+            name="dots-vertical"
+            size={24}
+            color={'white'}
+            onPress={() => setModalOpen(true)}
+         />
          <Modal
             visible={modalOpen}
             transparent={false}
             animationType='slide'
             presentationStyle={"formSheet"}
          >
-
-            <View style={style.modalContent}>
-               <MaterialIcons
-                  name="close"
-                  size={22}
-                  color={'white'}
-                  style={style.modalToggle}
-                  onPress={() => setModalOpen(false)}/>
+            <MaterialIcons
+               name="close"
+               size={22}
+               color={'white'}
+               style={styles.modalToggle}
+               onPress={() => setModalOpen(false)}
+            />
+            <View style={styles.modalContent}>
                <Button
-                  style={styles.button}
+                  style={AppStyles.button}
                   title="Settings"
                   onPress={() => {
                      setModalOpen(false);
@@ -65,13 +67,13 @@ function HeaderRight() {
                   }}
                />
                <Button
-                  style={styles.button}
+                  style={AppStyles.button}
                   title="Help"
                   onPress={onHelpPress}
                />
 
                <Button
-                  style={styles.button}
+                  style={AppStyles.button}
                   title="Make a feedback"
                   onPress={() => {
                      setModalOpen(false);
@@ -79,7 +81,8 @@ function HeaderRight() {
                   }}
                />
                <Button
-                  style={styles.button}
+                  style={AppStyles.button}
+                  color={"#121212"}
                   title="About Roadys"
                   onPress={() => {
                      setModalOpen(false);
@@ -95,13 +98,26 @@ function HeaderRight() {
 
 export default HeaderRight;
 
-
 const styles = StyleSheet.create({
+   modalToggle: {
+      marginTop:20 ,
+      color: 'white',
+      backgroundColor: Colors.light.tint,
+      padding: 8,
+      borderColor: "#121212",
+      borderRadius: 10,
+      alignSelf: 'center',
+   },
+   modalContent: {
+      display: 'flex',
+      flexWrap: "wrap",
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      alignContent: 'center',
+      alignItems: 'stretch',
+      // backgroundColor: "#121212",
+      height: "80%"
 
-   button: {
-      backgroundColor: '#c5c3c3',
-      paddingTop: 20,
-      paddingBottom: 20,
-      margin: 5
    }
-});
+
+})

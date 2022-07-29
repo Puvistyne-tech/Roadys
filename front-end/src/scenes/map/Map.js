@@ -11,9 +11,9 @@ import {
    useQuery, useMutation,
 } from '@apollo/client'
 import {useNavigation} from '@react-navigation/native'
-import {useTheme, Button, Card} from 'react-native-elements'
+import {useTheme, Card} from 'react-native-elements'
 
-import Appstyles from '../../../assets/styles/main.scss'
+import AppStyles from '../../../assets/styles/main.scss'
 import StickManImg from '../../../assets/images/man.png'
 import CurrentUserStickMan from '../../../assets/images/current-stick-man.png'
 import Loader from '../../components/Loader'
@@ -22,6 +22,7 @@ import Loader from '../../components/Loader'
 import {GET_USERS, UPDATE_LOCATION} from './queries'
 import styles from './style'
 import ProfileCard from "../../components/ProfileCard";
+import Button from "../../components/Button";
 // import MarkerCard from "./card/MakerCard";
 
 //TODO ma propre card avec MODEL
@@ -116,8 +117,8 @@ const Map = () => {
                   borderRadius: 10,
                   borderColor: "#7dce9a",
                   borderWidth: 2,
-                  shadowColor:"#606060",
-                  shadowOpacity:0.8
+                  shadowColor: "#606060",
+                  shadowOpacity: 0.8
                }}
             >
                <Card.Image
@@ -136,10 +137,10 @@ const Map = () => {
                <View
                   style={{
                      borderWidth: 1,
-                     height:80,
-                     width:1,
-                     maxWidth:1,
-                     margin:10,
+                     height: 80,
+                     width: 1,
+                     maxWidth: 1,
+                     margin: 10,
                      borderColor: "#bbbbbb"
                   }}
                />
@@ -147,17 +148,17 @@ const Map = () => {
                   style={{
                      justifyContent: "center",
                      height: 100,
-                     width:'auto',
-                     margin:5,
-                     padding:5,
+                     width: 'auto',
+                     margin: 5,
+                     padding: 5,
                      // backgroundColor:"#dede53"
                   }}
                >
                   <Card.Title>{elem.pseudo}</Card.Title>
                   <Text
                      style={{
-                        alignContent:"center",
-                        textAlign:"center"
+                        alignContent: "center",
+                        textAlign: "center"
                      }}
                   >{elem.age}</Text>
                   <Text>{elem.nationality}</Text>
@@ -171,8 +172,17 @@ const Map = () => {
       const navigation = useNavigation()
       return (
          <View>
-            <Button title='Voir le profil'
-                    onPress={() => navigation.navigate('USER_PROFILE_SCREEN', {id: idUserPressed})}/>
+            <Button
+               title='Voir le profil'
+               style={{
+                  ...AppStyles.button,
+                  // float: 'right',
+                  // alignSelf: 'right',
+                  // alignItems: 'right',
+                  // justifyContent: 'right'
+                  marginRight: -80
+               }}
+               onPress={() => navigation.navigate('USER_PROFILE_SCREEN', {id: idUserPressed})}/>
          </View>
       )
    }, [idUserPressed])
@@ -199,9 +209,9 @@ const Map = () => {
             {isPressed && idUserPressed === elem.id && <MarkerCard elem={elem}/>
                // :
                // <></>
-               // <Image style={Appstyles.marker} source={StickManImg} />
+               // <Image style={AppStyles.marker} source={StickManImg} />
             }
-            <Image style={Appstyles.userMarker} source={StickManImg}/>
+            <Image style={AppStyles.userMarker} source={StickManImg}/>
          </View>
       </Marker>
 
@@ -229,8 +239,8 @@ const Map = () => {
    )
    if (errorMsg) {
       return (
-         <View style={Appstyles.container}>
-            <Text style={Appstyles.paragraph}>{errorMsg}</Text>
+         <View style={AppStyles.container}>
+            <Text style={AppStyles.paragraph}>{errorMsg}</Text>
          </View>
       )
    }
@@ -241,12 +251,12 @@ const Map = () => {
    }
 
    return (
-      <View style={Appstyles.container}>
+      <View style={AppStyles.container}>
          <View style={theme.ActionsContainer}>
             {isPressed && <MarkerActions/>}
          </View>
          <MapView
-            style={Appstyles.map}
+            style={AppStyles.map}
             initialRegion={defaultLocation}
             // onPress={() => {
             //    console.log('taped hereeee')
@@ -264,7 +274,7 @@ const Map = () => {
             <Marker
                coordinate={userMarker.coordinate}
             >
-               <Image style={Appstyles.currentUserMaker} source={CurrentUserStickMan}/>
+               <Image style={AppStyles.currentUserMaker} source={CurrentUserStickMan}/>
             </Marker>
             {ListUsers}
          </MapView>

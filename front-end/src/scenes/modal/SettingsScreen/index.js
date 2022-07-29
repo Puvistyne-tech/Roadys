@@ -8,6 +8,7 @@ import {
 import Constants from 'expo-constants';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../../components/Button';
+import AppStyles from '../../../../assets/styles/main.scss'
 
 const SettingsScreen = () => {
    const navigation = useNavigation();
@@ -29,13 +30,13 @@ const SettingsScreen = () => {
             You can also send us a feedback to help us to improve the app.
          </Text>
          <Button
-            style={styles.button}
+            style={AppStyles.button}
             title="Edit Profile"
             onPress={onEditProfilePress}
          />
          <Button
             title="Send a feedback"
-            style={styles.button}
+            style={AppStyles.button}
             onPress={onSendFeedbackPress}
          />
       </View>
@@ -63,11 +64,11 @@ const styles = StyleSheet.create({
       marginBottom: 8,
       paddingVertical: 10,
    },
-   button:{
-      backgroundColor:'#c5c3c3',
-      paddingTop:20,
-      paddingBottom:20,
-      margin:5
+   button: {
+      backgroundColor: '#9f3e3e',
+      paddingTop: 20,
+      paddingBottom: 20,
+      margin: 5
    }
 });
 

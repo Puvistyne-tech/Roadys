@@ -47,6 +47,18 @@ $green_color: $mainColor;
   margin-bottom: 30px;
 };
 
+.button{
+   width: 90%;
+   font-size: 15px;
+   border-radius: 30px;
+   height: 50px;
+   //align-items: center;
+   justify-content: center;
+   margin: 10px auto;
+   background-color: $mainColor;
+   box-shadow: 5px 5px 5px #575656;
+}
+
 .loginBtn {
   width: 80%;
   font-size: 15px;

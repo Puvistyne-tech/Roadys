@@ -5,6 +5,10 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Button from '../../../components/Button';
 import styles from './style';
+import AppStyles from '../../../../assets/styles/main.scss';
+import email from 'react-native-email'
+
+
 // import {SMTPClient} from "emailjs";
 // import emailjs from 'emailjs-com';
 
@@ -16,13 +20,31 @@ const FeedbackScreen = ({route}) => {
       values: ''
    });
 
-   {/*  const form = useRef();   */
+
+   const sendEmail = () => {
+      console.log('sendEmail');
+      const to = ['puvistien@email.com'] // string or array of email addresses
+      email(to, {
+         // Optional additional arguments
+         cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
+         bcc: 'mee@mee.com', // string or array of email addresses
+         subject: 'Show how to use',
+         body: 'Some body right here',
+         checkCanOpen: false // Call Linking.canOpenURL prior to Linking.openURL
+      })
+         .then(() => {
+            Alert.alert('Email sent!')
+         }).catch(error => {
+         Alert.alert('Something went wrong!')
+      }
+      )
+      navigation.goBack()
    }
 
-
-   const sendEmail = (e) => {
-      e.preventDefault();
-
+//    const sendEmail = (e) => {
+//
+//       e.preventDefault();
+//
 //       const client = new SMTPClient({
 //          user: 'puvistien@gmail.com',
 //          password: 'Styne1995@@@S',
@@ -43,17 +65,17 @@ const FeedbackScreen = ({route}) => {
 //             console.log(err || message);
 //          }
 //       );
-
-      // emailjs.sendForm('gmail', 'template_8bhzkma', form.current, 'AdW8nR8J7QDeXzExa')
-      //    .then((result) => {
-      //       console.log(result.text);
-      //       Alert.alert('Success', 'Your feedback was sent successfully');
-      //    }, (error) => {
-      //       console.log(error.text);
-      //       Alert.alert('Oops', 'Your feedback could not be sent');
-      //    });
-   };
-
+//
+//       // emailjs.sendForm('gmail', 'template_8bhzkma', form.current, 'AdW8nR8J7QDeXzExa')
+//       //    .then((result) => {
+//       //       console.log(result.text);
+//       //       Alert.alert('Success', 'Your feedback was sent successfully');
+//       //    }, (error) => {
+//       //       console.log(error.text);
+//       //       Alert.alert('Oops', 'Your feedback could not be sent');
+//       //    });
+//    };
+//
 
    return (
       <ScrollView style={styles.formContainer}>
@@ -141,9 +163,10 @@ const FeedbackScreen = ({route}) => {
                )}
             />
 
-            <Button title="Send Feedback"
-                    onPress={handleSubmit(sendEmail)}
-                    style={styles.button}
+            <Button
+               title="Send Feedback"
+               onPress={handleSubmit(sendEmail)}
+               style={AppStyles.button}
             />
          </KeyboardAwareScrollView>
       </ScrollView>

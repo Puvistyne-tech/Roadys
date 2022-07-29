@@ -1,6 +1,6 @@
 import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
-import Home from '../../../scenes/home'
+import Chat from '../../../scenes/chat'
 import Map from '../../../scenes/map'
 import ProfileScreen from '../../../screens/ProfileScreen.js'
 import UserProfileScreen from '../../../screens/UserProfileScreen.js/index.js'
@@ -8,7 +8,7 @@ import EditProfileScreen from '../../../screens/EditProfileScreen.js'
 import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
 import HeaderRight from "./HeaderRight";
-import Appstyles from '../../../../assets/styles/main.scss';
+import AppStyles from '../../../../assets/styles/main.scss';
 
 import PartnerScreen from '../../../scenes/partners/PartnerScreen'
 import DrawerNavigator from "../drawer";
@@ -23,7 +23,7 @@ const Stack = createStackNavigator()
 
 const navigationProps = {
    headerTintColor: 'white',
-   headerStyle: {backgroundColor: Appstyles.mainColor},
+   headerStyle: {backgroundColor: AppStyles.mainColor},
    headerTitleStyle: {fontSize: 18},
 }
 
@@ -31,17 +31,17 @@ const navigationProps = {
 // Navigators
 // ------------------------------------
 
-export const HomeNavigator = () => (
+export const ChatNavigator = () => (
    <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Chat"
       headerMode="screen"
       screenOptions={navigationProps}
    >
       <Stack.Screen
-         name="HOME_SCREEN"
-         component={Home}
+         name="CHAT_SCREEN"
+         component={Chat}
          options={({navigation}) => ({
-            title: 'Home',
+            title: 'Chat',
             headerLeft: () => <HeaderLeft navigation={navigation}/>,
             headerTitle: () => <HeaderTitle/>,
             headerRight: () => <HeaderRight/>
@@ -59,8 +59,12 @@ export const MapNavigator = () => (
       <Stack.Screen
          name="MAP"
          component={Map}
-         options={() => ({
+         options={({navigation}) => ({
             title: 'Map',
+            headerShown:true,
+            headerLeft: () => <HeaderLeft navigation={navigation}/>,
+            headerTitle: () => <HeaderTitle/>,
+            headerRight: () => <HeaderRight/>
          })}
       />
       <Stack.Screen
@@ -88,9 +92,9 @@ export const ProfileNavigator = () => (
             headerShown: true,
             // })}
             // // name="HOME_SCREEN"
-            // // component={Home}
+            // // component={Chat}
             // // options={({navigation}) => ({
-            // //    title: 'Home',
+            // //    title: 'Chat',
             headerLeft: () => <HeaderLeft navigation={navigation}/>,
             headerTitle: () => <HeaderTitle/>,
             headerRight: () => <HeaderRight/>

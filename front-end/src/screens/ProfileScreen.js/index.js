@@ -8,12 +8,12 @@ import {
 } from "@apollo/client";
 import {showMessage} from "react-native-flash-message";
 
-import Appstyles from '../../../assets/styles/main.scss';
 import ProfileCard from '../../components/ProfileCard';
 import {GET_CURRENT_USER} from './queries'
 import Loader from '../../components/Loader';
-import {Button} from 'react-native-elements';
 import ImageReader from "../../components/ImageReader";
+import AppStyles from '../../../assets/styles/main.scss';
+import Button from "../../components/Button";
 
 const ProfileScreen = () => {
    const navigation = useNavigation();
@@ -39,7 +39,7 @@ const ProfileScreen = () => {
       <>
          {user ?
             <View
-               // style={Appstyles.container}
+               // style={AppStyles.container}
                style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -51,7 +51,10 @@ const ProfileScreen = () => {
                   <ProfileCard id={user?.id}/>
                </View>
                <View>
-                  <Button title="Edit" onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
+                  <Button
+                     title="Edit"
+                     style={AppStyles.button}
+                     onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
                   <ImageReader id={user?.id}></ImageReader>
                </View>
             </View>

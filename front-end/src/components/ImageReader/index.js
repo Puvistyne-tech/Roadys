@@ -3,8 +3,10 @@ import * as ImagePicker from "expo-image-picker";
 import {showMessage} from "react-native-flash-message";
 import {useMutation} from "@apollo/client";
 import {UPDATE_USER_IMAGE} from "../../screens/EditProfileScreen.js/queries";
-import {Button} from 'react-native-elements';
+// import {Button} from 'react-native-elements';
 import LoadingModal from "../LoadingModal";
+import AppStyles from '../../../assets/styles/main.scss';
+import Button from "../../components/Button";
 
 const ImageReader = ({id}) => {
 
@@ -20,7 +22,7 @@ const ImageReader = ({id}) => {
          quality: 0
       });
 
-      if (res&&res.cancelled===false) {
+      if (res && res.cancelled === false) {
          let imageUri = `data:image/jpg;base64,${res.base64}`;
          if (imageUri) {
             setLoading(true)
@@ -61,7 +63,10 @@ const ImageReader = ({id}) => {
             loading ?
                <LoadingModal loading={loading}/>
                :
-               <Button title="Change Image" onPress={_pickImg}/>
+               <Button
+                  title="Change Image"
+                  style={AppStyles.button}
+                  onPress={_pickImg}/>
          }
       </>
    );

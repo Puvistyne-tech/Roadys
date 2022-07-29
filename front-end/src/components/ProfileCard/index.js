@@ -13,7 +13,7 @@ import {
 } from "@apollo/client";
 import {showMessage} from "react-native-flash-message";
 
-import Appstyles from '../../../assets/styles/main.scss';
+import AppStyles from '../../../assets/styles/main.scss';
 import {GET_USER} from './queries'
 import Loader from '../../components/Loader';
 
@@ -52,13 +52,12 @@ const ProfileCard = ({id}) => {
                }}
             >
                <Card.Image
-                  resizeMode={"cover"}
                   source={{uri: user?.photo}}
                   PlaceholderContent={<Text>No Photo</Text>}
                   style={{
                      alignContent: "center",
                      maxWidth: '100%',
-                     // height: '60%',
+                     height: 250,
                      borderRadius: 8,
                      marginBottom: 10
                   }}
@@ -79,19 +78,19 @@ const ProfileCard = ({id}) => {
 
                   <Card.Divider/>
                   <View style={{flexDirection: "row"}}>
-                     <Text style={Appstyles.loginText}>{user?.pseudo}</Text>
+                     <Text style={AppStyles.loginText}>{user?.pseudo}</Text>
                   </View>
                   <View style={{flexDirection: "row"}}>
-                     <Text style={Appstyles.loginText}>{user?.age}</Text>
+                     <Text style={AppStyles.loginText}>{user?.age}</Text>
                   </View>
                   <View style={{flexDirection: "row"}}>
-                     <Text style={Appstyles.loginText}>{user?.kindOfTrip}</Text>
+                     <Text style={AppStyles.loginText}>{user?.kindOfTrip}</Text>
                   </View>
                   <View style={{flexDirection: "row"}}>
-                     <Text style={Appstyles.loginText}>{user?.nationality}</Text>
+                     <Text style={AppStyles.loginText}>{user?.nationality}</Text>
                   </View>
                   <View style={{flexDirection: "row"}}>
-                     <Text style={Appstyles.loginText}>{user?.description}</Text>
+                     <Text style={AppStyles.loginText}>{user?.description}</Text>
                   </View>
                </View>
             </Card>

@@ -1,29 +1,29 @@
 import React from 'react'
 import {View} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import Appstyles from '../../../../assets/styles/main.scss';
+import AppStyles from '../../../../assets/styles/main.scss';
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import {colors} from 'theme'
 
 // stack navigators
-import {HomeNavigator, MapNavigator, ProfileNavigator} from '../stacks'
+import {ChatNavigator, MapNavigator, ProfileNavigator} from '../stacks'
 import headerTitle from "../stacks/HeaderTitle";
 import {HeaderTitle} from "@react-navigation/stack";
 import HeaderRight from "../stacks/HeaderRight";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator()
 
 const TabNavigator = () => {
    return <Tab.Navigator
       screenOptions={({route}) => ({
-         // eslint-disable-next-line react/prop-types
          tabBarIcon: ({focused}) => {
             switch (route.name) {
-               case 'Home':
+               case 'Chat':
                   return (
-                     <FontIcon
-                        name="home"
-                        color={focused ? Appstyles.tabIconActive : Appstyles.tabIconInactive}
+                     <MaterialCommunityIcons
+                        name="wechat"
+                        color={focused ? AppStyles.tabIconActive : AppStyles.tabIconInactive}
                         size={20}
                         solid
                      />
@@ -32,7 +32,7 @@ const TabNavigator = () => {
                   return (
                      <FontIcon
                         name="map-marked-alt"
-                        color={focused ? Appstyles.tabIconActive : Appstyles.tabIconInactive}
+                        color={focused ? AppStyles.tabIconActive : AppStyles.tabIconInactive}
                         size={20}
                         solid
                      />
@@ -41,7 +41,7 @@ const TabNavigator = () => {
                   return (
                      <FontIcon
                         name="user"
-                        color={focused ? Appstyles.tabIconActive : Appstyles.tabIconInactive}
+                        color={focused ? AppStyles.tabIconActive : AppStyles.tabIconInactive}
                         size={20}
                         solid
                      />
@@ -52,8 +52,8 @@ const TabNavigator = () => {
          },
       })}
       tabBarOptions={{
-         activeTintColor: Appstyles.tabIconActive,
-         inactiveTintColor: Appstyles.tabIconInactive,
+         activeTintColor: AppStyles.tabIconActive,
+         inactiveTintColor: AppStyles.tabIconInactive,
          style: {
             // backgroundColor: 'white',
             // borderTopColor: 'gray',
@@ -62,10 +62,10 @@ const TabNavigator = () => {
             // paddingTop: 5,
          },
       }}
-      initialRouteName="Home"
+      initialRouteName="Chat"
       swipeEnabled={true}
    >
-      <Tab.Screen name="Home" component={HomeNavigator}/>
+      <Tab.Screen name="Chat" component={ChatNavigator}/>
       <Tab.Screen name="Map" component={MapNavigator}/>
       <Tab.Screen
          name="Profile"

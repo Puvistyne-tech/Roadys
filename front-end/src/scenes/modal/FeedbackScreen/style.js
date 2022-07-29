@@ -1,21 +1,21 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Constants from 'expo-constants';
 
 const styles = StyleSheet.create({
-    container: {
+   container: {
       flex: 1,
       justifyContent: 'center',
       paddingTop: Constants.statusBarHeight,
       backgroundColor: 'white',
-    },
-    formContainer: {
+   },
+   formContainer: {
       padding: 8,
       flex: 1,
-    },
-    inputContainer: {
+   },
+   inputContainer: {
       marginVertical: 8,
-    },
-    input: {
+   },
+   input: {
       borderStyle: 'solid',
       borderWidth: 1,
       borderRadius: 5,
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
       paddingLeft: 5,
       fontSize: 16,
       height: 40,
-    },
-    feedback: {
+   },
+   feedback: {
       borderStyle: 'solid',
       borderWidth: 1,
       borderRadius: 5,
@@ -32,24 +32,24 @@ const styles = StyleSheet.create({
       paddingLeft: 5,
       fontSize: 16,
       height: 120,
-    },
-    label: {
+   },
+   label: {
       paddingVertical: 5,
       fontSize: 16,
       fontWeight: 'bold',
-    },
-    textError: {
+   },
+   textError: {
       color: '#fc6d47',
       fontSize: 14,
-    },
-    button: {
+   },
+   button: {
       marginTop: 10,
       marginBottom: 30,
       marginRight: 50,
       marginLeft: 50,
       paddingVertical: 15,
       borderRadius: 30,
-    },
-  });
-  
+   },
+});
+
 export default styles

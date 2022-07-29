@@ -15,7 +15,7 @@ const HeaderTitle = () => {
    return (
       <Pressable
          onPress={() => {
-            navigation.navigate('Home')
+            navigation.navigate('Chat')
          }}
       >
          <Image

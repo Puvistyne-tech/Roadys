@@ -1,3 +1,3 @@
-import {HomeNavigator, MapNavigator, ProfileNavigator, PartnerNavigator} from './Stacks'
+import {ChatNavigator, MapNavigator, ProfileNavigator, PartnerNavigator} from './Stacks'
 
-export {HomeNavigator, MapNavigator, ProfileNavigator, PartnerNavigator}
+export {ChatNavigator, MapNavigator, ProfileNavigator, PartnerNavigator}
