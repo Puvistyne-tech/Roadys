@@ -1,0 +1,5 @@
+*node_modules
+*.expo
+.docker
+back-end/src/prisma/schema.prisma
+back-end/src/prisma/migrations
