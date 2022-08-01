@@ -61,9 +61,6 @@ const SigninScreen = () => {
         />
       </View>
         <Button title="Login" style={AppStyles.button} onPress={() => { connect() }} />
-        <Text>
-          testing
-        </Text>
         <Button title="Back" style={AppStyles.button} onPress={navigation.goBack} />
     </View>
   )
