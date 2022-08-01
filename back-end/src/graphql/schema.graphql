@@ -1,1 +1,2 @@
+# import Queries.*, Mutations.*, * from './book/schema.graphql'
 # import Queries.*, Mutations.*, * from './user/schema.graphql'

@@ -1,9 +1,8 @@
-import { mergeResolvers } from 'merge-graphql-schemas';
+import { mergeResolvers } from "merge-graphql-schemas";
 
-import userResolver from './user/resolvers';
+import bookResolver from "./book/resolvers";
+import userResolver from "./user/resolvers";
 
-const resolvers = [
-   userResolver
-];
+const resolvers = [bookResolver, userResolver];
 
 export default mergeResolvers(resolvers);

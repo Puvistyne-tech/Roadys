@@ -32,7 +32,6 @@ input UpdateUserInput {
   nationality: String
   kindOfTrip: String
   isVisibled: Boolean
-  photo:String
 }
 
 input UpdateCurrentUserInput {
@@ -46,7 +45,6 @@ input UpdateCurrentUserInput {
   nationality: String
   kindOfTrip: String
   isVisibled: Boolean
-  photo: String
 }
 
 type Mutation {
@@ -71,9 +69,4 @@ type User {
   nationality: String
   kindOfTrip: String
   isVisibled: Boolean
-  photo:String
-#  TODO
-#  image:bytea
 }
-
-
