@@ -71,7 +71,6 @@ const SigninScreen = () => {
           connect()
         }}
       />
-      <Text>testing</Text>
       <Button
         title="Back"
         style={AppStyles.button}

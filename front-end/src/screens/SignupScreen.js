@@ -11,7 +11,7 @@ import {Button} from 'react-native-elements'
 import Appstyles from '../../assets/styles/main.scss'
 import {AuthContext} from '../providers/AuthProvider'
 import {useNavigation} from "@react-navigation/native";
-import AppStyles from "../../assets/styles/main.scss";
+import AppStyles from "../../assets/styles/main.scss"
 
 const SignupScreen = () => {
    const navigation = useNavigation()
@@ -39,22 +39,22 @@ const SignupScreen = () => {
 
    const createAccount = useCallback(async () => {
 
-      if (!termsAndConditionsAccepted) {
-         showMessage({
-            message: 'Error',
-            description: 'You must accept the terms and conditions',
-            type: 'warning',
-            duration: 10000,
-         })
-         return false
-      } else {
+      // if (!termsAndConditionsAccepted) {
+      //    showMessage({
+      //       message: 'Error',
+      //       description: 'You must accept the terms and conditions',
+      //       type: 'warning',
+      //       duration: 10000,
+      //    })
+      //    return false
+      // } else {
 
          if (password === confirmPassword) {
             await authErrorHandling(signup(pseudo, email, password))
          } else {
             console.log('Error: Password and ConfirmPassword, must be the same')
          }
-      }
+      // }
    }, [pseudo, email, password, confirmPassword])
 
    // <Input
@@ -117,11 +117,11 @@ const SignupScreen = () => {
          <Button title="Create account" onPress={() => {
             createAccount()
          }}/>
-          <Button
-              title="Back"
-              style={AppStyles.button}
-              onPress={navigation.goBack}
-          />
+         <Button
+            title="Back"
+            style={AppStyles.signinButton}
+            onPress={() => navigation.navigate('Welcome screen')}
+         />
          <Text style={Appstyles.text}>
             By creating an account, you agree to our Terms and Conditions.
             <Text
@@ -130,9 +130,8 @@ const SignupScreen = () => {
                   color: '#45a8f8'
                }}
                onPress={() => {
-                  navigation.navigate('TermsAndConditions')
-               }
-               }
+                  navigation.goBack()
+               }}
             >
                {'\n'}Here.
             </Text>

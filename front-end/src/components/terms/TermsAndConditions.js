@@ -64,7 +64,8 @@ const TermsAndConditions = () => {
                 disabled={!accepted}
                 onPress={() => {
                     alert("Terms and conditions accepted")
-                    navigation.goBack()
+                    // navigation.goBack()
+                    navigation.navigate('Sign up')
                 }}
                 style={accepted ? styles.button : styles.buttonDisabled}><Text
                 style={styles.buttonLabel}>Accept</Text></TouchableOpacity>
