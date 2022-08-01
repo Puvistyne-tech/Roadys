@@ -1,15 +1,12 @@
 import React, { useCallback, useState, useContext } from 'react'
 import { showMessage } from 'react-native-flash-message'
 import { StatusBar } from 'expo-status-bar'
-import { Button } from 'react-native-elements'
+// import { Button } from 'react-native-elements'
 
-import {
-  View,
-  Image,
-  TextInput,
-} from 'react-native'
+import { View, Image, TextInput } from 'react-native'
 
-import Appstyles from '../../assets/styles/main.scss'
+import AppStyles from '../../assets/styles/main.scss'
+import Button from '../components/Button'
 import { AuthContext } from '../providers/AuthProvider'
 
 const SigninScreen = () => {
@@ -17,6 +14,7 @@ const SigninScreen = () => {
   const [password, setPassword] = useState('')
 
   const { signin } = useContext(AuthContext)
+  const navigation = useNavigation()
 
   const authErrorHandling = useCallback(async (query) => {
     try {
@@ -36,29 +34,48 @@ const SigninScreen = () => {
   }, [login, password])
 
   return (
-    <View style={Appstyles.container}>
+    <View style={AppStyles.container}>
       <StatusBar style="auto" />
-      <Image style={Appstyles.image} source={require('../../assets/images/logo_color.png')} />
+      <Image
+        style={AppStyles.image}
+        source={require('../../assets/images/logo_color.png')}
+      />
 
-      <View style={Appstyles.inputView}>
+      <View style={AppStyles.inputView}>
         <TextInput
-          style={Appstyles.textInput}
+          style={AppStyles.textInput}
           placeholder="Email or Pseudo"
           placeholderTextColor="#003f5c"
-          onChangeText={(login) => { setLogin(login) }}
+          onChangeText={(login) => {
+            setLogin(login)
+          }}
         />
       </View>
 
-      <View style={Appstyles.inputView}>
+      <View style={AppStyles.inputView}>
         <TextInput
-          style={Appstyles.textInput}
+          style={AppStyles.textInput}
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry
-          onChangeText={(password) => { setPassword(password) }}
+          onChangeText={(password) => {
+            setPassword(password)
+          }}
         />
       </View>
-      <Button title="Login" onPress={() => { connect() }} />
+      <Button
+        title="Login"
+        style={AppStyles.button}
+        onPress={() => {
+          connect()
+        }}
+      />
+      <Text>testing</Text>
+      <Button
+        title="Back"
+        style={AppStyles.button}
+        onPress={navigation.goBack}
+      />
     </View>
   )
 }
