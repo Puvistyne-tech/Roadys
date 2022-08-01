@@ -8,6 +8,7 @@ model User {
   latitude  Float?
   longitude Float?
   age Int?
+  photo String?
   description String?
   nationality String?
   kindOfTrip String?
@@ -15,3 +16,5 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
+
+//image Bytes? @db.ByteA
