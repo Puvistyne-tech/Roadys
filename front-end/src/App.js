@@ -49,7 +49,7 @@ const MyAppNavigation = () => {
                         <Stack.Screen name="Welcome screen" component={WelcomeScreen}/>
                         <Stack.Screen name="Sign in" component={SigninScreen}/>
                         <Stack.Screen name="Sign up" component={SignupScreen}/>
-                        <Stack.Screen name="TermsAndConditions" component={TermsAndConditions}/>
+                        {/*<Stack.Screen name="TermsAndConditions" component={TermsAndConditions}/>*/}
                     </>
                 ) :
                 (
