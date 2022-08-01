@@ -11,6 +11,7 @@ import {Button} from 'react-native-elements'
 import Appstyles from '../../assets/styles/main.scss'
 import {AuthContext} from '../providers/AuthProvider'
 import {useNavigation} from "@react-navigation/native";
+import AppStyles from "../../assets/styles/main.scss";
 
 const SignupScreen = () => {
    const navigation = useNavigation()
@@ -116,6 +117,11 @@ const SignupScreen = () => {
          <Button title="Create account" onPress={() => {
             createAccount()
          }}/>
+          <Button
+              title="Back"
+              style={AppStyles.button}
+              onPress={navigation.goBack}
+          />
          <Text style={Appstyles.text}>
             By creating an account, you agree to our Terms and Conditions.
             <Text
