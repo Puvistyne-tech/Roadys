@@ -9,7 +9,7 @@ import {
 import {StatusBar} from 'expo-status-bar'
 
 import {Button} from 'react-native-elements'
-import Appstyles from '../../assets/styles/main.scss'
+import AppStyles from '../../assets/styles/main.scss'
 
 const WelcomeScreen = () => {
    const navigation = useNavigation()
@@ -19,9 +19,9 @@ const WelcomeScreen = () => {
    })
 
    return (
-      <View style={Appstyles.container}>
+      <View style={AppStyles.container}>
          <StatusBar style="auto"/>
-         <Image style={Appstyles.image} source={require('../../assets/images/logo_color.png')}/>
+         <Image style={AppStyles.image} source={require('../../assets/images/logo_color.png')}/>
          <Button title="Sign in" onPress={navigate('Sign in')}/>
          <Button title="Sign up" onPress={navigate('Sign up')}/>
       </View>

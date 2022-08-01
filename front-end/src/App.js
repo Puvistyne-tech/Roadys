@@ -27,6 +27,7 @@ import SettingsScreen from "./scenes/modal/SettingsScreen";
 import {HeaderTitle} from "@react-navigation/stack";
 import HeaderRight from "./routes/navigation/stacks/HeaderRight";
 import HeaderLeft from "./routes/navigation/stacks/HeaderLeft";
+import TermsAndConditions from "./components/terms/TermsAndConditions";
 
 const MyAppNavigation = () => {
    const Stack = createNativeStackNavigator();
@@ -35,16 +36,18 @@ const MyAppNavigation = () => {
    const isAuthenticated = useMemo(
       () => {
          console.log("token", token);
-         return token === null
+         return token !== null
       }, [token]
    )
    console.log("token", token)
+   console.log(isAuthenticated)
 
    return <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-         {isAuthenticated ?
+         {!isAuthenticated ?
             (
                <>
+                  <Stack.Screen name="TermsAndConditions" component={TermsAndConditions}/>
                   <Stack.Screen name="Welcome screen" component={WelcomeScreen}/>
                   <Stack.Screen name="Sign in" component={SigninScreen}/>
                   <Stack.Screen name="Sign up" component={SignupScreen}/>
