@@ -15,8 +15,8 @@ const prisma = new PrismaClient({
 for (var a=[], i=0; i<40; ++i) a[i]=i;
 
 function shuffle(array) {
-  var tmp, current, top = array.length;
-  if(top) while(--top) {
+    let tmp, current, top = array.length;
+    if(top) while(--top) {
     current = Math.floor(Math.random() * (top + 1));
     tmp = array[current];
     array[current] = array[top];
@@ -35,11 +35,11 @@ const users = a.map(
         password: "azer",
         firstname: `${id}`,
         lastname: `${id}`,
-        latitude: (Math.random() > 0.5 ? 
+        latitude: (Math.random() > 0.5 ?
             48.82558263128961 + (Math.random() / 100)
             :
             48.82558263128961 - (Math.random() / 100)),
-        longitude: (Math.random() > 0.5 ? 
+        longitude: (Math.random() > 0.5 ?
             2.335827558647471 + (Math.random() / 100)
             :
             2.335827558647471 - (Math.random() / 100)),
