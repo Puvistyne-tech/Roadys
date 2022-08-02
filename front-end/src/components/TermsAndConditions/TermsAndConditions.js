@@ -90,7 +90,7 @@ const TermsAndConditions = (props) => {
                 // disabled={!accepted}
                 onPress={() => {
                     // alert("Terms and conditions accepted")
-                    props.setIsAccepted(true)
+                    // props.setIsAccepted(true)
                     setAccepted(true)
                     props.setIsOpen(false)
                 }}
