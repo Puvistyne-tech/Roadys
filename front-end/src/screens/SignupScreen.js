@@ -39,12 +39,6 @@ const SignupScreen = () => {
         }
     }, [])
 
-    // useEffect(() => {
-    //
-    //     setIsAccepted(isAccepted)
-    //     console.log("changed :::: "+isAccepted)
-    // }, [isAccepted])
-
 
     const createAccount = useCallback(async () => {
 
