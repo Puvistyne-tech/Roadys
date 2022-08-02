@@ -114,8 +114,26 @@ const SignupScreen = () => {
                         onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
                     />
                 </View>
-                <Button title="Create account" style={AppStyles.button} onPress={() => createAccount()}/>
-                <Button title="Back" style={AppStyles.button} onPress={navigation.goBack}/>
+                <View style={[{
+                    height: 24,
+                    width: 24,
+                    borderRadius: 12,
+                    borderWidth: 2,
+                    borderColor: '#000',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }]}>
+                    {
+                        // props.selected ?
+                            <View style={{
+                                height: 12,
+                                width: 12,
+                                borderRadius: 6,
+                                backgroundColor: '#000',
+                            }}/>
+                            // : null
+                    }
+                </View>
                 <Text style={AppStyles.text}>
                     By creating an account, you agree to our Terms and Conditions.
                     <Text
@@ -134,6 +152,8 @@ const SignupScreen = () => {
                         {'\n'}Here.
                     </Text>
                 </Text>
+                <Button title="Create account" style={AppStyles.button} onPress={() => createAccount()}/>
+                <Button title="Back" style={AppStyles.button} onPress={navigation.goBack}/>
             </View>
         </>
     )

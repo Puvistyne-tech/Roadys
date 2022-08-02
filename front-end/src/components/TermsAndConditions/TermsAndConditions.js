@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, ScrollView, Dimensions, TouchableOpacity, Modal} from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-import Button from "../Button/Button";
+import { Text, ScrollView, Dimensions, TouchableOpacity, Modal} from 'react-native';
 import AppStyles from '../../../assets/styles/main.scss';
 
 
@@ -15,7 +13,6 @@ const TermsAndConditions = (props) => {
 
     // const accepted=route?.params.isAccepted
     // const setAccepted=route?.params.setIsAccepted
-
 
     console.log(props)
 
@@ -112,7 +109,6 @@ const TermsAndConditions = (props) => {
 const {width, height} = Dimensions.get('window');
 
 const styles = {
-
     container: {
         marginTop: 30,
         marginLeft: 10,

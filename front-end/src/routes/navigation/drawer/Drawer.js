@@ -60,7 +60,7 @@ const DrawerMenuContainer = (props) => {
                ({focused, size}) =>
                   <MaterialCommunityIcons name="wechat"
                      color={focused ? AppStyles.tabIconActive : AppStyles.tabIconInactive}
-                           size={size}                        
+                           size={size}
                   />
             }
             onPress={() => navigation.navigate('Chat')}
@@ -138,7 +138,7 @@ const DrawerMenuContainer = (props) => {
 
 const DrawerNavigator = () => (
    <Drawer.Navigator drawerContent={props => <DrawerMenuContainer {...props} />}>
-      <Drawer.Screen name="DRAWER_HOME" component={TabNavigator} options={{}}/>
+      <Drawer.Screen name="DRAWER_HOME" component={TabNavigator} options={{ tabBarButton: () => null, tabBarVisible: false, }}/>
    </Drawer.Navigator>
 )
 
