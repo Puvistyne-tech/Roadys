@@ -175,11 +175,6 @@ const SignupScreen = () => {
                         }}
                         onPress={() => {
                             setTermsAndConditionsOpen(true)
-                            // navigation.navigate('TermsAndConditions', {
-                            //     title: 'Terms and Conditions',
-                            //     isAccepted: isAccepted,
-                            //     setIsAccepted: setIsAccepted,
-                            // })
                         }}
                       >
                           Terms and Conditions.

@@ -63,7 +63,7 @@ const ProfileCard = ({id}) => {
                   style={{
                      alignContent: "center",
                      maxWidth: '100%',
-                     height: 250,
+                     height: '50%',
                      borderRadius: 8,
                      marginBottom: 10
                   }}
