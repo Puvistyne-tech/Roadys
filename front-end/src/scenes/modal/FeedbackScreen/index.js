@@ -23,7 +23,6 @@ const FeedbackScreen = ({route}) => {
     const onSubmit = data => {
         setLoading(false)
 
-        // console.log(data)
 
         const [SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY, PRIVATE_KEY] = [process.env.SERVICE_ID, process.env.TEMPLATE_ID, process.env.PUBLIC_KEY, process.env.PRIVATE_KEY];
 
