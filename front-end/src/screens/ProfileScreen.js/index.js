@@ -44,13 +44,23 @@ const ProfileScreen = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-around',
-                  height: '100%'
+                  height: '100%',
+                  backgroundColor: '#8c3838'
                }}
             >
-               <View>
+               <View
+                  style={{
+                     height: '60%',
+                  }}
+               >
                   <ProfileCard id={user?.id}/>
                </View>
-               <View>
+               <View
+                  style={{
+                     // height: '30%',
+
+                  }}
+               >
                   <Button
                      title="Edit"
                      style={AppStyles.button}
