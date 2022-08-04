@@ -30,9 +30,19 @@ input UpdateUserInput {
   age: Int
   description: String
   nationality: String
-  kindOfTrip: String
+  kindOfTrip: TransportType
   isVisibled: Boolean
   photo:String
+}
+
+enum TransportType {
+  BIKE
+  BACKPACK
+  TRAIN
+  CAR
+  ERASMUS
+  NOMAD
+  OTHER
 }
 
 input UpdateCurrentUserInput {
@@ -44,7 +54,7 @@ input UpdateCurrentUserInput {
   age: Int
   description: String
   nationality: String
-  kindOfTrip: String
+  kindOfTrip: TransportType
   isVisibled: Boolean
   photo: String
 }
@@ -69,7 +79,7 @@ type User {
   age: Int
   description: String
   nationality: String
-  kindOfTrip: String
+  kindOfTrip: TransportType
   isVisibled: Boolean
   photo:String
 #  TODO

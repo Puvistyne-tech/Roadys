@@ -11,10 +11,25 @@ model User {
   photo String?
   description String?
   nationality String?
-  kindOfTrip String?
+  kindOfTrip TransportType @default(BIKE)
   isVisibled Boolean?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
+
+enum TransportType{
+    BIKE
+    BACKPACK
+    TRAIN
+    CAR
+    ERASMUS
+    NOMAD
+    OTHER
+}
+
+//model Type{
+  //  id String @id @default(autoincrement())
+    //name String @unique
+    //}
 
 //image Bytes? @db.ByteA

@@ -41,7 +41,7 @@ export const UPDATE_USER = gql`
       $lastname: String,
       $age: Int,
       $nationality: String,
-      $kindOfTrip: String,
+      $kindOfTrip: TransportType,
       $description: String,
    ){
       updateUser(data: {
