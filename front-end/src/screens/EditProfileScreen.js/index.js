@@ -4,7 +4,7 @@ import {
     View,
     ScrollView,
     TextInput,
-    StyleSheet, Keyboard,
+    StyleSheet,
 } from "react-native";
 import {
     useQuery,
@@ -16,12 +16,14 @@ import {Switch} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {showMessage} from "react-native-flash-message";
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
-// import { Button } from 'react-native-elements';
 
 import AppStyles from '../../../assets/styles/main.scss';
 import Loader from '../../components/Loader';
 import {GET_USER, UPDATE_USER} from './queries'
 import Button from "../../components/Button";
+// import {Picker} from "@react-native-picker/picker";
+// import IOSPicker from "react-native-ios-picker";
+import MyPicker from "../../components/MyPicker/MyPicker";
 import {Picker} from "@react-native-picker/picker";
 
 const EditProfileScreen = ({route}) => {
@@ -62,21 +64,21 @@ const EditProfileScreen = ({route}) => {
         // console.log(variables)
 
         try {
-           await updateUser({variables})
-           showMessage({
-              message: "Success",
-              description: "your data were updated",
-              type: "success",
-              duration: 10000
-           })
-           navigation.goBack();
+            await updateUser({variables})
+            showMessage({
+                message: "Success",
+                description: "your data were updated",
+                type: "success",
+                duration: 10000
+            })
+            navigation.goBack();
         } catch (err) {
-           showMessage({
-              message: "Error",
-              description: err.message,
-              type: "warning",
-              duration: 10000
-           });
+            showMessage({
+                message: "Error",
+                description: err.message,
+                type: "warning",
+                duration: 10000
+            });
         }
     }, [updateUser]);
 
@@ -118,6 +120,45 @@ const EditProfileScreen = ({route}) => {
             value: 'OTHER'
         }
     ]
+
+    // const [pickerOpacity, setPickerOpacity] = useState(0);
+    // const [opacityOfOtherItems, setOpacityOfOtherItems] = useState(1);
+    //
+    // const checkIfIOS = () => {
+    //     if (Platform.OS === 'ios') { // check if ios
+    //         console.log("IOS!!!");
+    //         //this button will (onpress) set our picker visible
+    //         return (
+    //             <Button buttonStyle={{backgroundColor: '#D1D1D1', opacity: opacityOfOtherItems}}
+    //                         onPress={toggle}
+    //                         color="#101010" title={"this.state.label"}
+    //                         onPress={this.changeOpacity}
+    //             />
+    //         );
+    //     } else if (Platform.OS === 'android') { //check if android
+    //         setPickerOpacity(1)
+    //         console.log("ANDROID!!!");
+    //     }
+    // }
+    //
+    // const toggle = () => {
+    //     if (Platform.OS === 'ios') {
+    //
+    //         if (pickerOpacity === 0) {
+    //             setPickerOpacity(1);
+    //             setOpacityOfOtherItems(0)
+    //         } else {
+    //             setPickerOpacity(0);
+    //             setOpacityOfOtherItems(1)
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     checkIfIOS()
+    //
+    // }, []);
+
 
     return (
 
@@ -238,29 +279,16 @@ const EditProfileScreen = ({route}) => {
                     render={({field: {onChange, onBlur, value}}) => (
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Kind of trip</Text>
-                            <Picker
-                                mode="dialog"
-                                prompt={'Select your kind of trip'}
+
+                            <MyPicker
+                                label={"kind Of Trip"}
                                 selectedValue={value}
-                                style={styles.inputContainer}
-                                numberOfLines={1}
                                 onValueChange={onChange}
-                                onBlur={() => {
-                                    onBlur()
-                                    console.log(value)
-                                }}
-                                onFocus={() => {
-                                    console.log('onFocus')
-                                    setTimeout(() => {
-                                        Keyboard.dismiss()
-                                    })
-                                }}
-                            >
-                                {TransportType.map(item => (
-                                    <Picker.Item key={item.value} label={item.label} value={item.value}/>
-                                ))}
-                                <Text style={styles.textError}>{errors?.test && "kind of trip is required."}</Text>
-                            </Picker>
+                                items={TransportType}
+                                onBlur={onBlur}
+                                errors={errors}
+                            />
+                            <Text style={styles.textError}>{errors?.test && "kind of trip is required."}</Text>
                         </View>
                         // <View style={styles.inputContainer}>
                         //    <Text style={styles.label}>Kind of trip</Text>
@@ -270,7 +298,6 @@ const EditProfileScreen = ({route}) => {
                         //       value={value}
                         //       style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
                         //    />
-                        //    <Text style={styles.textError}>{errors?.test && "kind of trip is required."}</Text>
                         // </View>
                     )}
                 />
