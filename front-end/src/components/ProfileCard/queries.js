@@ -11,6 +11,7 @@ export const GET_USER = gql`
          firstname
          lastname
          age
+         sex
          kindOfTrip
          nationality
          description

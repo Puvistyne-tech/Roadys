@@ -25,6 +25,7 @@ import Button from "../../components/Button";
 // import IOSPicker from "react-native-ios-picker";
 import MyPicker from "../../components/MyPicker/MyPicker";
 import {Picker} from "@react-native-picker/picker";
+import MyCountryPicker from "../../components/MyCountryPicker";
 
 const EditProfileScreen = ({route}) => {
     const {id} = useMemo(() => route?.params, [route]);
@@ -52,6 +53,7 @@ const EditProfileScreen = ({route}) => {
 
     useEffect(() => {
         reset(user);
+        // console.log(user)
     }, [user]);
 
     const {handleSubmit, formState: {errors}, reset, control} = useForm({
@@ -61,7 +63,7 @@ const EditProfileScreen = ({route}) => {
     const onSubmit = useCallback(async formData => {
         const variables = {id, ...formData, age: +formData.age}
 
-        // console.log(variables)
+        console.log(variables)
 
         try {
             await updateUser({variables})
@@ -90,7 +92,22 @@ const EditProfileScreen = ({route}) => {
         )
     }
 
-    let TransportType = [
+    const Sex = [
+        {
+            label: 'Man',
+            value: 'MAN'
+        },
+        {
+            label: 'Woman',
+            value: 'WOMAN'
+        },
+        {
+            label: 'Other',
+            value: 'OTHER'
+        }
+    ]
+
+    const TransportType = [
         {
             label: 'Bike',
             value: 'BIKE'
@@ -120,44 +137,6 @@ const EditProfileScreen = ({route}) => {
             value: 'OTHER'
         }
     ]
-
-    // const [pickerOpacity, setPickerOpacity] = useState(0);
-    // const [opacityOfOtherItems, setOpacityOfOtherItems] = useState(1);
-    //
-    // const checkIfIOS = () => {
-    //     if (Platform.OS === 'ios') { // check if ios
-    //         console.log("IOS!!!");
-    //         //this button will (onpress) set our picker visible
-    //         return (
-    //             <Button buttonStyle={{backgroundColor: '#D1D1D1', opacity: opacityOfOtherItems}}
-    //                         onPress={toggle}
-    //                         color="#101010" title={"this.state.label"}
-    //                         onPress={this.changeOpacity}
-    //             />
-    //         );
-    //     } else if (Platform.OS === 'android') { //check if android
-    //         setPickerOpacity(1)
-    //         console.log("ANDROID!!!");
-    //     }
-    // }
-    //
-    // const toggle = () => {
-    //     if (Platform.OS === 'ios') {
-    //
-    //         if (pickerOpacity === 0) {
-    //             setPickerOpacity(1);
-    //             setOpacityOfOtherItems(0)
-    //         } else {
-    //             setPickerOpacity(0);
-    //             setOpacityOfOtherItems(1)
-    //         }
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     checkIfIOS()
-    //
-    // }, []);
 
 
     return (
@@ -246,6 +225,29 @@ const EditProfileScreen = ({route}) => {
                     )}
                 />
 
+                {/* sex */}
+                <Controller
+                    name="sex"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Sex</Text>
+                            <MyPicker
+                                label={"Sex"}
+                                selectedValue={value}
+                                onValueChange={onChange}
+                                items={Sex}
+                                onBlur={onBlur}
+                                errors={errors}
+                            />
+                            <Text style={styles.textError}>{errors?.test && "kind of trip is required."}</Text>
+                        </View>
+                    )}
+                />
+
                 {/* nationality */}
                 <Controller
                     name="nationality"
@@ -254,22 +256,28 @@ const EditProfileScreen = ({route}) => {
                         required: true,
                     }}
                     render={({field: {onChange, onBlur, value}}) => (
+                        //     <TextInput
+                        //         onBlur={onBlur}
+                        //         onChangeText={onChange}
+                        //         value={value}
+                        //     />
+                        //     <Text style={styles.textError}>{errors?.test && "nationality is required."}</Text>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Nationality</Text>
-                            <TextInput
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
+                            <MyCountryPicker
                                 style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                label={"Nationality"}
+                                selectedValue={value}
+                                onValueChange={onChange}
+                                // items={["France", "Germany", "Italy", "Spain", "United Kingdom"]}
+                                onBlur={onBlur}
+                                errors={errors}
                             />
-                            <Text style={styles.textError}>{errors?.test && "nationality is required."}</Text>
                         </View>
                     )}
                 />
 
                 {/* kindOfTrip */}
-
-
                 <Controller
                     name="kindOfTrip"
                     control={control}
@@ -290,15 +298,6 @@ const EditProfileScreen = ({route}) => {
                             />
                             <Text style={styles.textError}>{errors?.test && "kind of trip is required."}</Text>
                         </View>
-                        // <View style={styles.inputContainer}>
-                        //    <Text style={styles.label}>Kind of trip</Text>
-                        //    <TextInput
-                        //       onBlur={onBlur}
-                        //       onChangeText={onChange}
-                        //       value={value}
-                        //       style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
-                        //    />
-                        // </View>
                     )}
                 />
 
@@ -322,6 +321,19 @@ const EditProfileScreen = ({route}) => {
                         </View>
                     )}
                 />
+                {/*<MyCountryPicker*/}
+                {/*    label={"Country"}*/}
+                {/*    selectedValue={"France"}*/}
+                {/*    onValueChange={(value) => {*/}
+                {/*        console.log("country changed " + value)*/}
+                {/*    }}*/}
+                {/*    items={["France", "Germany", "Italy", "Spain", "United Kingdom"]}*/}
+                {/*    onBlur={() => {*/}
+
+                {/*    }}*/}
+                {/*    errors={errors}*/}
+
+                {/*/>*/}
                 <Button
                     title="Edit profile"
                     style={AppStyles.button}

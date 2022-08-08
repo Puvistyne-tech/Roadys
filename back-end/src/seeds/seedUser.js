@@ -1,28 +1,28 @@
-import { PrismaClient } from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient({
     rejectOnNotFound: {
-      findFirst: {
-        User: (err) => new Error(`User: ${err}`),
-      },
-      findMany: {
-        User: (err) => new Error(`Users: ${err}`),
-      },
+        findFirst: {
+            User: (err) => new Error(`User: ${err}`),
+        },
+        findMany: {
+            User: (err) => new Error(`Users: ${err}`),
+        },
     },
     errorFormat: 'minimal',
 })
 
-for (var a=[], i=0; i<40; ++i) a[i]=i;
+for (var a = [], i = 0; i < 40; ++i) a[i] = i;
 
 function shuffle(array) {
     let tmp, current, top = array.length;
-    if(top) while(--top) {
-    current = Math.floor(Math.random() * (top + 1));
-    tmp = array[current];
-    array[current] = array[top];
-    array[top] = tmp;
-  }
-  return array;
+    if (top) while (--top) {
+        current = Math.floor(Math.random() * (top + 1));
+        tmp = array[current];
+        array[current] = array[top];
+        array[top] = tmp;
+    }
+    return array;
 }
 
 a = shuffle(a);
@@ -35,6 +35,7 @@ const users = a.map(
         password: "azer",
         firstname: `${id}`,
         lastname: `${id}`,
+        // sex: `(Math.random()>0.5 ? 'MAN' : 'WOMAN'`,
         latitude: (Math.random() > 0.5 ?
             48.82558263128961 + (Math.random() / 100)
             :
@@ -46,7 +47,7 @@ const users = a.map(
         age: id,
         description: "J'aime les fraises",
         nationality: "France",
-        kindOfTrip: "Bike",
+        // kindOfTrip: "BIKE",
         isVisibled: true
     })
 )

@@ -8,6 +8,7 @@ export const GET_USER = gql`
          isVisibled
          firstname
          lastname
+         sex
          age
          nationality
          kindOfTrip
@@ -39,6 +40,7 @@ export const UPDATE_USER = gql`
       $isVisibled: Boolean,
       $firstname: String,
       $lastname: String,
+      $sex: SEX,
       $age: Int,
       $nationality: String,
       $kindOfTrip: TransportType,
@@ -49,9 +51,10 @@ export const UPDATE_USER = gql`
          isVisibled: $isVisibled,
          firstname: $firstname,
          lastname: $lastname,
-         age: $age
-         nationality: $nationality
-         kindOfTrip: $kindOfTrip
+         sex:$sex,
+         age: $age,
+         nationality: $nationality,
+         kindOfTrip: $kindOfTrip,
          description: $description
       }){
          id
@@ -59,6 +62,7 @@ export const UPDATE_USER = gql`
          email
          firstname
          lastname
+         sex
          latitude
          longitude
       }

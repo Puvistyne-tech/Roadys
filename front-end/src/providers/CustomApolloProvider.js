@@ -10,7 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const httpLink = createHttpLink({
   // uri: 'http://192.168.1.89:8000',
-  uri: 'http://172.20.10.2:8000',
+  // uri: 'http://172.20.10.2:8000',
+  uri: 'http://192.168.1.15:8000',
 })
 
 const authLink = setContext(async (_, { headers }) => {

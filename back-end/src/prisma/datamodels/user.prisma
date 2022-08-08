@@ -5,6 +5,7 @@ model User {
   password  String
   firstname String?
   lastname  String?
+  sex       SEX?
   latitude  Float?
   longitude Float?
   age Int?
@@ -27,9 +28,8 @@ enum TransportType{
     OTHER
 }
 
-//model Type{
-  //  id String @id @default(autoincrement())
-    //name String @unique
-    //}
-
-//image Bytes? @db.ByteA
+enum SEX{
+    MAN
+    WOMAN
+    OTHER
+    }

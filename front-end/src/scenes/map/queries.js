@@ -10,6 +10,7 @@ export const GET_USERS = gql`
          latitude
          longitude
          age
+         sex
          nationality
          photo
       }

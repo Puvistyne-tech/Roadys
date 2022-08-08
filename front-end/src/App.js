@@ -28,6 +28,7 @@ import {HeaderTitle} from "@react-navigation/stack";
 import HeaderRight from "./routes/navigation/stacks/HeaderRight";
 import HeaderLeft from "./routes/navigation/stacks/HeaderLeft";
 import TermsAndConditions from "./components/TermsAndConditions/TermsAndConditions";
+import TermsAndConditionsScreen from "./scenes/modal/TermsAndConditionsScreen";
 
 const MyAppNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -80,6 +81,16 @@ const MyAppNavigation = () => {
                             options={({navigation}) => ({
                                 headerShown: true,
                                 title: 'About Roadys',
+                                headerTitle: () => <HeaderTitle/>,
+                                headerRight: () => <HeaderRight/>,
+                            })}
+                        />
+                        <Stack.Screen
+                            name="TermsAndConditions"
+                            component={TermsAndConditionsScreen}
+                            options={({navigation}) => ({
+                                title: 'Terms And Conditions',
+                                headerShown: true,
                                 headerTitle: () => <HeaderTitle/>,
                                 headerRight: () => <HeaderRight/>,
                             })}

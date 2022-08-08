@@ -2,23 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Picker} from "@react-native-picker/picker";
 import Constants from "expo-constants";
+import {capitalizeFirstLetter} from "../../utils/funcs";
 
 const MyPicker = (props) => {
 
     const {label, selectedValue, onValueChange, items, onBlur, errors} = props
 
-
-    // const capitalizeFirstLetter = (str) => {
-    //     return str.charAt(0) + str.slice(1).toLowerCase();
-    // }
-    // console.log(capitalizeFirstLetter(selectedValue))
-
     const [isPickerOpen, setIsPickerOpen] = useState(false);
-
-    // useEffect(() => {
-    //     console.log(isPickerOpen)
-    //
-    // }, [isPickerOpen]);
 
 
     return (
@@ -27,13 +17,12 @@ const MyPicker = (props) => {
                 <View>
                     <TouchableOpacity
                         onPress={() => {
-                            console.log("Touchable")
                             setIsPickerOpen(false)
                         }}
                     >
                         <Text
                             style={{
-                                float: 'right',
+                                // float: 'right',
                                 color: '#ff0000',
                                 textAlign: 'right',
                             }}
@@ -54,7 +43,11 @@ const MyPicker = (props) => {
                         }}
                     >
                         {items.map((item, index) => (
-                            <Picker.Item key={item.value} label={item.label} value={item.value}/>
+                            <Picker.Item
+                                key={item.value}
+                                label={item.label}
+                                value={item.value}
+                            />
                         ))}
                     </Picker>
                 </View>
@@ -64,50 +57,13 @@ const MyPicker = (props) => {
                     // onChangeText={onChange}
                     onPressIn={() => setIsPickerOpen(true)}
                     // onPressOut={() => setIsPickerOpen(false)}
-                    value={selectedValue}
+                    value={capitalizeFirstLetter(selectedValue)}
                     style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
                 />
             }
         </>
     )
 
-    // return (
-    //     <>
-    //         {
-    //             isPickerOpen ?
-    //                 <Text>
-    //                     "label"
-    //                 </Text>
-    //                 // <Picker
-    //                 //     mode="dialog"
-    //                 //     // prompt={'Select your kind of trip'}
-    //                 //     selectedValue={selectedValue}
-    //                 //     style={styles.inputContainer}
-    //                 //     numberOfLines={1}
-    //                 //     onValueChange={onValueChange}
-    //                 //     onBlur={onBlur}
-    //                 //     // onFocus={() => {
-    //                 //     //     console.log('onFocus')
-    //                 //     //     setTimeout(() => {
-    //                 //     //         Keyboard.dismiss()
-    //                 //     //     })
-    //                 //     // }}
-    //                 // >
-    //                 //     {items.map(item => (
-    //                 //         <Picker.Item key={item.value} label={item.label} value={item.value}/>
-    //                 //     ))}
-    //                 //     {/*<Text style={styles.textError}>{errors?.test &&  " is required."}</Text>*/}
-    //                 // </Picker>
-    //                 : null
-    //             // <TextInput
-    //             //     // onBlur={onBlur}
-    //             //     // onChangeText={onChange}
-    //             //     value={selectedValue}
-    //             //     style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
-    //             // />
-    //         }}
-    //     </>
-    // );
 }
 
 const styles = StyleSheet.create({

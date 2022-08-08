@@ -16,6 +16,7 @@ import {showMessage} from "react-native-flash-message";
 import AppStyles from '../../../assets/styles/main.scss';
 import {GET_USER} from './queries'
 import Loader from '../../components/Loader';
+import {capitalizeFirstLetter} from "../../utils/funcs";
 
 const ProfileCard = ({id}) => {
     const {data, refetch, error} = useQuery(GET_USER, {variables: {id: id}});
@@ -103,7 +104,10 @@ const ProfileCard = ({id}) => {
                             <Text style={AppStyles.loginText}>{user?.age}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{user?.kindOfTrip}</Text>
+                            <Text style={AppStyles.loginText}>{capitalizeFirstLetter(user?.sex)}</Text>
+                        </View>
+                        <View style={{flexDirection: "row"}}>
+                            <Text style={AppStyles.loginText}>{capitalizeFirstLetter(user?.kindOfTrip)}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
                             <Text style={AppStyles.loginText}>{user?.nationality}</Text>
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
         // flexDirection:'column',
         // justifyContent: 'space-between',
         // padding: 15,
-        backgroundColor: '#23677a',
+        // backgroundColor: '#23677a',
         width: '95%',
         alignSelf: 'center',
         // height: 'auto'

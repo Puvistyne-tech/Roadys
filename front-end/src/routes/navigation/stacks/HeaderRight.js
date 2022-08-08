@@ -87,6 +87,15 @@ function HeaderRight() {
                      navigation.navigate("About Roadys");
                   }}
                />
+               <Button
+                   style={AppStyles.button}
+                   color={"#121212"}
+                   title="Terms And Conditions"
+                   onPress={() => {
+                      setModalOpen(false);
+                      navigation.navigate("TermsAndConditions");
+                   }}
+               />
             </View>
          </Modal>
 

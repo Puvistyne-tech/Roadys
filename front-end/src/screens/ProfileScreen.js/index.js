@@ -45,7 +45,7 @@ const ProfileScreen = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-around',
                   height: '100%',
-                  backgroundColor: '#8c3838'
+                  // backgroundColor: '#8c3838'
                }}
             >
                <View
