@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, Image, Pressable} from 'react-native'
-import {images} from 'theme'
+import {images} from '../../../theme'
 import {useNavigation} from "@react-navigation/native";
 
 const styles = StyleSheet.create({

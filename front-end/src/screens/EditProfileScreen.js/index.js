@@ -234,7 +234,7 @@ const EditProfileScreen = ({route}) => {
                     }}
                     render={({field: {onChange, onBlur, value}}) => (
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Sex</Text>
+                            <Text style={styles.label}>Gender</Text>
                             <MyPicker
                                 label={"Sex"}
                                 selectedValue={value}

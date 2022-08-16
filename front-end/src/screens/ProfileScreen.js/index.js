@@ -1,10 +1,10 @@
 import React, {useEffect, useMemo} from 'react'
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {
-   View,
+    View,
 } from "react-native";
 import {
-   useQuery
+    useQuery
 } from "@apollo/client";
 import {showMessage} from "react-native-flash-message";
 
@@ -16,63 +16,63 @@ import AppStyles from '../../../assets/styles/main.scss';
 import Button from "../../components/Button";
 
 const ProfileScreen = () => {
-   const navigation = useNavigation();
-   const {data, refetch, error} = useQuery(GET_CURRENT_USER);
-   const user = useMemo(() => data?.currentUser, [data])
+    const navigation = useNavigation();
+    const {data, refetch, error} = useQuery(GET_CURRENT_USER);
+    const user = useMemo(() => data?.currentUser, [data])
 
-   useFocusEffect(
-      React.useCallback(() => {
-         refetch()
-      }, [refetch])
-   );
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch()
+        }, [refetch])
+    );
 
-   useEffect(() => {
-      error && showMessage({
-         message: "Error",
-         description: error.message,
-         type: "danger",
-         duration: 1000000
-      });
-   }, [error]);
+    useEffect(() => {
+        error && showMessage({
+            message: "Error",
+            description: error.message,
+            type: "danger",
+            duration: 1000000
+        });
+    }, [error]);
 
-   return (
-      <>
-         {user ?
-            <View
-               // style={AppStyles.container}
-               style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-around',
-                  height: '100%',
-                  // backgroundColor: '#8c3838'
-               }}
-            >
-               <View
-                  style={{
-                     height: '60%',
-                  }}
-               >
-                  <ProfileCard id={user?.id}/>
-               </View>
-               <View
-                  style={{
-                     // height: '30%',
+    return (
+        <>
+            {user ?
+                <View
+                    // style={AppStyles.container}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
+                        height: '100%',
+                        // backgroundColor: '#8c3838'
+                    }}
+                >
+                    <View
+                        style={{
+                            height: '60%',
+                        }}
+                    >
+                        <ProfileCard id={user?.id}/>
+                    </View>
+                    <View
+                        style={{
+                            // height: '30%',
 
-                  }}
-               >
-                  <Button
-                     title="Edit"
-                     style={AppStyles.button}
-                     onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
-                  <ImageReader id={user?.id}></ImageReader>
-               </View>
-            </View>
-            :
-            <Loader/>
-         }
-      </>
-   );
+                        }}
+                    >
+                        <Button
+                            title="Edit"
+                            style={AppStyles.button}
+                            onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
+                        <ImageReader id={user?.id}></ImageReader>
+                    </View>
+                </View>
+                :
+                <Loader/>
+            }
+        </>
+    );
 }
 
 export default ProfileScreen;

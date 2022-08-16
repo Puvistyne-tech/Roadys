@@ -1,8 +1,8 @@
 import * as React from 'react';
 import MapView, { Callout, Marker, Circle } from 'react-native-maps';
-import { Text, View, Image } from 'react-native';
+import {Text, View, Image, TextInput} from 'react-native';
 import styles from './style';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 
 
 import { useEffect, useState, useMemo, useCallback } from 'react'
@@ -12,11 +12,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-elements';
 import StickManImg from '../../../../assets/images/man.png';
 import { Button } from 'react-native-elements';
+import MySearchBar from "../../../components/MySearchBar";
 
 
 export default function BikeScreen() {
-   const color = '#2986cc';
-   const size = 40 ;
+    const size = 40 ;
 
    const [defaultLocation] = useState({
       latitude: 48.86,
@@ -46,6 +46,7 @@ export default function BikeScreen() {
 
    return (
       <View style={styles.container}>
+
          <MapView style={styles.map} initialRegion={defaultLocation}>
             <Circle center={{latitude: 49, longitude: 2.32}} radius={8} strokeWidth={0} strokeColor={'rgba(143,0,255,0.26)'} fillColor={'rgbargba(143,0,255,0.26)'}/>
 
@@ -90,6 +91,11 @@ export default function BikeScreen() {
             </Marker>
 
          </MapView>
+          <MySearchBar
+              isPressed={isPressed}
+              setIsPressed={setIsPressed}
+              // onChangeText={handleSearch}
+          />
       </View>
    )
 }

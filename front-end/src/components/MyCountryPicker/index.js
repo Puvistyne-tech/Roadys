@@ -54,17 +54,9 @@ const Option = ({value, onValueChange, title}) => (
 const MyCountryPicker = (props) => {
     const {label, selectedValue, onValueChange, items, onBlur, errors} = props
 
-    // console.log(selectedValue)
-    // const lo = lookup.byCountry(selectedValue)
-    //
-    // console.log(lo?.iso2)
-    // console.log(lo?.internet)
-
-    // const [isPickerOpen, setIsPickerOpen] = useState(false);
-
     const [countryCode, setCountryCode] = useState(lookup.byCountry(selectedValue)?.internet);
     const [country, setCountry] = useState(null)
-    console.log(countryCode)
+    // console.log(countryCode)
     const [withCountryNameButton, setWithCountryNameButton] = useState(
         true,
     )
@@ -180,7 +172,10 @@ const MyCountryPicker = (props) => {
                         modalProps: {
                             visible,
                         },
-                        onClose: () => setVisible(false),
+                        onClose: () => {
+                            setVisible(false)
+                            onBlur()
+                        },
                         onOpen: () => {
                             setVisible(true)
                             // setCountryCode()

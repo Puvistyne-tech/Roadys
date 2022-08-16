@@ -29,6 +29,7 @@ import HeaderRight from "./routes/navigation/stacks/HeaderRight";
 import HeaderLeft from "./routes/navigation/stacks/HeaderLeft";
 import TermsAndConditions from "./components/TermsAndConditions/TermsAndConditions";
 import TermsAndConditionsScreen from "./scenes/modal/TermsAndConditionsScreen";
+import SignalUser from "./scenes/modal/SignalUserScreen/SignalUser";
 
 const MyAppNavigation = () => {
     const Stack = createNativeStackNavigator();
@@ -70,6 +71,16 @@ const MyAppNavigation = () => {
                             component={FeedbackScreen}
                             options={({navigation}) => ({
                                 title: 'Feedback',
+                                headerShown: true,
+                                headerTitle: () => <HeaderTitle/>,
+                                headerRight: () => <HeaderRight/>,
+                            })}
+                        />
+                        <Stack.Screen
+                            name="SignalUser"
+                            component={SignalUser}
+                            options={({navigation}) => ({
+                                title: 'SignalUser',
                                 headerShown: true,
                                 headerTitle: () => <HeaderTitle/>,
                                 headerRight: () => <HeaderRight/>,

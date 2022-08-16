@@ -3,7 +3,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import {
-    View, Text, Image, ActivityIndicator,
+    View, Text, Image, ActivityIndicator, TextInput,
 } from 'react-native'
 import MapView, {Marker, Circle} from 'react-native-maps'
 import * as Location from 'expo-location'
@@ -18,15 +18,17 @@ import StickManImg from '../../../assets/images/man.png'
 import CurrentUserStickMan from '../../../assets/images/current-stick-man.png'
 import Loader from '../../components/Loader'
 
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 import {GET_USERS, UPDATE_LOCATION} from './queries'
 import styles from './style'
 import ProfileCard from "../../components/ProfileCard";
 import Button from "../../components/Button";
+import {FontAwesome} from "@expo/vector-icons";
+import FontIcon from "react-native-vector-icons/FontAwesome5";
 // import MarkerCard from "./card/MakerCard";
 
-//TODO ma propre card avec MODEL
-// import MarkerCard from './card/MakerCard'
 
 const Map = () => {
     const [defaultLocation] = useState({
@@ -42,6 +44,10 @@ const Map = () => {
     const [isPressed, setIsPressed] = useState(false)
     const [idUserPressed, setIdUserPressed] = useState()
     const {theme} = useTheme()
+
+    const [searchInput, setSearchInput] = useState('');
+    const [listUsers, setListUsers] = useState(<></>);
+
 
     const {data, refetch} = useQuery(GET_USERS, {variables: {excludeCurrentUser: true}})
     const [mutateUpdateLocation, {
@@ -71,35 +77,8 @@ const Map = () => {
         })()
     }, [refetch])
 
-    // const MarkerCard = useCallback(({ elem }) => {
-    //
-    //       const navigation = useNavigation()
-    //       return (
-    //          // <View>
-    //          //    <Image style={styles.marker} source={StickManImg} />
-    //          <View style={styles.markerCardContainer}>
-    //             <View style={styles.markerCardTextContainer}>
-    //                <Text style={styles.title}>{elem.pseudo}</Text>
-    //                <Text>{elem.age}</Text>
-    //                <Text>{elem.nationality}</Text>
-    //                <Button style={styles.button}
-    //                        title='Profile'
-    //                        onPress={() => {
-    //                           console.log('taped')
-    //                           navigation.navigate('USER_PROFILE_SCREEN', { id: idUserPressed })
-    //                        }}
-    //                />
-    //             </View>
-    //          </View>
-    //          // </View>
-    //       )
-    //    }, [],
-    // )
 
     const MarkerCard = useCallback(({elem}) => {
-
-        // <ProfileCard id={elem?.id}/>
-        // console.log(elem.photo)
 
         return (
 
@@ -217,15 +196,45 @@ const Map = () => {
 
     ), [isPressed, idUserPressed])
 
-    const ListUsers = useMemo(() => data?.users?.map((elem, index) => {
-        if (!elem.isVisibled) {
-            return (
-                <CustomMarker
-                    key={index}
-                    elem={elem}
-                />)
-        } else return <></>
-    }), [data, CustomMarker])
+    // let ListUserss = useMemo(() => data?.users?.map((elem, index) => {
+    //     if (!elem.isVisibled) {
+    //         return (
+    //             <CustomMarker
+    //                 key={index}
+    //                 elem={elem}
+    //             />)
+    //     } else return <></>
+    // }), [data, CustomMarker])
+
+    const setUsersToCustomMarker = (userData) => {
+        // console.log("userData")
+        // console.log(userData)
+        let r = userData?.map((elem, index) => {
+            if (!elem.isVisibled) {
+                return (
+                    <CustomMarker
+                        key={index}
+                        elem={elem}
+                    />)
+            } else return <></>
+        })
+
+        setListUsers(r)
+        // console.log(listUsers)
+    }
+
+    useEffect(() => {
+
+        if (searchInput) {
+            filterByName(searchInput)
+        } else {
+            setUsersToCustomMarker(data?.users)
+        }
+        return () => {
+            setListUsers(null)
+        };
+    }, [data, CustomMarker, searchInput]);
+
 
     const userMarker = useMemo(
         () => ({
@@ -248,6 +257,22 @@ const Map = () => {
         return (
             <Loader/>
         )
+    }
+
+    function handleSearch(input) {
+        setSearchInput(input)
+        filterByName(input)
+    }
+
+    const filterByName = (name) => {
+        if (name === '') {
+            setUsersToCustomMarker(data?.users)
+        } else {
+            let res = data?.users?.filter((elem, index) => {
+                return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
+            })
+            setUsersToCustomMarker(res)
+        }
     }
 
     return (
@@ -281,8 +306,66 @@ const Map = () => {
                 >
                     <Image style={AppStyles.currentUserMaker} source={CurrentUserStickMan}/>
                 </Marker>
-                {ListUsers}
+                {listUsers}
             </MapView>
+            {/*<View*/}
+            {/*    style={{*/}
+            {/*        position: 'absolute',*/}
+            {/*        top: 10,*/}
+            {/*        width: '100%',*/}
+
+            {/*    }}*/}
+            {/*>*/}
+
+            {/*    <View*/}
+            {/*        style={{*/}
+            {/*            borderRadius: 10,*/}
+            {/*            margin: 10,*/}
+            {/*            color: '#000',*/}
+            {/*            borderColor: '#666',*/}
+            {/*            backgroundColor: '#FFF',*/}
+            {/*            borderWidth: 1,*/}
+            {/*            // height: 45,*/}
+            {/*            paddingHorizontal: 10,*/}
+            {/*            padding: 8,*/}
+            {/*            fontSize: 18,*/}
+            {/*            display: "flex",*/}
+            {/*            justifyContent: "space-between",*/}
+            {/*            flexDirection: "row",*/}
+            {/*            alignContent: "center"*/}
+            {/*        }}*/}
+            {/*        // placeholder={'Search'}*/}
+            {/*        // placeholderTextColor={'#666'}*/}
+            {/*    >*/}
+            {/*        <FontAwesome name="search" size={32} color="grey"/>*/}
+            {/*        <TextInput*/}
+            {/*            style={{*/}
+            {/*                flexGrow: 1*/}
+            {/*            }}*/}
+            {/*            onChangeText={handleSearch}*/}
+            {/*            placeholder={'Search here'}*/}
+            {/*            value={searchInput}*/}
+            {/*        >*/}
+            {/*        </TextInput>*/}
+            {/*        {searchInput !== '' &&*/}
+            {/*            <FontAwesome name="close" size={16} color="red"*/}
+            {/*                         onPress={() => {*/}
+            {/*                             setSearchInput('')*/}
+            {/*                             setIsPressed(false)*/}
+            {/*                         }}*/}
+            {/*                         style={{*/}
+            {/*                             alignSelf: "center",*/}
+            {/*                             marginRight: 10*/}
+            {/*                         }}*/}
+            {/*            />*/}
+            {/*        }*/}
+            {/*        <FontAwesome name="filter" size={32} color="grey"*/}
+            {/*                     onPress={() => {*/}
+            {/*                         console.log("iefi")*/}
+            {/*                     }}*/}
+            {/*        />*/}
+            {/*    </View>*/}
+            {/*</View>*/}
         </View>
     )
 }
