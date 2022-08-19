@@ -26,8 +26,6 @@ import AboutRoadysScreen from "./scenes/modal/AboutRoadysScreen";
 import SettingsScreen from "./scenes/modal/SettingsScreen";
 import {HeaderTitle} from "@react-navigation/stack";
 import HeaderRight from "./routes/navigation/stacks/HeaderRight";
-import HeaderLeft from "./routes/navigation/stacks/HeaderLeft";
-import TermsAndConditions from "./components/TermsAndConditions/TermsAndConditions";
 import TermsAndConditionsScreen from "./scenes/modal/TermsAndConditionsScreen";
 import SignalUser from "./scenes/modal/SignalUserScreen/SignalUser";
 
