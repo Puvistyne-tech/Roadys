@@ -67,6 +67,7 @@ const SignupScreen = () => {
                 duration: 10000,
             })
         } else {
+            console.log(pseudo, email, password)
             await authErrorHandling(signup(pseudo, email, password))
         }
     }, [pseudo, email, password, confirmPassword, isAccepted])
