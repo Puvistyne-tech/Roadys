@@ -21,6 +21,7 @@ const SigninScreen = () => {
     const navigation = useNavigation()
 
     const authErrorHandling = useCallback(async (query) => {
+        console.log(process.env.API_HOST)
         try {
             return await query
         } catch (error) {
@@ -31,6 +32,7 @@ const SigninScreen = () => {
                 duration: 10000,
             })
         }
+        console.log(query)
     }, [])
 
     const connect = useCallback(async () => {

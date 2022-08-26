@@ -2,8 +2,8 @@
     "schemaPath": "graphql.schema.json",
     "extensions": {
         "endpoints": {
-            "Default http://localhost:4000": {
-                "url": "http://localhost:4000",
+            "Default http://35.181.43.40:4000": {
+                "url": "http://35.181.43.40:4000",
                 "headers": {
                     "user-agent": "JS GraphQL"
                 }

@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  api:
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: api
+    container_name: roadys_api
+    command: sh -c "yarn install &&
+      npm run prisma:migrate &&
+      npm run prisma:merge &&
+      npm start"
+    ports:
+      - 6565:6565
+    volumes:
+      - .:/api
+    networks:
+      - roadys_network
+    environment:
+      - API_PORT=6565
+      - POSTGRES_URL=postgresql://roadys:roadys_password@postgres:5432/roadys?schema=public
+      - JWT_SECRET=couleurcoucou
+
+    depends_on:
+      - postgres
+
+  postgres:
+    restart: on-failure
+    image: postgis/postgis
+    container_name: roadys_postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=roadys
+      - POSTGRES_PASSWORD=roadys_password
+      - POSTGRES_DB=roadys
+      - POSTGRES_SCHEMA=public
+      - JWT_SECRET=couleurcoucou
+    networks:
+      - roadys_network
+
+volumes:
+  postgresdata:
+
+networks:
+  roadys_network:
+    driver: bridge
