@@ -94,26 +94,26 @@ const ProfileCard = ({id}) => {
                             height:'auto'
                         }}
                     >
-                        <Card.Title> {user?.firstname} {user?.lastname} </Card.Title>
+                        <Card.Title  style={{fontSize: 16}}> {user?.firstname} {user?.lastname} </Card.Title>
 
                         <Card.Divider/>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{user?.pseudo}</Text>
+                            <Text style={styles.textItem}>{user?.pseudo}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{user?.age}</Text>
+                            <Text style={styles.textItem}>{user?.age}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{capitalizeFirstLetter(user?.sex)}</Text>
+                            <Text style={styles.textItem}>{capitalizeFirstLetter(user?.sex)}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{capitalizeFirstLetter(user?.kindOfTrip)}</Text>
+                            <Text style={styles.textItem}>{capitalizeFirstLetter(user?.kindOfTrip)}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{user?.nationality}</Text>
+                            <Text style={styles.textItem}>{user?.nationality}</Text>
                         </View>
                         <View style={{flexDirection: "row"}}>
-                            <Text style={AppStyles.loginText}>{user?.description}</Text>
+                            <Text style={styles.textItem}>{user?.description}</Text>
                         </View>
                     </View>
                 </Card>

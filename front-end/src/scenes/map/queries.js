@@ -13,6 +13,7 @@ export const GET_USERS = gql`
          sex
          nationality
          photo
+         kindOfTrip
       }
    }
 `

@@ -12,14 +12,14 @@ import AppStyles from '../../../../assets/styles/main.scss'
 import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {AuthContext} from "../../../providers/AuthProvider";
 import {useMutation, useQuery} from "@apollo/client";
-import {DELET_USER, GET_CURRENT_USER} from "./query";
+import {DELETE_USER, GET_CURRENT_USER} from "./query";
 import {showMessage} from "react-native-flash-message";
 import LoadingModal from "../../../components/LoadingModal";
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
     const {disconnect} = useContext(AuthContext)
-    const [deleteUser, {l}] = useMutation(DELET_USER);
+    const [deleteUser, {l}] = useMutation(DELETE_USER);
     const [loading, setLoading] = useState(false);
 
     const {data, refetch, error} = useQuery(GET_CURRENT_USER);
@@ -99,7 +99,7 @@ const SettingsScreen = () => {
                                     text: 'Yes, I am sure',
                                     onPress: () => {
                                         console.log('Delete Pressed');
-                                        // setModalOpen(false)
+                                        // navigation.navigate('Profile')
                                         setLoading(true)
                                         handleDeleteUser()
 

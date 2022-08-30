@@ -58,17 +58,20 @@ const ImageReader = ({id}) => {
    }
 
    return (
-      <>
-         {
-            loading ?
-               <LoadingModal loading={loading}/>
-               :
-               <Button
-                  title="Change Image"
-                  style={AppStyles.button}
-                  onPress={_pickImg}/>
-         }
-      </>
+       <>
+          {
+             loading ?
+                 <LoadingModal loading={loading}/>
+                 :
+                 <Button
+                     title="Change Image"
+                     style={{
+                        ...AppStyles.button,
+                        flex: 1,
+                     }}
+                     onPress={_pickImg}/>
+          }
+       </>
    );
 
 }

@@ -27,22 +27,42 @@ const UserProfileScreen = ({route}) => {
         >
             <View
                 style={{
-                    height: '50%',
+                    //height: '50%',
+                    flex: 1,
                 }}
             >
                 <ProfileCard id={id}/>
             </View>
 
-            <View>
+            <View
+                style={{
+                    // height: '30%',
+                    flexDirection: 'row',
+                    alignSelf: 'center',
+                    width: "85%",
+
+                }}
+            >
 
                 <Button
                     title="Send message"
-                    style={AppStyles.button}
+                    style={{
+                        ...AppStyles.button,
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginRight: 20,
+                    }}
                     //  onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}
                 />
                 <Button
                     title="Signal this user"
-                    style={AppStyles.button}
+                    style={{
+                        ...AppStyles.button,
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
                     onPress={() => navigation.navigate("SignalUser",
                         {
                             victimId: id,

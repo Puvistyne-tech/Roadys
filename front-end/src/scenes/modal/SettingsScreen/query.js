@@ -1,6 +1,6 @@
 import {gql} from "@apollo/client";
 
-export const DELET_USER = gql`
+export const DELETE_USER = gql`
     mutation DeleteUser($deleteUserId: ID!) {
         deleteUser(id: $deleteUserId) {
             id

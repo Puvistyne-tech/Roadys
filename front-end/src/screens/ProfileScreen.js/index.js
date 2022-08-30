@@ -50,7 +50,8 @@ const ProfileScreen = () => {
                 >
                     <View
                         style={{
-                            height: '60%',
+                            //    height: '60%',
+                            flex: 1,
                         }}
                     >
                         <ProfileCard id={user?.id}/>
@@ -58,12 +59,21 @@ const ProfileScreen = () => {
                     <View
                         style={{
                             // height: '30%',
+                            flexDirection: 'row',
+                            alignSelf: 'center',
+                            width: "85%",
 
                         }}
                     >
                         <Button
                             title="Edit"
-                            style={AppStyles.button}
+                            style={{
+                                ...AppStyles.button,
+                                flex: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginRight: 20,
+                            }}
                             onPress={() => navigation.navigate("EDIT_PROFILE_SCREEN", {id: user?.id})}/>
                         <ImageReader id={user?.id}></ImageReader>
                     </View>

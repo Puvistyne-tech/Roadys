@@ -10,7 +10,6 @@ const MyPicker = (props) => {
 
     const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-
     return (
         <>
             {isPickerOpen ?
@@ -23,10 +22,10 @@ const MyPicker = (props) => {
                         <Text
                             style={{
                                 // float: 'right',
-                                color: '#ff0000',
+                                color: '#5bea13',
                                 textAlign: 'right',
                             }}
-                        >close X</Text>
+                        >validate ✅</Text>
                     </TouchableOpacity>
                     <Picker
                         mode="dropdown"

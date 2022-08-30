@@ -5,7 +5,6 @@ import {FontAwesome} from "@expo/vector-icons";
 const MySearchBar = (props) => {
 
 
-
     return (
         <View
             style={{

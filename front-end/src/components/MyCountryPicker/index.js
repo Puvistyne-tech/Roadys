@@ -56,7 +56,7 @@ const MyCountryPicker = (props) => {
 
     const [countryCode, setCountryCode] = useState(lookup.byCountry(selectedValue)?.internet);
     const [country, setCountry] = useState(null)
-    // console.log(countryCode)
+
     const [withCountryNameButton, setWithCountryNameButton] = useState(
         true,
     )

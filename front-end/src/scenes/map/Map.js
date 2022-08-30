@@ -27,6 +27,8 @@ import ProfileCard from "../../components/ProfileCard";
 import Button from "../../components/Button";
 import {FontAwesome} from "@expo/vector-icons";
 import FontIcon from "react-native-vector-icons/FontAwesome5";
+import TermsAndConditions from "../../components/TermsAndConditions/TermsAndConditions";
+import MoreCriteriaScreen from "../modal/MoreCriteriaScreen";
 // import MarkerCard from "./card/MakerCard";
 
 
@@ -45,7 +47,7 @@ const Map = () => {
     const [idUserPressed, setIdUserPressed] = useState()
     const {theme} = useTheme()
 
-    const [searchInput, setSearchInput] = useState('');
+    // const [searchInput, setSearchInput] = useState('');
     const [listUsers, setListUsers] = useState(<></>);
 
 
@@ -166,9 +168,47 @@ const Map = () => {
         )
     }, [idUserPressed])
 
+    const [filter, setFilter] = useState({
+        "TransportType": "ALL",
+        "nationality": "ALL",
+        "sex": "ALL",
+    })
+
+    // useEffect(() => {
+    //     console.log("-------------------------From Map S")
+    //     // setFilter(filter)
+    //     console.log("filter")
+    //     console.log(filter)
+    //     console.log("-------------------------From Map Z")
+    // }, [filter]);
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const MoreCriteria = useCallback(() => {
+        const navigation = useNavigation()
+        return (
+            <View style={{
+                flexDirection: 'row',
+                width: '40%',
+                marginLeft: 10,
+            }}>
+                <Button
+                    title='Add Criteria'
+                    style={{
+                        ...AppStyles.button,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flex: 1,
+                    }}
+                    onPress={() => {
+                        setIsOpen(true)
+                    }}
+                />
+            </View>
+        )
+    }, [])
+
     const CustomMarker = useCallback(({elem}) => (
-
-
         <Marker
             coordinate={{latitude: elem.latitude, longitude: elem.longitude}}
             onPress={() => {
@@ -223,18 +263,61 @@ const Map = () => {
         // console.log(listUsers)
     }
 
-    useEffect(() => {
+    const filterUsers = () => {
+        const res = data?.users
+            .filter((elem) => {
+                if (filter.TransportType === "ALL") {
+                    return true
+                } else if (filter.TransportType === elem.kindOfTrip) {
+                    return true
+                }else return false
+            })
+            .filter((elem) => {
+                if (filter.nationality === "ALL") {
+                    return true
+                } else if (filter.nationality === elem.nationality){
+                    return true
+                }else return false
+            })
+            .filter((elem) => {
+                if (filter.sex === "ALL") {
+                    return true
+                } else if (filter.sex === elem.sex){
+                    return true
+                }else return false
+            })
 
-        if (searchInput) {
-            filterByName(searchInput)
+
+        console.log(res)
+
+        // if (name === '') {
+        //     setUsersToCustomMarker(data?.users)
+        // } else {
+        //     let res = data?.users?.filter((elem, index) => {
+        //         return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
+        //     })
+        setUsersToCustomMarker(res)
+        // }
+    }
+
+    useEffect(() => {
+        if (isFilterApplied()) {
+            console.log("filterApplied")
+            filterUsers()
+            // filterByName(searchInput)
         } else {
             setUsersToCustomMarker(data?.users)
         }
         return () => {
             setListUsers(null)
         };
-    }, [data, CustomMarker, searchInput]);
+    }, [data, CustomMarker, filter, isOpen]);
 
+    const isFilterApplied = () => {
+        if (filter.TransportType !== "ALL" || filter.nationality !== "ALL" || filter.sex !== "ALL") {
+            return true
+        } else return false
+    }
 
     const userMarker = useMemo(
         () => ({
@@ -259,10 +342,10 @@ const Map = () => {
         )
     }
 
-    function handleSearch(input) {
-        setSearchInput(input)
-        filterByName(input)
-    }
+    // function handleSearch(input) {
+    //     setSearchInput(input)
+    //     filterByName(input)
+    // }
 
     const filterByName = (name) => {
         if (name === '') {
@@ -277,6 +360,12 @@ const Map = () => {
 
     return (
         <View style={AppStyles.container}>
+            <MoreCriteriaScreen
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                filter={filter}
+                setFilter={setFilter}
+            />
             <View style={theme.ActionsContainer}>
                 {isPressed && <MarkerActions/>}
             </View>
@@ -290,9 +379,10 @@ const Map = () => {
                 zoomEnabled={true}
                 rotateEnabled={false}
                 maxZoomLevel={14}
-                minZoomLevel={10}
+                minZoomLevel={0}
                 showsMyLocationButton={true}
             >
+                <MoreCriteria/>
                 <Circle
                     center={userMarker.coordinate}
                     radius={500}
