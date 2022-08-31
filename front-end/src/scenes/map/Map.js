@@ -172,6 +172,10 @@ const Map = () => {
         "TransportType": "ALL",
         "nationality": "ALL",
         "sex": "ALL",
+        "age": {
+            min: 1,
+            max: 99
+        }
     })
 
     // useEffect(() => {
@@ -263,6 +267,7 @@ const Map = () => {
         // console.log(listUsers)
     }
 
+        console.log(filter.age)
     const filterUsers = () => {
         const res = data?.users
             .filter((elem) => {
@@ -270,21 +275,27 @@ const Map = () => {
                     return true
                 } else if (filter.TransportType === elem.kindOfTrip) {
                     return true
-                }else return false
+                } else return false
             })
             .filter((elem) => {
                 if (filter.nationality === "ALL") {
                     return true
-                } else if (filter.nationality === elem.nationality){
+                } else if (filter.nationality === elem.nationality) {
                     return true
-                }else return false
+                } else return false
             })
             .filter((elem) => {
                 if (filter.sex === "ALL") {
                     return true
-                } else if (filter.sex === elem.sex){
+                } else if (filter.sex === elem.sex) {
                     return true
-                }else return false
+                } else return false
+            })
+            .filter((elem) => {
+                // if (filter.age?.min === 1 && filter?.age?.max === 99) return true;
+                // else
+                if (elem.age >= filter?.age?.min && elem.age <= filter?.age?.max) return true;
+                else return false;
             })
 
 

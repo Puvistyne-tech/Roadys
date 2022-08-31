@@ -18,16 +18,20 @@ import MyPicker from '../../../components/MyPicker/MyPicker';
 import MyCountryPicker from '../../../components/MyCountryPicker';
 import {useForm, Controller} from 'react-hook-form';
 import {bool} from "prop-types";
+import MyRangeSlider from "../../../components/MyRangeSlider";
 
 const MoreCriteriaScreen = (props) => {
     const navigation = useNavigation();
     const {filter, setFilter} = props;
+    const [min, setMin] = useState(props.filter.sex?.min);
+    const [max, setMax] = useState(props.filter.sex?.max);
 
     const {handleSubmit, formState: {errors}, reset, setValue, control} = useForm({
         defaultValues: {
             sex: filter?.sex,
             nationality: filter?.nationality,
             TransportType: filter?.TransportType,
+            sex: filter?.sex
         },
     });
 
@@ -38,10 +42,25 @@ const MoreCriteriaScreen = (props) => {
             type: "success",
             duration: 5000,
         })
+        // setValue("sex", "ALL")
+        // setValue("nationality", "ALL")
+        // setValue("TransportType", "ALL")
+        // setValue("age", {
+        //     "min": 1,
+        //     "max": 99
+        // })
+        setFilter(
+            {
+                "TransportType": "ALL",
+                "nationality": "ALL",
+                "sex": "ALL",
+                "age": {
+                    min: 1,
+                    max: 99,
+                }
+            }
+        )
         reset(props.filter)
-        setValue("sex", "ALL")
-        setValue("nationality", "ALL")
-        setValue("TransportType", "ALL")
         // reset()
         props.setIsOpen(false)
     }
@@ -126,16 +145,16 @@ const MoreCriteriaScreen = (props) => {
         // console.log(control?._defaultValues)
     }, [control]);
 
-    const resetThisField = (field) => {
+    const resetThisField = (field, resetValue) => {
         // console.log(field)
-        setValue(field, "ALL")
+        setValue(field, resetValue)
     }
 
-    const MyResetButton = useCallback(({value, fieldName}) => {
-        if (control?._defaultValues[fieldName] !== "ALL") {
+    const MyResetButton = useCallback(({value, fieldName, resetValue = "ALL"}) => {
+        if (control?._defaultValues[fieldName] !== resetValue) {
             return (<></>)
         } else {
-            return (value !== "ALL" && <TouchableOpacity
+            return (value !== resetValue && <TouchableOpacity
                 style={{
                     alignItems: 'right',
                     alignSelf: "flex-start",
@@ -147,7 +166,7 @@ const MoreCriteriaScreen = (props) => {
                     backgroundColor: "#fde3e3",
 
                 }}
-                onPress={() => resetThisField(fieldName)}
+                onPress={() => resetThisField(fieldName, resetValue)}
             >
                 <Text
                     style={styles.clearText}
@@ -204,6 +223,7 @@ const MoreCriteriaScreen = (props) => {
                                     <MyResetButton
                                         value={value}
                                         fieldName={"sex"}
+                                        resetValue={"ALL"}
                                     />
                                 </View>
                                 <MyPicker
@@ -241,6 +261,7 @@ const MoreCriteriaScreen = (props) => {
                                     <MyResetButton
                                         value={value}
                                         fieldName={"TransportType"}
+                                        resetValue={"ALL"}
                                     />
                                 </View>
                                 <MyPicker
@@ -279,6 +300,7 @@ const MoreCriteriaScreen = (props) => {
                                     <MyResetButton
                                         value={value}
                                         fieldName={"nationality"}
+                                        resetValue={"ALL"}
                                     />
                                 </View>
                                 <MyCountryPicker
@@ -288,6 +310,44 @@ const MoreCriteriaScreen = (props) => {
                                     onValueChange={onChange}
                                     onBlur={onBlur}
                                     errors={errors}
+                                />
+                            </View>
+                        )}
+                    />
+
+                    {/* age */}
+                    <Controller
+                        name="age"
+                        control={control}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            <View style={styles.inputContainer}>
+                                <View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        flexDirection: "row",
+
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            ...styles.label,
+                                            alignSelf: "flex-start",
+
+                                        }}
+                                    >Age</Text>
+                                    <MyResetButton
+                                        value={value}
+                                        fieldName={"age"}
+                                        resetValue={{
+                                            min: 1,
+                                            max: 99,
+                                        }}
+                                    />
+                                </View>
+                                <MyRangeSlider
+                                    min={min}
+                                    max={max}
                                 />
                             </View>
                         )}
