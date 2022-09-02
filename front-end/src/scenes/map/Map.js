@@ -47,7 +47,6 @@ const Map = () => {
     const [idUserPressed, setIdUserPressed] = useState()
     const {theme} = useTheme()
 
-    // const [searchInput, setSearchInput] = useState('');
     const [listUsers, setListUsers] = useState(<></>);
 
 
@@ -168,16 +167,17 @@ const Map = () => {
         )
     }, [idUserPressed])
 
-    const [filter, setFilter] = useState({
-        "TransportType": "ALL",
-        "nationality": "ALL",
-        "sex": "ALL",
-        "age": {
-            min: 1,
-            max: 99
+    const [filter, setFilter] = useState(
+        {
+            TransportType: "ALL",
+            "nationality": "ALL",
+            "sex": "ALL",
+            age: [1, 99]
         }
-    })
+    )
 
+    // console.log("----------filter.age")
+    // console.log(filter)
     // useEffect(() => {
     //     console.log("-------------------------From Map S")
     //     // setFilter(filter)
@@ -188,7 +188,7 @@ const Map = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const MoreCriteria = useCallback(() => {
+    const MoreCriteriaButton = useCallback(() => {
         const navigation = useNavigation()
         return (
             <View style={{
@@ -267,22 +267,18 @@ const Map = () => {
         // console.log(listUsers)
     }
 
-        console.log(filter.age)
+
     const filterUsers = () => {
         const res = data?.users
             .filter((elem) => {
                 if (filter.TransportType === "ALL") {
                     return true
-                } else if (filter.TransportType === elem.kindOfTrip) {
-                    return true
-                } else return false
+                } else return filter.TransportType === elem.kindOfTrip;
             })
             .filter((elem) => {
                 if (filter.nationality === "ALL") {
                     return true
-                } else if (filter.nationality === elem.nationality) {
-                    return true
-                } else return false
+                } else return filter.nationality === elem.nationality;
             })
             .filter((elem) => {
                 if (filter.sex === "ALL") {
@@ -292,14 +288,13 @@ const Map = () => {
                 } else return false
             })
             .filter((elem) => {
-                // if (filter.age?.min === 1 && filter?.age?.max === 99) return true;
-                // else
-                if (elem.age >= filter?.age?.min && elem.age <= filter?.age?.max) return true;
+                if (filter.age?.min === 1 && filter?.age?.max === 99) return true;
+                else if (elem.age >= filter?.age[0] && elem.age <= filter?.age[1]) return true;
                 else return false;
             })
 
 
-        console.log(res)
+        // console.log(res)
 
         // if (name === '') {
         //     setUsersToCustomMarker(data?.users)
@@ -358,16 +353,16 @@ const Map = () => {
     //     filterByName(input)
     // }
 
-    const filterByName = (name) => {
-        if (name === '') {
-            setUsersToCustomMarker(data?.users)
-        } else {
-            let res = data?.users?.filter((elem, index) => {
-                return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
-            })
-            setUsersToCustomMarker(res)
-        }
-    }
+    // const filterByName = (name) => {
+    //     if (name === '') {
+    //         setUsersToCustomMarker(data?.users)
+    //     } else {
+    //         let res = data?.users?.filter((elem, index) => {
+    //             return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
+    //         })
+    //         setUsersToCustomMarker(res)
+    //     }
+    // }
 
     return (
         <View style={AppStyles.container}>
@@ -393,7 +388,7 @@ const Map = () => {
                 minZoomLevel={0}
                 showsMyLocationButton={true}
             >
-                <MoreCriteria/>
+                <MoreCriteriaButton/>
                 <Circle
                     center={userMarker.coordinate}
                     radius={500}

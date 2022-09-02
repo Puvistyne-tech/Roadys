@@ -17,21 +17,18 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MyPicker from '../../../components/MyPicker/MyPicker';
 import MyCountryPicker from '../../../components/MyCountryPicker';
 import {useForm, Controller} from 'react-hook-form';
-import {bool} from "prop-types";
 import MyRangeSlider from "../../../components/MyRangeSlider";
 
 const MoreCriteriaScreen = (props) => {
     const navigation = useNavigation();
     const {filter, setFilter} = props;
-    const [min, setMin] = useState(props.filter.sex?.min);
-    const [max, setMax] = useState(props.filter.sex?.max);
 
     const {handleSubmit, formState: {errors}, reset, setValue, control} = useForm({
         defaultValues: {
             sex: filter?.sex,
             nationality: filter?.nationality,
             TransportType: filter?.TransportType,
-            sex: filter?.sex
+            age: filter?.age
         },
     });
 
@@ -42,22 +39,13 @@ const MoreCriteriaScreen = (props) => {
             type: "success",
             duration: 5000,
         })
-        // setValue("sex", "ALL")
-        // setValue("nationality", "ALL")
-        // setValue("TransportType", "ALL")
-        // setValue("age", {
-        //     "min": 1,
-        //     "max": 99
-        // })
+
         setFilter(
             {
                 "TransportType": "ALL",
                 "nationality": "ALL",
                 "sex": "ALL",
-                "age": {
-                    min: 1,
-                    max: 99,
-                }
+                "age": [1, 99]
             }
         )
         reset(props.filter)
@@ -67,11 +55,7 @@ const MoreCriteriaScreen = (props) => {
 
     const SavePressed = useCallback(
         async (formData) => {
-            // console.log("########")
-            // route.params.setFilter(formData);
             setFilter(formData);
-            // // console.log(filter);
-
             showMessage({
                 message: "Success",
                 description: "All criteria were deleted",
@@ -138,19 +122,13 @@ const MoreCriteriaScreen = (props) => {
         }
     ]
 
-    // // console.log(control)
-
-    useEffect(() => {
-        // console.log("control")
-        // console.log(control?._defaultValues)
-    }, [control]);
 
     const resetThisField = (field, resetValue) => {
         // console.log(field)
         setValue(field, resetValue)
     }
 
-    const MyResetButton = useCallback(({value, fieldName, resetValue = "ALL"}) => {
+    const MyResetButton = useCallback(({value, fieldName, resetValue}) => {
         if (control?._defaultValues[fieldName] !== resetValue) {
             return (<></>)
         } else {
@@ -315,7 +293,7 @@ const MoreCriteriaScreen = (props) => {
                         )}
                     />
 
-                    {/* age */}
+                    {/*age*/}
                     <Controller
                         name="age"
                         control={control}
@@ -339,15 +317,12 @@ const MoreCriteriaScreen = (props) => {
                                     <MyResetButton
                                         value={value}
                                         fieldName={"age"}
-                                        resetValue={{
-                                            min: 1,
-                                            max: 99,
-                                        }}
+                                        resetValue={[1, 99]}
                                     />
                                 </View>
                                 <MyRangeSlider
-                                    min={min}
-                                    max={max}
+                                    ageRange={value}
+                                    setAgeRange={onChange}
                                 />
                             </View>
                         )}

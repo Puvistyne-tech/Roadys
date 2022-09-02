@@ -1,118 +1,82 @@
 import React, {useState} from 'react';
-import {Slider} from '@miblanchard/react-native-slider';
-import {AppRegistry, StyleSheet, View, Text} from 'react-native';
-import {componentThumbStyles, customStyles, trackMarkStyles} from "@miblanchard/react-native-slider/lib/stories/styles";
+
+import {StyleSheet, View, Text, Image, Slider, TouchableOpacity} from 'react-native';
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
+
 
 const MyRangeSlider = (props) => {
 
-    const [value, setValue] = useState([
-        props?.min,
-        props?.max
-    ]);
-    const [min, setMin] = useState(18);
-    const [max, setMax] = useState(80);
+    // const [multiSliderValue, setMultiSliderValue] = useState([3, 7]);
+    // console.log(props);
+    const {
+        ageRange,
+        setAgeRange,
+    } = props;
+
+
+    // const multiSliderValuesChange = values => setMultiSliderValue(values);
+
+    const handleOnChange = values => {
+        setAgeRange(values);
+    }
+
+    const [showLabel, setShowLabel] = useState(false);
 
     return (
         <View style={styles.container}>
-            <SliderContainer
-                caption="<Slider/> 2 thumbs, min, max, and custom tint"
-                value={value}>
-                setValue={setValue}
-                <Slider
-                    animateTransitions
-                    maximumTrackTintColor="#d3d3d3"
-                    maximumValue={99}
-                    minimumTrackTintColor="#2875FF"
-                    minimumValue={1}
-                    step={1}
-                    thumbTintColor="#2875FF"
-                />
-            </SliderContainer>
-            <Text>Value: {min} -- {max}</Text>
-            <Text>Value: {value.min} -- {value.max}</Text>
+            <View style={styles.sliderOne}>
+                <Text style={styles.text}>Minimum Age : {ageRange[0]} </Text>
+                <Text style={styles.text}>Maximum Age : {ageRange[1]}</Text>
+            </View>
+            <MultiSlider
+                values={[ageRange[0], ageRange[1]]}
+                sliderLength={380}
+                onValuesChange={handleOnChange}
+                onValuesChangeStart={() => setShowLabel(true)}
+                onValuesChangeFinish={() => setShowLabel(false)}
+                min={1}
+                max={99}
+                step={1}
+                allowOverlap={true}
+                enableLabel={showLabel}
+                showStepMarkers={true}
+                snapped
+                showStepLabels={true}
+                smoothSnapped={true}
+            />
         </View>
     );
-
 }
 
 
-const CustomThumb = () => (
-    <View style={componentThumbStyles.container}>
-        <Text>Any</Text>
-    </View>
-);
-
-const SliderContainer = (props: {
-    caption: string;
-    children: React.ReactElement;
-    value?: number | Array<number>;
-    trackMarks?: Array<number>;
-    setValue?: (value: number | Array<number>) => void;
-}) => {
-    const {caption, value, trackMarks,setValue} = props;
-    // const [value, setValue] = useState(
-    //     sliderValue ? sliderValue : 0.2,
-    // );
-    let renderTrackMarkComponent;
-
-    if (trackMarks?.length && (!Array.isArray(value) || value?.length === 1)) {
-        renderTrackMarkComponent = (index: number) => {
-            const currentMarkValue = trackMarks[index];
-
-            const style =
-                currentMarkValue >
-                Math.max(Array.isArray(value) ? value[0] : value)
-                    ? trackMarkStyles.activeMark
-                    : trackMarkStyles.inactiveMark;
-            return <View style={style}/>;
-        };
-    }
-
-    const renderChildren = () => {
-        return React.Children.map(
-            props.children,
-            (child) => {
-                if (!!child && child.type === Slider) {
-                    return React.cloneElement(child, {
-                        onValueChange: setValue,
-                        renderTrackMarkComponent,
-                        trackMarks,
-                        value,
-                    });
-                }
-
-                return child;
-            },
-        );
-    };
-
-    return (
-        <View style={styles.sliderContainer}>
-            <View style={styles.titleContainer}>
-                <Text>{caption}</Text>
-                {/*<Text>{Array.isArray(value) ? value.join(' - ') : value}</Text>*/}
-            </View>
-            {renderChildren()}
-        </View>
-    );
-};
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
-        alignItems: 'stretch',
-        justifyContent: 'center',
-    },
-    thumb: {
-        width: 30,
-        height: 30,
-        borderRadius: 30 / 2,
-        backgroundColor: '#1a9274',
-        borderColor: '#1a9274',
-        borderWidth: 2,
-    },
-
-});
+const styles = StyleSheet.create(
+    {
+        container: {
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'stretch',
+        },
+        sliders: {
+            margin: 20,
+            width: 100,
+        }
+        ,
+        text: {
+            alignSelf: 'center',
+            paddingVertical: 20,
+        },
+        title: {
+            fontSize: 30,
+        },
+        sliderOne: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+        },
+        image: {
+            height: 40,
+            width: 40,
+        },
+    });
 
 export default MyRangeSlider;
