@@ -283,14 +283,11 @@ const Map = () => {
             .filter((elem) => {
                 if (filter.sex === "ALL") {
                     return true
-                } else if (filter.sex === elem.sex) {
-                    return true
-                } else return false
+                } else return filter.sex === elem.sex;
             })
             .filter((elem) => {
                 if (filter.age?.min === 1 && filter?.age?.max === 99) return true;
-                else if (elem.age >= filter?.age[0] && elem.age <= filter?.age[1]) return true;
-                else return false;
+                else return elem.age >= filter?.age[0] && elem.age <= filter?.age[1];
             })
 
 
@@ -320,9 +317,10 @@ const Map = () => {
     }, [data, CustomMarker, filter, isOpen]);
 
     const isFilterApplied = () => {
-        if (filter.TransportType !== "ALL" || filter.nationality !== "ALL" || filter.sex !== "ALL") {
-            return true
-        } else return false
+        return filter.TransportType !== "ALL" ||
+            filter.nationality !== "ALL" ||
+            filter.sex !== "ALL" ||
+            (filter.age[0] !== [1] && filter.age[1] !== 99)
     }
 
     const userMarker = useMemo(

@@ -16,6 +16,8 @@ model User {
   isVisibled Boolean?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  isBlocked Boolean @default(false)
+  isDeleted Boolean @default(false)
 }
 
 enum TransportType{
@@ -32,4 +34,4 @@ enum SEX{
     MAN
     WOMAN
     OTHER
-    }
+}

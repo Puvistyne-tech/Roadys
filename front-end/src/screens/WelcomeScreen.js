@@ -24,6 +24,7 @@ const WelcomeScreen = () => {
          <Image style={AppStyles.image} source={require('../../assets/images/logo_color.png')}/>
          <Button title="Sign in" style={AppStyles.button} onPress={navigate('Sign in')}/>
          <Button title="Sign up" style={AppStyles.button} onPress={navigate('Sign up')}/>
+         {/*<Button title="Activate User" style={AppStyles.button} onPress={navigate('Activate user')}/>*/}
       </View>
    )
 }

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const getUser = async (token, prisma) => {
-  const response = await jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
+  return jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
     if (err) {
       return null;
     }
@@ -10,8 +10,7 @@ const getUser = async (token, prisma) => {
         id: result.id
       },
     })
-  })
-  return response;
+  });
 };
 
 export default getUser;

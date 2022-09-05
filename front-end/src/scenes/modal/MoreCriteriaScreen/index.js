@@ -129,27 +129,35 @@ const MoreCriteriaScreen = (props) => {
     }
 
     const MyResetButton = useCallback(({value, fieldName, resetValue}) => {
-        if (control?._defaultValues[fieldName] !== resetValue) {
-            return (<></>)
-        } else {
-            return (value !== resetValue && <TouchableOpacity
-                style={{
-                    alignItems: 'right',
-                    alignSelf: "flex-start",
-                    borderRadius: 12,
-                    marginLeft: 5,
-                    padding: 5,
-                    borderWidth: 1,
-                    borderColor: '#ff1313',
-                    backgroundColor: "#fde3e3",
 
-                }}
-                onPress={() => resetThisField(fieldName, resetValue)}
-            >
-                <Text
-                    style={styles.clearText}
-                >clear x</Text>
-            </TouchableOpacity>)
+
+        if (Array.isArray(resetValue)) {
+            if (control?._defaultValues[fieldName][0] !== resetValue[0] && control?._defaultValues[fieldName][1] !== resetValue[1]) {
+                return (<></>)
+            } else {
+                return (
+                    value[0] !== resetValue[0] || value[1] !== resetValue[1] ? (
+                        <TouchableOpacity onPress={() => resetThisField(fieldName, resetValue)}>
+                            <Text style={styles.resetButton}>Reset ⟳ </Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <></>
+                    )
+                )
+            }
+        } else {
+            if (control?._defaultValues[fieldName] !== resetValue) {
+                return (<></>)
+            } else {
+                return (value !== resetValue && <TouchableOpacity
+                    style={styles.resetButton}
+                    onPress={() => resetThisField(fieldName, resetValue)}
+                >
+                    <Text
+                        style={styles.clearText}
+                    >clear ❌</Text>
+                </TouchableOpacity>)
+            }
         }
     }, []);
 
@@ -391,6 +399,16 @@ const styles = StyleSheet.create({
     },
     clearText: {
         color: '#ff1313',
+    },
+    resetButton: {
+        alignItems: 'center',
+        alignSelf: "flex-start",
+        borderRadius: 12,
+        marginLeft: 5,
+        padding: 5,
+        borderWidth: 1,
+        borderColor: '#ff1313',
+        backgroundColor: "#fde3e3",
     }
 })
 

@@ -12,7 +12,7 @@ import AppStyles from '../../../../assets/styles/main.scss'
 import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {AuthContext} from "../../../providers/AuthProvider";
 import {useMutation, useQuery} from "@apollo/client";
-import {DELETE_USER, GET_CURRENT_USER} from "./query";
+import {DELETE_USER, GET_CURRENT_USER, INSERT_DELETED_USER} from "./query";
 import {showMessage} from "react-native-flash-message";
 import LoadingModal from "../../../components/LoadingModal";
 
@@ -20,6 +20,7 @@ const SettingsScreen = () => {
     const navigation = useNavigation();
     const {disconnect} = useContext(AuthContext)
     const [deleteUser, {l}] = useMutation(DELETE_USER);
+    const [createOneDeletedUser, {lo}] = useMutation(INSERT_DELETED_USER);
     const [loading, setLoading] = useState(false);
 
     const {data, refetch, error} = useQuery(GET_CURRENT_USER);
@@ -41,8 +42,30 @@ const SettingsScreen = () => {
     const handleDeleteUser = useCallback(async () => {
         setLoading(true)
         try {
-            console.log('deleteUser', currentUser)
-            console.log(loading)
+            // console.log('deleteUser', currentUser)
+            // console.log(loading)
+            // const res = await createOneDeletedUser({
+            //     variables: {
+            //         data: {
+            //             pseudo: currentUser.pseudo,
+            //             email: currentUser.email,
+            //             password: currentUser.password,
+            //             firstname: currentUser.firstname,
+            //             lastname: currentUser.lastname,
+            //             sex: currentUser.sex,
+            //             latitude: currentUser.latitude,
+            //             longitude: currentUser.longitude,
+            //             age: currentUser.age,
+            //             photo: currentUser.photo,
+            //             description: currentUser.description,
+            //             isVisibled: currentUser.isVisibled,
+            //             isBlocked: currentUser.isBlocked,
+            //             nationality: currentUser.nationality,
+            //             kindOfTrip: currentUser.kindOfTrip,
+            //         }
+            //     }
+            // })
+            // console.log(res)
             await deleteUser({variables: {deleteUserId: currentUser?.id}});
             console.log(loading)
             // showMessage({

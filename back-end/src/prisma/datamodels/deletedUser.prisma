@@ -1,0 +1,20 @@
+model DeletedUser {
+  id        String  @id @default(cuid())
+  email     String @unique
+  pseudo    String @unique
+  firstname String?
+  lastname  String?
+  sex       SEX?
+  latitude  Float?
+  longitude Float?
+  age Int?
+  photo String?
+  description String?
+  nationality String?
+  kindOfTrip TransportType?
+  isVisibled Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  isBlocked Boolean @default(false)
+}
+

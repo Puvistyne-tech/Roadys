@@ -11,7 +11,6 @@ import HeaderRight from "./HeaderRight";
 import AppStyles from '../../../../assets/styles/main.scss';
 
 import PartnerScreen from '../../../scenes/partners/PartnerScreen'
-import DrawerNavigator from "../drawer";
 import MuseumScreen from "../../../scenes/modal/MapScreens/MuseumScreen";
 import BikeScreen from "../../../scenes/modal/MapScreens/BikeScreen";
 import MoreCriteriaScreen from '../../../scenes/modal/MoreCriteriaScreen'
