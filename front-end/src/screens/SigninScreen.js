@@ -23,8 +23,11 @@ const SigninScreen = () => {
     const authErrorHandling = useCallback(async (query) => {
         console.log(process.env.API_HOST)
         try {
-            return await query
+            const res= await query
+            console.log(res)
+            return res;
         } catch (error) {
+            console.error(error?.code)
             showMessage({
                 message: 'Error',
                 description: error.message,

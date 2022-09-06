@@ -17,10 +17,10 @@ import {useQuery} from "@apollo/client";
 import {GET_USER} from "./queries";
 
 const SignupScreen = () => {
-    const [pseudo, setPseudo] = useState('Pseudo')
-    const [email, setEmail] = useState('Email')
-    const [password, setPassword] = useState('password')
-    const [confirmPassword, setConfirmPassword] = useState('confirmPassword')
+    const [pseudo, setPseudo] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     const [isAccepted, setIsAccepted] = useState(false)
     const [termsAndConditionsOpen, setTermsAndConditionsOpen] = useState(false)
@@ -37,9 +37,13 @@ const SignupScreen = () => {
 
     useEffect(() => {
         tempUser = data?.user
-        console.log("tempUser")
-        console.log(tempUser)
-        console.log("isdeleted " + isDeletedUserFound())
+        // console.log("tempUser")
+        // console.log(tempUser)
+        // console.log("isdeleted " + isDeletedUserFound())
+        if (isDeletedUserFound()) {
+            setPseudo(tempUser?.pseudo)
+        }
+        // setPseudo(tempUser?.pseudo)
     }, [data, tempUser]);
 
     const authErrorHandling = useCallback(async (query) => {
@@ -55,19 +59,21 @@ const SignupScreen = () => {
         }
     }, [])
 
-    useFocusEffect(
-        React.useCallback(() => {
-            refetch().then(r => {
-                // console.log(r)
-            }).catch(e => {
-                // console.log(e)
-            })
-        }, [refetch, email, pseudo])
-    );
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //         refetch().then(r => {
+    //             // console.log(r)
+    //         }).catch(e => {
+    //             // console.log(e)
+    //         })
+    //     }, [refetch, email, pseudo])
+    // );
 
     // useEffect(() => {
-    //     setPseudo(tempUser?.pseudo)
-    //     setEmail(tempUser?.email)
+    //     if (isDeletedUserFound()) {
+    //         setPseudo(tempUser?.pseudo)
+    //     }
+    //     // setEmail(tempUser?.email)
     //
     // }, [tempUser]);
 
@@ -110,14 +116,13 @@ const SignupScreen = () => {
                 duration: 10000,
             })
         } else {
-            console.log(pseudo, email, password)
+            // console.log(pseudo, email, password)
             if (isDeletedUserFound()) {
-                tempUser=null
+                tempUser = null
                 await authErrorHandling(reactivateDeletedUser(pseudo, email, password, false))
             } else {
                 await authErrorHandling(signup(pseudo, email, password, false))
             }
-            // await authErrorHandling(signup(pseudo, email, password))
         }
     }, [pseudo, email, password, confirmPassword, isAccepted])
 
@@ -145,26 +150,40 @@ const SignupScreen = () => {
                             fontSize: 16,
                         }}
                     >
-                        {`❕The account linked to this email has been deleted. Choose new password to recover it ...`}
+                        {`❕The account linked to this email has been deleted. Choose a new password to recover it ...`}
                     </Text>
                 </View>}
                 <Image style={AppStyles.image} source={require('../../assets/images/logo_color.png')}/>
                 <View style={AppStyles.inputView}>
                     <TextInput
-                        style={AppStyles.textInput}
-                        placeholder={pseudo}
-                        placeholderTextColor='#003f5c'
-                        // editable={false}
+                        style={{
+                            ...AppStyles.textInput,
+                            color:isDeletedUserFound() ? "#696868" : '#003f5c',
+
+                        }}
+                        placeholder={"Pseudo"}
+                        placeholderTextColor={isDeletedUserFound() ? "#919191" : '#003f5c'}
+                        editable={!isDeletedUserFound()}
                         onChangeText={(pseudo) => setPseudo(pseudo)}
+                        value={pseudo}
+                        onPressIn={() => {
+                            isDeletedUserFound() ? showMessage({
+                                message: 'Oops !!!',
+                                description: 'You cannot change your pseudo/username for a deleted account',
+                                type: 'warning',
+                                duration: 1000,
+                            }) : null
+                        }}
                     />
                 </View>
 
                 <View style={AppStyles.inputView}>
                     <TextInput
                         style={AppStyles.textInput}
-                        placeholder={email}
+                        placeholder={'Email'}
                         placeholderTextColor='#003f5c'
                         onChangeText={(email) => setEmail(email)}
+                        value={email}
                     />
                 </View>
 
@@ -172,6 +191,7 @@ const SignupScreen = () => {
                     <TextInput
                         style={AppStyles.textInput}
                         placeholder='Password'
+                        // value={password}
                         placeholderTextColor='#003f5c'
                         secureTextEntry
                         onChangeText={(password) => setPassword(password)}
@@ -214,7 +234,6 @@ const SignupScreen = () => {
                         }]}
                         onPress={() => {
                             setIsAccepted(!isAccepted)
-                            // console.log('clicked here')
                         }}
                     >
                         {

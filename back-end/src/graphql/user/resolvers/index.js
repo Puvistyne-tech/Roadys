@@ -86,7 +86,7 @@ export default {
             const users = await prisma.user.findMany({
                 where: {
                     OR: [
-                        {email:data.email},
+                        {email: data.email},
                     ]
                 },
             })
@@ -169,10 +169,18 @@ export default {
 
             if (user && user.isBlocked === true) {
                 throw new Error('You are blocked as you have been signaled by another user\nContact us for more information via contact@roadys.fr');
+                // console.log('You are blocked as you have been signaled by another user\nContact us for more information via')
+                // return {
+                //     error: {
+                //         message: 'You are blocked as you have been signaled by another user\nContact us for more information via" + "kn * 2 + "oadys.fr',
+                //         status: 403,
+                //     }
+                // }
             }
 
             if (user && user.isDeleted === true) {
                 throw new Error('Your account has been deleted\nPlease return to signup screen to reactivate your account');
+                // throw new DeletedUserError()
             }
 
             const validPassword = await bcrypt.compare(password, user.password);
@@ -187,3 +195,15 @@ export default {
         },
     }
 }
+
+// class DeletedUserError extends Error {
+//     constructor(message='heheheh') {
+//             // 'Your account has been deleted\nPlease return to signup screen to reactivate your account',
+//         super(
+//             message
+//         );
+//         this.name = 'DeletedUserError'
+//         this.code = 403
+//         this.date = new Date()
+//     }
+// }

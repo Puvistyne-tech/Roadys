@@ -291,16 +291,7 @@ const Map = () => {
             })
 
 
-        // console.log(res)
-
-        // if (name === '') {
-        //     setUsersToCustomMarker(data?.users)
-        // } else {
-        //     let res = data?.users?.filter((elem, index) => {
-        //         return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
-        //     })
         setUsersToCustomMarker(res)
-        // }
     }
 
     useEffect(() => {
@@ -377,14 +368,22 @@ const Map = () => {
                 style={AppStyles.map}
                 initialRegion={defaultLocation}
                 showsScale={true}
-                zoomControlEnabled={true}
+                zoomControlEnabled={false}
                 scrollDuringRotateOrZoomEnabled={false}
                 zoomTapEnabled={false}
                 zoomEnabled={true}
                 rotateEnabled={false}
-                maxZoomLevel={14}
+                maxZoomLevel={11}
                 minZoomLevel={0}
                 showsMyLocationButton={true}
+                showsCompass={true}
+                showsBuildings={true}
+                showsTraffic={true}
+                showsIndoors={true}
+                showsIndoorLevelPicker={true}
+                showsUserLocation={true}
+                showsPointsOfInterest={true}
+
             >
                 <MoreCriteriaButton/>
                 <Circle

@@ -33,14 +33,3 @@ export const GET_CURRENT_USER = gql`
         }
     }
 `
-
-export const INSERT_DELETED_USER = gql`
-    mutation createOne($data: deleteUserInput) {
-        createOne(data: $data) {
-            id
-            pseudo
-            email
-        }
-
-    }
-`
