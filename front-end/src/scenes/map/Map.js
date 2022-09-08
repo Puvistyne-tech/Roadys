@@ -10,7 +10,7 @@ import * as Location from 'expo-location'
 import {
     useQuery, useMutation,
 } from '@apollo/client'
-import {useNavigation} from '@react-navigation/native'
+import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import {useTheme, Card} from 'react-native-elements'
 
 import AppStyles from '../../../assets/styles/main.scss'
@@ -21,7 +21,7 @@ import Loader from '../../components/Loader'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-import {GET_USERS, UPDATE_LOCATION} from './queries'
+import {GET_CURRENT_USER, GET_USERS, UPDATE_LOCATION} from './queries'
 import styles from './style'
 import ProfileCard from "../../components/ProfileCard";
 import Button from "../../components/Button";
@@ -33,7 +33,7 @@ import MoreCriteriaScreen from "../modal/MoreCriteriaScreen";
 
 
 const Map = () => {
-    const [defaultLocation] = useState({
+    const [defaultLocation, setDefaultLocation] = useState({
         latitude: 48.86,
         longitude: 2.34,
         latitudeDelta: 0.0922,
@@ -56,6 +56,21 @@ const Map = () => {
         loading: updateLocationLoading,
         error: updateLocationError,
     }] = useMutation(UPDATE_LOCATION)
+
+    const {data:userData, refetch:refetch2, error} = useQuery(GET_CURRENT_USER);
+    let currentUser = useMemo(() => userData?.currentUser, [userData])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch2().then(r => {
+                // console.log(r)
+            })
+        }, [refetch2])
+    );
+
+    useEffect(() => {
+        currentUser = userData?.currentUser
+    }, [userData, currentUser]);
 
     const onLocationChange = useCallback((newLocation) => {
         const {longitude, latitude} = newLocation.coords
@@ -296,7 +311,6 @@ const Map = () => {
 
     useEffect(() => {
         if (isFilterApplied()) {
-            console.log("filterApplied")
             filterUsers()
             // filterByName(searchInput)
         } else {
@@ -353,6 +367,7 @@ const Map = () => {
     //     }
     // }
 
+
     return (
         <View style={AppStyles.container}>
             <MoreCriteriaScreen
@@ -364,101 +379,53 @@ const Map = () => {
             <View style={theme.ActionsContainer}>
                 {isPressed && <MarkerActions/>}
             </View>
-            <MapView
-                style={AppStyles.map}
-                initialRegion={defaultLocation}
-                showsScale={true}
-                zoomControlEnabled={false}
-                scrollDuringRotateOrZoomEnabled={false}
-                zoomTapEnabled={false}
-                zoomEnabled={true}
-                rotateEnabled={false}
-                maxZoomLevel={11}
-                minZoomLevel={0}
-                showsMyLocationButton={true}
-                showsCompass={true}
-                showsBuildings={true}
-                showsTraffic={true}
-                showsIndoors={true}
-                showsIndoorLevelPicker={true}
-                showsUserLocation={true}
-                showsPointsOfInterest={true}
+            {
+                currentUser &&
 
-            >
-                <MoreCriteriaButton/>
-                <Circle
-                    center={userMarker.coordinate}
-                    radius={500}
-                    strokeWidth={0}
-                    strokeColor='rgba(143,0,255,0.26)'
-                    fillColor='rgbargba(143,0,255,0.26)'
-                />
+                <MapView
+                    style={AppStyles.map}
+                    initialRegion={{
+                        ...currentUser,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
 
-                <Marker
-                    coordinate={userMarker.coordinate}
+                    }}
+                    showsScale={true}
+                    zoomControlEnabled={false}
+                    scrollDuringRotateOrZoomEnabled={false}
+                    zoomTapEnabled={true}
+                    zoomEnabled={true}
+                    rotateEnabled={false}
+                    maxZoomLevel={18}
+                    minZoomLevel={0}
+                    showsMyLocationButton={true}
+                    showsCompass={true}
+                    showsBuildings={true}
+                    showsTraffic={true}
+                    showsIndoors={true}
+                    showsIndoorLevelPicker={true}
+                    showsUserLocation={false}
+                    showsPointsOfInterest={true}
+
                 >
-                    <Image style={AppStyles.currentUserMaker} source={CurrentUserStickMan}/>
-                </Marker>
-                {listUsers}
-            </MapView>
-            {/*<View*/}
-            {/*    style={{*/}
-            {/*        position: 'absolute',*/}
-            {/*        top: 10,*/}
-            {/*        width: '100%',*/}
+                    <MoreCriteriaButton/>
+                    <Circle
+                        center={userMarker.coordinate}
+                        radius={500}
+                        strokeWidth={0}
+                        strokeColor='rgba(143,0,255,0.26)'
+                        fillColor='rgbargba(143,0,255,0.26)'
+                    />
 
-            {/*    }}*/}
-            {/*>*/}
+                    <Marker
+                        coordinate={userMarker.coordinate}
+                    >
+                        <Image style={AppStyles.currentUserMaker} source={CurrentUserStickMan}/>
+                    </Marker>
+                    {listUsers}
+                </MapView>
+            }
 
-            {/*    <View*/}
-            {/*        style={{*/}
-            {/*            borderRadius: 10,*/}
-            {/*            margin: 10,*/}
-            {/*            color: '#000',*/}
-            {/*            borderColor: '#666',*/}
-            {/*            backgroundColor: '#FFF',*/}
-            {/*            borderWidth: 1,*/}
-            {/*            // height: 45,*/}
-            {/*            paddingHorizontal: 10,*/}
-            {/*            padding: 8,*/}
-            {/*            fontSize: 18,*/}
-            {/*            display: "flex",*/}
-            {/*            justifyContent: "space-between",*/}
-            {/*            flexDirection: "row",*/}
-            {/*            alignContent: "center"*/}
-            {/*        }}*/}
-            {/*        // placeholder={'Search'}*/}
-            {/*        // placeholderTextColor={'#666'}*/}
-            {/*    >*/}
-            {/*        <FontAwesome name="search" size={32} color="grey"/>*/}
-            {/*        <TextInput*/}
-            {/*            style={{*/}
-            {/*                flexGrow: 1*/}
-            {/*            }}*/}
-            {/*            onChangeText={handleSearch}*/}
-            {/*            placeholder={'Search here'}*/}
-            {/*            value={searchInput}*/}
-            {/*        >*/}
-            {/*        </TextInput>*/}
-            {/*        {searchInput !== '' &&*/}
-            {/*            <FontAwesome name="close" size={16} color="red"*/}
-            {/*                         onPress={() => {*/}
-            {/*                             setSearchInput('')*/}
-            {/*                             setIsPressed(false)*/}
-            {/*                         }}*/}
-            {/*                         style={{*/}
-            {/*                             alignSelf: "center",*/}
-            {/*                             marginRight: 10*/}
-            {/*                         }}*/}
-            {/*            />*/}
-            {/*        }*/}
-            {/*        <FontAwesome name="filter" size={32} color="grey"*/}
-            {/*                     onPress={() => {*/}
-            {/*                         console.log("iefi")*/}
-            {/*                     }}*/}
-            {/*        />*/}
-            {/*    </View>*/}
-            {/*</View>*/}
         </View>
     )
 }

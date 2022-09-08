@@ -3,7 +3,6 @@ import {View} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import AppStyles from '../../../../assets/styles/main.scss';
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
-import {colors} from 'theme'
 
 // stack navigators
 import {ChatNavigator, MapNavigator, ProfileNavigator} from '../stacks'

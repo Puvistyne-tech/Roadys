@@ -31,3 +31,13 @@ export const UPDATE_LOCATION = gql`
       }
    }
 `
+
+export const GET_CURRENT_USER = gql`
+   query currentUser {
+      currentUser {
+         id
+         latitude
+         longitude
+      }
+   }
+`
