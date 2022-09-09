@@ -13,28 +13,7 @@ const BottomTabBar = () => {
 
     const navigation = useNavigation();
 
-    const styles = StyleSheet.create({
-        container: {
-            // flexDirection: 'row',
-            // alignItems: 'flex-end',
-            borderColor: '#c0cbd3',
-            borderWidth: 1,
-        },
-        mainContainer: {
-            display: 'flex',
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            padding: 20,
-            justifyContent: 'space-between',
-            paddingHorizontal: 50,
-            alignContent: 'center',
-            alignItems: 'center',
-            // marginBottom: 10,
-            paddingBottom: 30,
-        },
 
-
-    });
 
     return (
         <View style={styles.container}>
@@ -69,5 +48,25 @@ const BottomTabBar = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        borderColor: '#c0cbd3',
+        borderWidth: 1,
+    },
+    mainContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        padding: 20,
+        justifyContent: 'space-between',
+        paddingHorizontal: 50,
+        alignContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 30,
+    },
+
+
+});
 
 export default BottomTabBar;

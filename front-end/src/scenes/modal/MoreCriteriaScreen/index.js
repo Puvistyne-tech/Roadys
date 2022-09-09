@@ -62,7 +62,6 @@ const MoreCriteriaScreen = (props) => {
                 type: "success",
                 duration: 5000,
             })
-            // navigation.goBack();
             props.setIsOpen(false);
         }, [navigation, setFilter]
     );
@@ -129,7 +128,6 @@ const MoreCriteriaScreen = (props) => {
     }
 
     const MyResetButton = useCallback(({value, fieldName, resetValue}) => {
-
 
         if (Array.isArray(resetValue)) {
             if (control?._defaultValues[fieldName][0] !== resetValue[0] && control?._defaultValues[fieldName][1] !== resetValue[1]) {

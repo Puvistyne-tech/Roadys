@@ -37,13 +37,9 @@ const SignupScreen = () => {
 
     useEffect(() => {
         tempUser = data?.user
-        // console.log("tempUser")
-        // console.log(tempUser)
-        // console.log("isdeleted " + isDeletedUserFound())
         if (isDeletedUserFound()) {
             setPseudo(tempUser?.pseudo)
         }
-        // setPseudo(tempUser?.pseudo)
     }, [data, tempUser]);
 
     const authErrorHandling = useCallback(async (query) => {
@@ -58,32 +54,6 @@ const SignupScreen = () => {
             })
         }
     }, [])
-
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         refetch().then(r => {
-    //             // console.log(r)
-    //         }).catch(e => {
-    //             // console.log(e)
-    //         })
-    //     }, [refetch, email, pseudo])
-    // );
-
-    // useEffect(() => {
-    //     if (isDeletedUserFound()) {
-    //         setPseudo(tempUser?.pseudo)
-    //     }
-    //     // setEmail(tempUser?.email)
-    //
-    // }, [tempUser]);
-
-
-    // useEffect(() => {
-    //     refetch().then(r => {
-    //         // console.log(r)
-    //     })
-    //     console.log(pseudo, email, password, confirmPassword)
-    // }, [email, password, confirmPassword, pseudo]);
 
     const isDeletedUserFound = () => {
         if (tempUser == null) {
@@ -116,7 +86,6 @@ const SignupScreen = () => {
                 duration: 10000,
             })
         } else {
-            // console.log(pseudo, email, password)
             if (isDeletedUserFound()) {
                 tempUser = null
                 await authErrorHandling(reactivateDeletedUser(pseudo, email, password, false))

@@ -1,3 +1,6 @@
+/**
+ * A simple error class for specific errors in the application.
+ */
 class DeletedUserError extends Error {
     constructor(message) {
         super(message ? message : 'Your account has been deleted\nPlease return to signup screen to reactivate your account');

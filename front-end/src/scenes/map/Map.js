@@ -18,18 +18,10 @@ import StickManImg from '../../../assets/images/man.png'
 import CurrentUserStickMan from '../../../assets/images/current-stick-man.png'
 import Loader from '../../components/Loader'
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-
-
 import {GET_CURRENT_USER, GET_USERS, UPDATE_LOCATION} from './queries'
-import styles from './style'
-import ProfileCard from "../../components/ProfileCard";
 import Button from "../../components/Button";
-import {FontAwesome} from "@expo/vector-icons";
-import FontIcon from "react-native-vector-icons/FontAwesome5";
-import TermsAndConditions from "../../components/TermsAndConditions/TermsAndConditions";
 import MoreCriteriaScreen from "../modal/MoreCriteriaScreen";
-// import MarkerCard from "./card/MakerCard";
+
 
 
 const Map = () => {
@@ -191,15 +183,6 @@ const Map = () => {
         }
     )
 
-    // console.log("----------filter.age")
-    // console.log(filter)
-    // useEffect(() => {
-    //     console.log("-------------------------From Map S")
-    //     // setFilter(filter)
-    //     console.log("filter")
-    //     console.log(filter)
-    //     console.log("-------------------------From Map Z")
-    // }, [filter]);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -266,8 +249,7 @@ const Map = () => {
     // }), [data, CustomMarker])
 
     const setUsersToCustomMarker = (userData) => {
-        // console.log("userData")
-        // console.log(userData)
+
         let r = userData?.map((elem, index) => {
             if (!elem.isVisibled) {
                 return (
@@ -279,7 +261,6 @@ const Map = () => {
         })
 
         setListUsers(r)
-        // console.log(listUsers)
     }
 
 
@@ -351,22 +332,6 @@ const Map = () => {
         )
     }
 
-    // function handleSearch(input) {
-    //     setSearchInput(input)
-    //     filterByName(input)
-    // }
-
-    // const filterByName = (name) => {
-    //     if (name === '') {
-    //         setUsersToCustomMarker(data?.users)
-    //     } else {
-    //         let res = data?.users?.filter((elem, index) => {
-    //             return elem.pseudo.toLowerCase().includes(name.toLowerCase(), 0)
-    //         })
-    //         setUsersToCustomMarker(res)
-    //     }
-    // }
-
 
     return (
         <View style={AppStyles.container}>
@@ -388,7 +353,6 @@ const Map = () => {
                         ...currentUser,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-
                     }}
                     showsScale={true}
                     zoomControlEnabled={false}
@@ -406,7 +370,6 @@ const Map = () => {
                     showsIndoorLevelPicker={true}
                     showsUserLocation={false}
                     showsPointsOfInterest={true}
-
                 >
                     <MoreCriteriaButton/>
                     <Circle

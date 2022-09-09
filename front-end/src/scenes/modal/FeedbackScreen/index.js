@@ -34,11 +34,13 @@ const FeedbackScreen = ({route}) => {
                         text: "Go back", onPress: () => {
                             navigation.goBack()
                         },
-                    }, {
-                        text: "Send a new feedback", onPress: () => {
-                            reset()
-                        }
-                    }])
+                    },
+                        // {
+                        //     text: "Send a new feedback", onPress: () => {
+                        //         reset()
+                        //     }
+                        // }
+                    ])
                 },
 
                 function (error) {

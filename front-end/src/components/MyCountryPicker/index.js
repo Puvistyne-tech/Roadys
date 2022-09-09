@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {PixelRatio, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import CountryPicker, {DARK_THEME, DEFAULT_THEME} from 'react-native-country-picker-modal'
-import Button from "../Button";
-import {capitalizeFirstLetter} from "../../utils/funcs";
 import * as lookup from "country-code-lookup";
 
 
@@ -86,72 +84,10 @@ const MyCountryPicker = (props) => {
     return (
         <View>
             <ScrollView contentContainerStyle={props.style}>
-                {/*<Text style={styles.welcome}>Welcome to Country Picker !</Text>*/}
-                {/*<Option*/}
-                {/*    title='With country name on button'*/}
-                {/*    value={withCountryNameButton}*/}
-                {/*    onValueChange={setWithCountryNameButton}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With flag'*/}
-                {/*    value={withFlag}*/}
-                {/*    onValueChange={setWithFlag}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With font scaling'*/}
-                {/*    value={fontScaling}*/}
-                {/*    onValueChange={setFontScaling}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With emoji'*/}
-                {/*    value={withEmoji}*/}
-                {/*    onValueChange={setWithEmoji}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With filter'*/}
-                {/*    value={withFilter}*/}
-                {/*    onValueChange={setWithFilter}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With calling code'*/}
-                {/*    value={withCallingCode}*/}
-                {/*    onValueChange={setWithCallingCode}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With alpha filter code'*/}
-                {/*    value={withAlphaFilter}*/}
-                {/*    onValueChange={setWithAlphaFilter}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='Without native modal'*/}
-                {/*    value={true}*/}
-                {/*    onValueChange={()=>{}}*/}
-                {/*/>*/}
-                {/*<Option*/}
-                {/*    title='With modal'*/}
-                {/*    value={withModal}*/}
-                {/*    onValueChange={setWithModal}*/}
-                {/*/>*/}
-                {/*<Option title='With dark theme' value={dark} onValueChange={setDark}/>*/}
-                {/*<Option*/}
-                {/*    title='With flag button'*/}
-                {/*    value={withFlagButton}*/}
-                {/*    onValueChange={setWithFlagButton}*/}
-                {/*/>*/}
-                {/*<TextInput*/}
-                {/*    // onBlur={onBlur}*/}
-                {/*    // onChangeText={onChange}*/}
-                {/*    onPressIn={switchVisible}*/}
-                {/*    // onPressOut={() => setIsPickerOpen(false)}*/}
-                {/*    value={capitalizeFirstLetter(country?.name)}*/}
-                {/*    style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}*/}
-                {/*>*/}
-                {/*</TextInput>*/}
 
                 <CountryPicker
                     theme={DEFAULT_THEME}
                     {...{
-                        // allowFontScaling: fontScaling,
                         country,
                         countryCode,
                         withFilter,
@@ -183,16 +119,8 @@ const MyCountryPicker = (props) => {
                     }
                     }
                 />
-                {/*<Text style={styles.instructions}>Press on the flag to open modal</Text>*/}
-                {/*<Button*/}
-                {/*    title={'Open modal from outside using visible props'}*/}
-                {/*    onPress={switchVisible}*/}
-                {/*/>*/}
             </ScrollView>
-            {/*{country !== null && (*/}
-            {/*    <Text style={styles.data}>{JSON.stringify(country, null, 0)}</Text>*/}
-            {/*    // <Text style={styles.data}>{country.name}</Text>*/}
-            {/*)}*/}
+
         </View>
     )
 }

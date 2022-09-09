@@ -18,7 +18,6 @@ export const GET_USER = gql`
    }
 `
 
-// TODO
 export const UPDATE_USER_IMAGE = gql`
    mutation updateUser(
       $id: ID!,

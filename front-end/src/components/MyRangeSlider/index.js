@@ -6,15 +6,11 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 const MyRangeSlider = (props) => {
 
-    // const [multiSliderValue, setMultiSliderValue] = useState([3, 7]);
-    // console.log(props);
     const {
         ageRange,
         setAgeRange,
     } = props;
 
-
-    // const multiSliderValuesChange = values => setMultiSliderValue(values);
 
     const handleOnChange = values => {
         setAgeRange(values);
