@@ -18,6 +18,11 @@ import {GET_USER} from './queries'
 import Loader from '../../components/Loader';
 import {capitalizeFirstLetter} from "../../utils/funcs";
 
+/**
+ * It's a React component that displays a user's profile
+ * @param {id} props - The id of the user
+ * @returns A card with the user's information
+ */
 const ProfileCard = ({id}) => {
     const {data, refetch, error} = useQuery(GET_USER, {variables: {id: id}});
     const user = useMemo(() => data?.user, [data])

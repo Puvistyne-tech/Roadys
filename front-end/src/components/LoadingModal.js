@@ -2,12 +2,17 @@ import React from 'react';
 
 import {View, StyleSheet, ActivityIndicator, Modal, Text} from "react-native";
 
+/**
+ * It returns a modal that is visible when the loading prop is true
+ * @param loading   boolean that determines whether the modal is visible or not
+ * @param text      text to be displayed in the modal
+ * @returns A modal that is displayed when the loading prop is true. while displaying the modal, it shows a loading indicator
+ */
 const LoadingModal = ({loading, text}) => {
 
     return (
         <Modal
             animationType={'fade'}
-            // presentationStyle={'formSheet'}
             transparent={true}
             onRequestClose={() =>
                 console.log('Modal has been closed.')
@@ -22,7 +27,6 @@ const LoadingModal = ({loading, text}) => {
                     flex: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
-
                 }}
             >
                 <View style={styles.model}>

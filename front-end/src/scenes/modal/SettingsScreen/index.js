@@ -12,15 +12,20 @@ import AppStyles from '../../../../assets/styles/main.scss'
 import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {AuthContext} from "../../../providers/AuthProvider";
 import {useMutation, useQuery} from "@apollo/client";
-import {DELETE_USER, GET_CURRENT_USER, INSERT_DELETED_USER} from "./query";
+import {DELETE_USER, GET_CURRENT_USER} from "./query";
 import {showMessage} from "react-native-flash-message";
 import LoadingModal from "../../../components/LoadingModal";
 
+/**
+ * It's a function that returns a view with a button that when pressed, opens an alert that asks the user if they want to
+ * delete their account. If they press yes, it opens another alert that asks them if they're sure. If they press yes again,
+ * it deletes their account
+ * @returns The SettingsScreen component is being returned.
+ */
 const SettingsScreen = () => {
     const navigation = useNavigation();
     const {disconnect} = useContext(AuthContext)
     const [deleteUser, {l}] = useMutation(DELETE_USER);
-    const [createOneDeletedUser, {lo}] = useMutation(INSERT_DELETED_USER);
     const [loading, setLoading] = useState(false);
 
     const {data, refetch, error} = useQuery(GET_CURRENT_USER);
@@ -39,43 +44,12 @@ const SettingsScreen = () => {
     }, [data, currentUser]);
 
 
+    /* It's a function that deletes the user's account. */
     const handleDeleteUser = useCallback(async () => {
         setLoading(true)
         try {
-            // console.log('deleteUser', currentUser)
-            // console.log(loading)
-            // const res = await createOneDeletedUser({
-            //     variables: {
-            //         data: {
-            //             pseudo: currentUser.pseudo,
-            //             email: currentUser.email,
-            //             password: currentUser.password,
-            //             firstname: currentUser.firstname,
-            //             lastname: currentUser.lastname,
-            //             sex: currentUser.sex,
-            //             latitude: currentUser.latitude,
-            //             longitude: currentUser.longitude,
-            //             age: currentUser.age,
-            //             photo: currentUser.photo,
-            //             description: currentUser.description,
-            //             isVisibled: currentUser.isVisibled,
-            //             isBlocked: currentUser.isBlocked,
-            //             nationality: currentUser.nationality,
-            //             kindOfTrip: currentUser.kindOfTrip,
-            //         }
-            //     }
-            // })
-            // console.log(res)
             await deleteUser({variables: {deleteUserId: currentUser?.id}});
             console.log(loading)
-            // showMessage({
-            //     message: "Success",
-            //     description: "Account is deleted",
-            //     type: "success",
-            //     duration: 10000
-            // })
-            console.log(loading)
-            // setModalOpen(false)
             setTimeout(() => {
                 setLoading(false)
                 alert('Account deleted successfully')
@@ -84,7 +58,7 @@ const SettingsScreen = () => {
         } catch (e) {
             showMessage({
                 message: "Error",
-                description: err.message,
+                description: e.message,
                 type: "warning",
                 duration: 10000
             });
@@ -92,6 +66,14 @@ const SettingsScreen = () => {
         }
     })
 
+    /**
+     * A function that is called when the user presses the delete account button. It asks the user if they are sure they
+     * want to delete their account. If they press yes, it asks them again if they are sure. If they press yes again, it
+     * calls the handleDeleteUser function.
+     * @returns {Promise<void>}
+     *
+     * @see handleDeleteUser
+     */
     function handleDeleteAccount() {
         Alert.alert(
             'Delete Account',
@@ -138,10 +120,16 @@ const SettingsScreen = () => {
         );
     }
 
+    /**
+     * When the user presses the edit profile button, the user is navigated to the Profile screen
+     */
     const onEditProfilePress = () => {
         navigation.navigate('Profile')
     }
 
+    /**
+     * When the user presses the button, the app navigates to the Feedback screen
+     */
     const onSendFeedbackPress = () => {
         navigation.navigate('Feedback')
     }

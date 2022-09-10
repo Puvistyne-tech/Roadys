@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scenes/modal/MoreCriteriaScreen/index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scenes/modal/MoreCriteriaScreen/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState, useCallback, useMemo, useEffect} from 'react';
+import {
+    Text,
+    View,
+    StyleSheet,
+    ScrollView,
+    Alert, Modal, TouchableOpacity,
+} from 'react-native';
+import Button from '../../../components/Button';
+import {useNavigation} from '@react-navigation/native';
+import Colors from "../../../theme/colors";
+import AppStyles from '../../../../assets/styles/main.scss';
+import Constants from 'expo-constants';
+import {showMessage} from "react-native-flash-message";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+import MyPicker from '../../../components/MyPicker/MyPicker';
+import MyCountryPicker from '../../../components/MyCountryPicker';
+import {useForm, Controller} from 'react-hook-form';
+import MyRangeSlider from "../../../components/MyRangeSlider";
+
+/**
+ * It's a modal that allows the user to filter the list of travelers
+ * @param props - (     visible: boolean,        setVisible: (value: boolean) => void,        onFilter: (data: any) => void    )    visible: boolean - if the modal is visible or not    setVisible: (value: boolean) => void - function to set the visibility of the modal    onFilter: (data: any) => void - function to call when the user clicks on the filter button
+ * @returns A modal with a form to filter the users list
+ */
+const MoreCriteriaScreen = (props) => {
+    const navigation = useNavigation();
+    const {filter, setFilter} = props;
+
+    /* Using the useForm hook to create a form. */
+    const {handleSubmit, formState: {errors}, reset, setValue, control} = useForm({
+        defaultValues: {
+            sex: filter?.sex,
+            nationality: filter?.nationality,
+            TransportType: filter?.TransportType,
+            age: filter?.age
+        },
+    });
+
+    /**
+     * It resets the filter to the default values, and then closes the modal
+     * @returns void
+     */
+    const CancelPressed = () => {
+        showMessage({
+            message: "Success",
+            description: "All criteria were deleted",
+            type: "success",
+            duration: 5000,
+        })
+
+        setFilter(
+            {
+                "TransportType": "ALL",
+                "nationality": "ALL",
+                "sex": "ALL",
+                "age": [1, 99]
+            }
+        )
+        reset(props.filter)
+        // reset()
+        props.setIsOpen(false)
+    }
+
+    /* A callback function that is called when the user presses the save button. */
+    const SavePressed = useCallback(
+        async (formData) => {
+            setFilter(formData);
+            showMessage({
+                message: "Success",
+                description: "All criteria were deleted",
+                type: "success",
+                duration: 5000,
+            })
+            props.setIsOpen(false);
+        }, [navigation, setFilter]
+    );
+
+
+    /* Creating an array of objects. */
+    const Sex = [
+        {
+            label: 'All',
+            value: 'ALL'
+        },
+        {
+            label: 'Man',
+            value: 'MAN'
+        },
+        {
+            label: 'Woman',
+            value: 'WOMAN'
+        },
+        {
+            label: 'Other',
+            value: 'OTHER'
+        }
+    ]
+
+    /* Creating an array of objects. */
+    const TransportType = [
+        {
+            label: 'All',
+            value: 'ALL'
+        },
+        {
+            label: 'Bike',
+            value: 'BIKE'
+        },
+        {
+            label: 'Backpack',
+            value: 'BACKPACK'
+        },
+        {
+            label: 'Train',
+            value: 'TRAIN'
+        },
+        {
+            label: 'Car',
+            value: 'CAR'
+        },
+        {
+            label: 'Erasmus',
+            value: 'ERASMUS'
+        },
+        {
+            label: 'Nomad',
+            value: 'NOMAD'
+        },
+        {
+            label: 'Other',
+            value: 'OTHER'
+        }
+    ]
+
+
+    /**
+     * It takes a field and a reset value, and sets the value of the field to the reset value
+     * @param field - The name of the field you want to reset.
+     * @param resetValue - The value you want to reset the field to its default values.
+     * @returns void
+     * @example resetField('name', 'John Doe')
+     * @example resetField('age', 18)
+     */
+    const resetThisField = (field, resetValue) => {
+        // console.log(field)
+        setValue(field, resetValue)
+    }
+
+    /* A React Hook that is used to reset the value of a field. */
+    const MyResetButton = useCallback(({value, fieldName, resetValue}) => {
+
+        if (Array.isArray(resetValue)) {
+            if (control?._defaultValues[fieldName][0] !== resetValue[0] &amp;&amp; control?._defaultValues[fieldName][1] !== resetValue[1]) {
+                return (&lt;>&lt;/>)
+            } else {
+                return (
+                    value[0] !== resetValue[0] || value[1] !== resetValue[1] ? (
+                        &lt;TouchableOpacity onPress={() => resetThisField(fieldName, resetValue)}>
+                            &lt;Text style={styles.resetButton}>Reset ⟳ &lt;/Text>
+                        &lt;/TouchableOpacity>
+                    ) : (
+                        &lt;>&lt;/>
+                    )
+                )
+            }
+        } else {
+            if (control?._defaultValues[fieldName] !== resetValue) {
+                return (&lt;>&lt;/>)
+            } else {
+                return (value !== resetValue &amp;&amp; &lt;TouchableOpacity
+                    style={styles.resetButton}
+                    onPress={() => resetThisField(fieldName, resetValue)}
+                >
+                    &lt;Text
+                        style={styles.clearText}
+                    >clear ❌&lt;/Text>
+                &lt;/TouchableOpacity>)
+            }
+        }
+    }, []);
+
+
+    return (
+
+        &lt;Modal
+            animationType={'none'}
+            transparent={false}
+            onRequestClose={() => null}
+            visible={props.isOpen}
+            style={AppStyles.container}
+        >
+            &lt;ScrollView style={styles.formContainer}>
+                &lt;KeyboardAwareScrollView
+                    contentContainerStyle={styles.container}
+                >
+                    &lt;Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            color: Colors.primary,
+                        }}
+                        onPress={() => props.setIsOpen(false)}
+                    >
+                        {"❌"} Close Filter
+                    &lt;/Text>
+
+                    {/* sex */}
+                    &lt;Controller
+                        name="sex"
+                        control={control}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            &lt;View style={styles.inputContainer}>
+                                &lt;View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        flexDirection: "row",
+                                    }}
+                                >
+                                    &lt;Text
+                                        style={{
+                                            ...styles.label,
+                                            alignSelf: "flex-start",
+
+                                        }}
+                                    >Gender &lt;/Text>
+                                    &lt;MyResetButton
+                                        value={value}
+                                        fieldName={"sex"}
+                                        resetValue={"ALL"}
+                                    />
+                                &lt;/View>
+                                &lt;MyPicker
+                                    label={"sex"}
+                                    selectedValue={value}
+                                    onValueChange={onChange}
+                                    items={Sex}
+                                    onBlur={onBlur}
+                                    errors={errors}
+                                />
+                            &lt;/View>
+                        )}
+                    />
+
+                    {/* kindOfTrip */}
+                    &lt;Controller
+                        name="TransportType"
+                        control={control}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            &lt;View style={styles.inputContainer}>
+                                &lt;View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        flexDirection: "row",
+                                    }}
+                                >
+                                    &lt;Text
+                                        style={{
+                                            ...styles.label,
+                                            alignSelf: "flex-start",
+
+                                        }}
+                                    >Kind of trip &lt;/Text>
+                                    &lt;MyResetButton
+                                        value={value}
+                                        fieldName={"TransportType"}
+                                        resetValue={"ALL"}
+                                    />
+                                &lt;/View>
+                                &lt;MyPicker
+                                    label={"TransportType"}
+                                    selectedValue={value}
+                                    onValueChange={onChange}
+                                    items={TransportType}
+                                    onBlur={onBlur}
+                                    errors={errors}
+                                />
+                                &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "kind of trip is required."}&lt;/Text>
+                            &lt;/View>
+                        )}
+                    />
+
+                    {/* nationality */}
+                    &lt;Controller
+                        name="nationality"
+                        control={control}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            &lt;View style={styles.inputContainer}>
+                                &lt;View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        flexDirection: "row",
+                                    }}
+                                >
+                                    &lt;Text
+                                        style={{
+                                            ...styles.label,
+                                            alignSelf: "flex-start",
+
+                                        }}
+                                    >Nationality&lt;/Text>
+                                    &lt;MyResetButton
+                                        value={value}
+                                        fieldName={"nationality"}
+                                        resetValue={"ALL"}
+                                    />
+                                &lt;/View>
+                                &lt;MyCountryPicker
+                                    style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                    label={"Nationality"}
+                                    selectedValue={value}
+                                    onValueChange={onChange}
+                                    onBlur={onBlur}
+                                    errors={errors}
+                                />
+                            &lt;/View>
+                        )}
+                    />
+
+                    {/*age*/}
+                    &lt;Controller
+                        name="age"
+                        control={control}
+                        render={({field: {onChange, onBlur, value}}) => (
+                            &lt;View style={styles.inputContainer}>
+                                &lt;View
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        flexDirection: "row",
+
+                                    }}
+                                >
+                                    &lt;Text
+                                        style={{
+                                            ...styles.label,
+                                            alignSelf: "flex-start",
+
+                                        }}
+                                    >Age&lt;/Text>
+                                    &lt;MyResetButton
+                                        value={value}
+                                        fieldName={"age"}
+                                        resetValue={[1, 99]}
+                                    />
+                                &lt;/View>
+                                &lt;MyRangeSlider
+                                    ageRange={value}
+                                    setAgeRange={onChange}
+                                />
+                            &lt;/View>
+                        )}
+                    />
+
+                    &lt;Button
+                        style={{
+                            ...AppStyles.button,
+                            marginTop: 30,
+                        }}
+                        title="Apply my criteria"
+                        onPress={handleSubmit(SavePressed)}
+                    />
+                    &lt;Button
+                        style={{
+                            ...AppStyles.button,
+                            marginTop: 30,
+                        }}
+                        title="Delete all criteria"
+                        onPress={CancelPressed}
+                    />
+                &lt;/KeyboardAwareScrollView>
+            &lt;/ScrollView>
+        &lt;/Modal>
+    );
+
+
+}
+
+export default MoreCriteriaScreen;
+
+const styles = StyleSheet.create({
+    container: {
+        // flex: 1,
+        justifyContent: 'center',
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: 'white',
+        // margin:10,
+        padding: 20
+    },
+    formContainer: {
+        paddingBottom: 15,
+        // flex: 1,
+    },
+    inputContainer: {
+        marginVertical: 8,
+    },
+    label: {
+        paddingVertical: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    textError: {
+        color: '#fc6d47',
+        fontSize: 14,
+    },
+    input: {
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderRadius: 5,
+        paddingVertical: 5,
+        paddingLeft: 5,
+        fontSize: 16,
+        height: 40,
+        // color: '#c0cbd3',
+    },
+    clearText: {
+        color: '#ff1313',
+    },
+    resetButton: {
+        alignItems: 'center',
+        alignSelf: "flex-start",
+        borderRadius: 12,
+        marginLeft: 5,
+        padding: 5,
+        borderWidth: 1,
+        borderColor: '#ff1313',
+        backgroundColor: "#fde3e3",
+    }
+})
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li></ul><h3>Classes</h3><ul><li><a href="DeletedUserError.html">DeletedUserError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutRoadysScreen">AboutRoadysScreen</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#EditProfileScreen">EditProfileScreen</a></li><li><a href="global.html#FeedbackScreen">FeedbackScreen</a></li><li><a href="global.html#ImageReader">ImageReader</a></li><li><a href="global.html#isCloseToBottom">isCloseToBottom</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoadingModal">LoadingModal</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MarkerCard">MarkerCard</a></li><li><a href="global.html#MoreCriteriaScreen">MoreCriteriaScreen</a></li><li><a href="global.html#MyCountryPicker">MyCountryPicker</a></li><li><a href="global.html#MyPicker">MyPicker</a></li><li><a href="global.html#MyRangeSlider">MyRangeSlider</a></li><li><a href="global.html#MySearchBar">MySearchBar</a></li><li><a href="global.html#PartnerScreen">PartnerScreen</a></li><li><a href="global.html#ProfileCard">ProfileCard</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#SignalUser">SignalUser</a></li><li><a href="global.html#SigninScreen">SigninScreen</a></li><li><a href="global.html#SignupScreen">SignupScreen</a></li><li><a href="global.html#TermsAndConditions">TermsAndConditions</a></li><li><a href="global.html#UserProfileScreen">UserProfileScreen</a></li><li><a href="global.html#WelcomeScreen">WelcomeScreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Sep 09 2022 20:07:53 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

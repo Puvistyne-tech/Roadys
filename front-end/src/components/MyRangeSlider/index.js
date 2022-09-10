@@ -4,6 +4,11 @@ import {StyleSheet, View, Text, Image, Slider, TouchableOpacity} from 'react-nat
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 
 
+/**
+ * It's a function that returns a view that contains a text and a slider
+ * @param props -  props of the component (title, min, max, step, value, onChange)
+ * @returns A component that renders a slider with a range of values. Ex: age range
+ */
 const MyRangeSlider = (props) => {
 
     const {
@@ -12,10 +17,14 @@ const MyRangeSlider = (props) => {
     } = props;
 
 
+    /**
+     * It sets the age range to the values that are passed in.
+     */
     const handleOnChange = values => {
         setAgeRange(values);
     }
 
+    /* It's a state variable that is used to show the label of the slider. */
     const [showLabel, setShowLabel] = useState(false);
 
     return (

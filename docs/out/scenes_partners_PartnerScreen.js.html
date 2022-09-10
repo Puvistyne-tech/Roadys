@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scenes/partners/PartnerScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scenes/partners/PartnerScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {ScrollView, Text, TouchableWithoutFeedback, Alert, View} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+import {MaterialCommunityIcons, Fontisto, FontAwesome, MaterialIcons, Ionicons, Entypo} from '@expo/vector-icons';
+import styles from './style';
+import BottomTabBar from '../../components/BottomTabBar';
+
+
+/**
+ * It renders a list of items that are clickable
+ * @returns A scroll view with a list of partners.
+ */
+const PartnerScreen = () => {
+    const color = '#2986cc';
+    const size = 40;
+    const navigation = useNavigation();
+
+    const onClickMuseum = () => {
+        navigation.navigate('MUSEUMS')
+    }
+    const onClickBike = () => {
+        navigation.navigate('BIKE_REPAIR')
+    }
+
+    /**
+     * It displays an alert message when the user presses the other item.
+     */
+    const onOtherItemPress = () => {
+        Alert.alert('Coming soon', 'No partners available yet');
+    };
+
+    return (
+        &lt;>&lt;ScrollView>
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;FontAwesome name="hotel" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Hostels and housing&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;Fontisto name="world-o" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Travel stores&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;Ionicons name="restaurant" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Restaurants&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;Entypo name="drink" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Drinks&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onClickBike}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;MaterialCommunityIcons name="bike" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Bike repair&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;MaterialIcons name="nightlife" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Clubs&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onClickMuseum}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;MaterialIcons name="museum" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Museums and culture&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;Entypo name="address" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Popular places&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+            &lt;TouchableWithoutFeedback onPress={onOtherItemPress}>
+                &lt;View style={styles.container}>
+                    &lt;View style={styles.leftContainer}>
+                        &lt;Entypo name="compass" color={color} size={size} style={styles.icon}/>
+                        &lt;View style={styles.midContainer}>
+                            &lt;Text style={styles.title}>Other partners&lt;/Text>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/View>
+            &lt;/TouchableWithoutFeedback>
+
+        &lt;/ScrollView>
+            &lt;BottomTabBar/>
+        &lt;/>
+    );
+}
+
+export default PartnerScreen
+;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li></ul><h3>Classes</h3><ul><li><a href="DeletedUserError.html">DeletedUserError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutRoadysScreen">AboutRoadysScreen</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#EditProfileScreen">EditProfileScreen</a></li><li><a href="global.html#FeedbackScreen">FeedbackScreen</a></li><li><a href="global.html#ImageReader">ImageReader</a></li><li><a href="global.html#isCloseToBottom">isCloseToBottom</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoadingModal">LoadingModal</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MarkerCard">MarkerCard</a></li><li><a href="global.html#MoreCriteriaScreen">MoreCriteriaScreen</a></li><li><a href="global.html#MyCountryPicker">MyCountryPicker</a></li><li><a href="global.html#MyPicker">MyPicker</a></li><li><a href="global.html#MyRangeSlider">MyRangeSlider</a></li><li><a href="global.html#MySearchBar">MySearchBar</a></li><li><a href="global.html#PartnerScreen">PartnerScreen</a></li><li><a href="global.html#ProfileCard">ProfileCard</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#SignalUser">SignalUser</a></li><li><a href="global.html#SigninScreen">SigninScreen</a></li><li><a href="global.html#SignupScreen">SignupScreen</a></li><li><a href="global.html#TermsAndConditions">TermsAndConditions</a></li><li><a href="global.html#UserProfileScreen">UserProfileScreen</a></li><li><a href="global.html#WelcomeScreen">WelcomeScreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Sep 09 2022 20:07:53 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -16,6 +16,19 @@ import TermsAndConditions from '../components/TermsAndConditions/TermsAndConditi
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "./queries";
 
+/**
+ * It's a function that returns a view that contains a button that calls a function that returns a view that contains a
+ * button that calls a function that returns a view that contains a button that calls a function that returns a view that
+ * contains a button that calls a function that returns a view that contains a button that calls a function that returns a
+ * view that contains a button that calls a function that returns a view that contains a button that calls a function that
+ * returns a view that contains a button that calls a function that returns a view that contains a button that calls a
+ * function that returns a view that contains a button that calls a function that returns a view that contains a button
+ * that calls a function that returns a view that contains a button that calls a function that returns a view that contains
+ * a button that calls a function that returns a view that contains a button that calls a function that returns a view that
+ * contains a button that calls a function that returns a view that contains a button that calls a function that returns a
+ * view
+ * @returns The SignupScreen component is being returned.
+ */
 const SignupScreen = () => {
     const [pseudo, setPseudo] = useState('')
     const [email, setEmail] = useState('')
@@ -28,11 +41,13 @@ const SignupScreen = () => {
     const {signup, reactivateDeletedUser} = useContext(AuthContext)
     const navigation = useNavigation()
 
+    /* It's a hook that allows us to query the database. */
     const {data, refetch} = useQuery(GET_USER, {
         variables: {
             email: email,
         }
     });
+    /* It's a hook that allows us to query the database. */
     let tempUser = useMemo(() => data?.user, [data]);
 
     useEffect(() => {
@@ -42,6 +57,25 @@ const SignupScreen = () => {
         }
     }, [data, tempUser]);
 
+    /* It's a function that returns a view that contains a button that calls a function that returns a view that contains a
+     * button that calls a function that returns a view that contains a button that calls a function that returns a view
+    that
+     * contains a button that calls a function that returns a view that contains a button that calls a function that
+    returns a
+     * view that contains a button that calls a function that returns a view that contains a button that calls a
+    function that
+     * returns a view that contains a button that calls a function that returns a view that contains a button that calls
+    a
+     * function that returns a view that contains a button that calls a function that returns a view that contains a
+    button
+     * that calls a function that returns a view that contains a button that calls a function that returns a view that
+    contains
+     * a button that calls a function that returns a view that contains a button that calls a function that returns a
+    view that
+     * contains a button that calls a function that returns a view that contains a button that calls a function that
+    returns a
+     * view that contains a button that calls a function that returns a view that contains a button that calls a
+    function that */
     const authErrorHandling = useCallback(async (query) => {
         try {
             return await query
@@ -55,12 +89,19 @@ const SignupScreen = () => {
         }
     }, [])
 
+    /**
+     * If the tempUser is null, return false, else return the value of the isDeleted property of the tempUser object
+     * @returns A boolean value.
+     */
     const isDeletedUserFound = () => {
         if (tempUser == null) {
             return false
         } else return tempUser?.isDeleted;
     }
 
+    /* A function that is called when the user presses the signup button. It checks if the user has filled all the fields,
+    if the password and confirmPassword are the same, if the user has accepted the terms and conditions and if the user
+    is a deleted user. If all the conditions are met, it will call the signup function. */
     const handleOnPress = useCallback(async () => {
 
         if (pseudo === '' || email === '' || password === '' || confirmPassword === '' || pseudo === 'Pseudo' || email === 'Email' || password === 'password' || confirmPassword === 'confirmPassword') {

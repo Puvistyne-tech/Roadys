@@ -5,9 +5,11 @@ import {
 import {Card} from "react-native-elements";
 
 
+/**
+ * It returns a View component that contains a Card.Image component, a View component, and a View component
+ * @returns A card with the user's photo, pseudo, age and nationality.
+ */
 const MarkerCard = ({elem}) => {
-
-   console.log(elem.photo)
 
    return (
       <>

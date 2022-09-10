@@ -4,10 +4,16 @@ import {Picker} from "@react-native-picker/picker";
 import Constants from "expo-constants";
 import {capitalizeFirstLetter} from "../../utils/funcs";
 
+/**
+ * It's a picker that opens when you press on it, and closes when you press on the validate button
+ * @param props - ( label, value, onChange, options, style ) - label is the label of the picker, value is the value of the picker, onChange is the function that will be called when the value changes, options is an array of options, style is the style of the picker
+ * @returns A component that contains a picker
+ */
 const MyPicker = (props) => {
 
     const {label, selectedValue, onValueChange, items, onBlur, errors} = props
 
+    /* It's a hook that allows us to use state in a functional component. */
     const [isPickerOpen, setIsPickerOpen] = useState(false);
 
     return (

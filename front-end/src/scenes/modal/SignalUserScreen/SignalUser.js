@@ -11,9 +11,13 @@ import AppStyles from "../../../../assets/styles/main.scss";
 import MyPicker from "../../../components/MyPicker/MyPicker";
 import {useQuery} from "@apollo/client";
 
-import {showMessage} from "react-native-flash-message";
 import {GET_CURRENT_USER, GET_USER} from "./queries";
 
+/**
+ * A function that allows the user to signal another user.
+ * @param props - The props that were passed into the component.
+ * @returns The return statement is used to return a value from a function.
+ */
 const SignalUser = (props) => {
 
     const {data, refetch, error} = useQuery(GET_CURRENT_USER);
@@ -32,12 +36,15 @@ const SignalUser = (props) => {
     }, [data, currentUser]);
 
 
+    /* A destructuring assignment. */
     const {
         data: data2,
         refetch: refetch2,
         error: error2
     } = useQuery(GET_USER, {variables: {id: props.route.params.victimId}});
 
+    /* A React hook that will only recompute the memoized value when one of the dependencies has changed. This optimization
+    helps to avoid expensive calculations on every render. */
     const victim = useMemo(() => data2?.user, [data2])
 
     useFocusEffect(
@@ -65,6 +72,13 @@ const SignalUser = (props) => {
     });
 
 
+    /**
+     * It sends an email to the team with the data provided by the user in the form.  It also displays a message to the user to confirm that the email has been sent.
+     * @param data - The data provided by the user in the form.
+     * @returns The return statement is used to return a value from a function.
+     * @author  Roadys Team
+     *
+     */
     const onSubmit = data => {
         setLoading(true)
 
@@ -96,6 +110,7 @@ const SignalUser = (props) => {
     };
 
 
+    /* A list of motifs that the user can choose from. */
     let Motifs = [
         {label: "Abuse", value: "Abuse"},
         {label: "Harassment", value: "Harassment"},

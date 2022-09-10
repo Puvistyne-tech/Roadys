@@ -19,10 +19,16 @@ import MyCountryPicker from '../../../components/MyCountryPicker';
 import {useForm, Controller} from 'react-hook-form';
 import MyRangeSlider from "../../../components/MyRangeSlider";
 
+/**
+ * It's a modal that allows the user to filter the list of travelers
+ * @param props - (     visible: boolean,        setVisible: (value: boolean) => void,        onFilter: (data: any) => void    )    visible: boolean - if the modal is visible or not    setVisible: (value: boolean) => void - function to set the visibility of the modal    onFilter: (data: any) => void - function to call when the user clicks on the filter button
+ * @returns A modal with a form to filter the users list
+ */
 const MoreCriteriaScreen = (props) => {
     const navigation = useNavigation();
     const {filter, setFilter} = props;
 
+    /* Using the useForm hook to create a form. */
     const {handleSubmit, formState: {errors}, reset, setValue, control} = useForm({
         defaultValues: {
             sex: filter?.sex,
@@ -32,6 +38,10 @@ const MoreCriteriaScreen = (props) => {
         },
     });
 
+    /**
+     * It resets the filter to the default values, and then closes the modal
+     * @returns void
+     */
     const CancelPressed = () => {
         showMessage({
             message: "Success",
@@ -53,6 +63,7 @@ const MoreCriteriaScreen = (props) => {
         props.setIsOpen(false)
     }
 
+    /* A callback function that is called when the user presses the save button. */
     const SavePressed = useCallback(
         async (formData) => {
             setFilter(formData);
@@ -67,6 +78,7 @@ const MoreCriteriaScreen = (props) => {
     );
 
 
+    /* Creating an array of objects. */
     const Sex = [
         {
             label: 'All',
@@ -86,6 +98,7 @@ const MoreCriteriaScreen = (props) => {
         }
     ]
 
+    /* Creating an array of objects. */
     const TransportType = [
         {
             label: 'All',
@@ -122,11 +135,20 @@ const MoreCriteriaScreen = (props) => {
     ]
 
 
+    /**
+     * It takes a field and a reset value, and sets the value of the field to the reset value
+     * @param field - The name of the field you want to reset.
+     * @param resetValue - The value you want to reset the field to its default values.
+     * @returns void
+     * @example resetField('name', 'John Doe')
+     * @example resetField('age', 18)
+     */
     const resetThisField = (field, resetValue) => {
         // console.log(field)
         setValue(field, resetValue)
     }
 
+    /* A React Hook that is used to reset the value of a field. */
     const MyResetButton = useCallback(({value, fieldName, resetValue}) => {
 
         if (Array.isArray(resetValue)) {

@@ -4,6 +4,7 @@ import CountryPicker, {DARK_THEME, DEFAULT_THEME} from 'react-native-country-pic
 import * as lookup from "country-code-lookup";
 
 
+/* A style sheet. */
 const styles = StyleSheet.create({
     container: {
         // paddingVertical: 10,
@@ -49,6 +50,11 @@ const Option = ({value, onValueChange, title}) => (
 )
 
 
+/**
+ * A custom component that renders a country picker.
+ * @param props - ( value, onValueChange, title ) - the value is the country code, onValueChange is a function that takes the new country code as an argument.
+ * @returns A component that renders a country picker.
+ */
 const MyCountryPicker = (props) => {
     const {label, selectedValue, onValueChange, items, onBlur, errors} = props
 

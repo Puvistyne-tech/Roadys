@@ -13,6 +13,10 @@ import AppStyles from '../../assets/styles/main.scss';
 import Button from "../components/Button";
 import {AuthContext} from '../providers/AuthProvider'
 
+/**
+ * It's a function that returns a view with a text input, a button, and a back button
+ * @returns The SigninScreen component is being returned.
+ */
 const SigninScreen = () => {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -20,6 +24,7 @@ const SigninScreen = () => {
     const {signin} = useContext(AuthContext)
     const navigation = useNavigation()
 
+    /* It's a function that is called when the user press the login button. */
     const authErrorHandling = useCallback(async (query) => {
         console.log(process.env.API_HOST)
         try {
@@ -38,6 +43,7 @@ const SigninScreen = () => {
         console.log(query)
     }, [])
 
+    /* It's a function that is called when the user press the login button. */
     const connect = useCallback(async () => {
         await authErrorHandling(signin(login, password))
     }, [login, password])

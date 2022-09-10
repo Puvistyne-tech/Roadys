@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/TermsAndConditions/TermsAndConditions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/TermsAndConditions/TermsAndConditions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState} from 'react';
+import { Text, ScrollView, Dimensions, TouchableOpacity, Modal} from 'react-native';
+import AppStyles from '../../../assets/styles/main.scss';
+import TermsAndConditionsScreen from "../../scenes/modal/TermsAndConditionsScreen";
+
+
+/**
+ * If the sum of the height of the visible area and the current scroll position is greater than or equal to the height of
+ * the content minus some padding, then the user is close to the bottom.
+ * @returns A function that takes in an object with three properties: layoutMeasurement, contentOffset, and contentSize.
+ */
+const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - paddingToBottom;
+};
+
+/**
+ * It's a modal that displays a Terms and Conditions screen.
+ *
+ * The modal has a button that closes the modal.
+ *
+ * The button is disabled until the user has accepted the terms and conditions.
+ *
+ * The button is enabled when the user has accepted the terms and conditions.
+ *
+ * The button closes the modal when it's pressed.
+ *
+ * The modal is closed when the button is pressed.
+ *
+ * The modal is closed when
+ * @param props - This is the props object that is passed to the component.
+ * @returns A modal with a TermsAndConditionsScreen component and a button that is disabled until the user accepts the
+ * terms and conditions.
+ */
+const TermsAndConditions = (props) => {
+    const [accepted, setAccepted] = useState(false);
+
+
+    return (
+        &lt;Modal
+            animationType={'none'}
+            transparent={false}
+            onRequestClose={() => null}
+            visible={props.isOpen}
+            style={AppStyles.container}
+        >
+            &lt;TermsAndConditionsScreen/>
+
+            &lt;TouchableOpacity
+                // disabled={!accepted}
+                onPress={() => {
+                    // alert("Terms and conditions accepted")
+                    // props.setIsAccepted(true)
+                    setAccepted(true)
+                    props.setIsOpen(false)
+                }}
+                style={accepted ? styles.button : styles.buttonDisabled}>
+                &lt;Text
+                    style={styles.buttonLabel}>Close
+                &lt;/Text>
+                {/*&lt;Button style={AppStyles.button}/>*/}
+            &lt;/TouchableOpacity>
+
+        &lt;/Modal>
+    );
+}
+
+
+/* It's getting the width and height of the window. */
+const {width, height} = Dimensions.get('window');
+
+const styles = {
+    container: {
+        marginTop: 30,
+        marginLeft: 10,
+        marginRight: 10
+    },
+    title: {
+        marginTop: 60,
+        fontSize: 22,
+        alignSelf: 'center'
+    },
+    tcP: {
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 12
+    },
+
+    tcL: {
+        marginLeft: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 12
+    },
+    tcContainer: {
+        marginTop: 15,
+        marginBottom: 15,
+        height: height * .75
+    },
+
+    button: {
+        backgroundColor: '#136AC7',
+        borderRadius: 5,
+        padding: 10
+    },
+
+    buttonDisabled: {
+        backgroundColor: '#999',
+        borderRadius: 5,
+        padding: 10
+    },
+
+    buttonLabel: {
+        fontSize: 14,
+        color: '#FFF',
+        alignSelf: 'center'
+    }
+
+}
+
+
+export default TermsAndConditions;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li></ul><h3>Classes</h3><ul><li><a href="DeletedUserError.html">DeletedUserError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutRoadysScreen">AboutRoadysScreen</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#EditProfileScreen">EditProfileScreen</a></li><li><a href="global.html#FeedbackScreen">FeedbackScreen</a></li><li><a href="global.html#ImageReader">ImageReader</a></li><li><a href="global.html#isCloseToBottom">isCloseToBottom</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoadingModal">LoadingModal</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MarkerCard">MarkerCard</a></li><li><a href="global.html#MoreCriteriaScreen">MoreCriteriaScreen</a></li><li><a href="global.html#MyCountryPicker">MyCountryPicker</a></li><li><a href="global.html#MyPicker">MyPicker</a></li><li><a href="global.html#MyRangeSlider">MyRangeSlider</a></li><li><a href="global.html#MySearchBar">MySearchBar</a></li><li><a href="global.html#PartnerScreen">PartnerScreen</a></li><li><a href="global.html#ProfileCard">ProfileCard</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#SignalUser">SignalUser</a></li><li><a href="global.html#SigninScreen">SigninScreen</a></li><li><a href="global.html#SignupScreen">SignupScreen</a></li><li><a href="global.html#TermsAndConditions">TermsAndConditions</a></li><li><a href="global.html#UserProfileScreen">UserProfileScreen</a></li><li><a href="global.html#WelcomeScreen">WelcomeScreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Sep 09 2022 20:07:53 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

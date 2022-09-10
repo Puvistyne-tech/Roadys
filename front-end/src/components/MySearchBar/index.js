@@ -2,6 +2,11 @@ import React from 'react';
 import {Text, TextInput, View} from 'react-native';
 import {FontAwesome} from "@expo/vector-icons";
 
+/**
+ * It returns a View that contains a TextInput and two FontAwesome icons
+ * @param props - This is the props object that is passed to the component.(text input for search )
+ * @returns A view with a text input and two icons.
+ */
 const MySearchBar = (props) => {
 
 

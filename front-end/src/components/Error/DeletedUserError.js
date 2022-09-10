@@ -1,5 +1,6 @@
 /**
- * A simple error class for specific errors in the application.
+ * The DeletedUserError class extends the Error class and is used to throw an error when a user attempts to login to a
+ * deleted account
  */
 class DeletedUserError extends Error {
     constructor(message) {

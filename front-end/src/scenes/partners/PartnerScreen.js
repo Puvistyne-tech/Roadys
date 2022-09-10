@@ -6,6 +6,10 @@ import styles from './style';
 import BottomTabBar from '../../components/BottomTabBar';
 
 
+/**
+ * It renders a list of items that are clickable
+ * @returns A scroll view with a list of partners.
+ */
 const PartnerScreen = () => {
     const color = '#2986cc';
     const size = 40;
@@ -18,6 +22,9 @@ const PartnerScreen = () => {
         navigation.navigate('BIKE_REPAIR')
     }
 
+    /**
+     * It displays an alert message when the user presses the other item.
+     */
     const onOtherItemPress = () => {
         Alert.alert('Coming soon', 'No partners available yet');
     };

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scenes/modal/SignalUserScreen/SignalUser.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scenes/modal/SignalUserScreen/SignalUser.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect, useMemo, useState} from 'react';
+import {Alert, ScrollView, Text, TextInput, View} from 'react-native';
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
+import {Controller, useForm} from "react-hook-form";
+import * as emailjs from "@emailjs/browser";
+import LoadingModal from "../../../components/LoadingModal";
+import styles from "./style";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import Button from "../../../components/Button";
+import AppStyles from "../../../../assets/styles/main.scss";
+import MyPicker from "../../../components/MyPicker/MyPicker";
+import {useQuery} from "@apollo/client";
+
+import {GET_CURRENT_USER, GET_USER} from "./queries";
+
+/**
+ * A function that allows the user to signal another user.
+ * @param props - The props that were passed into the component.
+ * @returns The return statement is used to return a value from a function.
+ */
+const SignalUser = (props) => {
+
+    const {data, refetch, error} = useQuery(GET_CURRENT_USER);
+    let currentUser = useMemo(() => data?.currentUser, [data])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch().then(r => {
+                // console.log(r)
+            })
+        }, [refetch])
+    );
+
+    useEffect(() => {
+        currentUser = data?.currentUser
+    }, [data, currentUser]);
+
+
+    /* A destructuring assignment. */
+    const {
+        data: data2,
+        refetch: refetch2,
+        error: error2
+    } = useQuery(GET_USER, {variables: {id: props.route.params.victimId}});
+
+    /* A React hook that will only recompute the memoized value when one of the dependencies has changed. This optimization
+    helps to avoid expensive calculations on every render. */
+    const victim = useMemo(() => data2?.user, [data2])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch2().then(r => {
+                // console.log(r)
+                // // setVictim(r.user)
+            })
+        }, [refetch2])
+    );
+
+
+    const navigation = useNavigation();
+
+    const [loading, setLoading] = useState(false);
+
+    const {control, handleSubmit, reset, formState: {errors}} = useForm({
+        defaultValues: {
+            victimUserName: victim?.firstname + " " + victim?.lastname,
+            currentUserName: currentUser?.firstname + " " + currentUser?.lastname,
+            to_name: 'Roadys Team',
+            motif: '',
+            message: '',
+        }
+    });
+
+
+    /**
+     * It sends an email to the team with the data provided by the user in the form.  It also displays a message to the user to confirm that the email has been sent.
+     * @param data - The data provided by the user in the form.
+     * @returns The return statement is used to return a value from a function.
+     * @author  Roadys Team
+     *
+     */
+    const onSubmit = data => {
+        setLoading(true)
+
+        const [SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY, PRIVATE_KEY] = [process.env.SERVICE_ID, process.env.SIGNAL_USER_TEMPLATE_ID, process.env.PUBLIC_KEY, process.env.PRIVATE_KEY];
+
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, data, PUBLIC_KEY)
+            .then(function (response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    setLoading(false)
+                    Alert.alert("Success", "Your complain has been sent to the team. Thank you for your concern!", [{
+                        text: "Go back", onPress: () => {
+                            navigation.goBack()
+                        },
+                    }, {
+                        text: "Signal this user again", onPress: () => {
+                            reset()
+                        }
+                    }])
+                },
+
+                function (error) {
+                    setLoading(false)
+                    console.log('FAILED...', error);
+                    Alert.alert("Failed", "Your complain has not been sent. Please try again.", [{
+                        text: "Close"
+                    }])
+                }
+            );
+    };
+
+
+    /* A list of motifs that the user can choose from. */
+    let Motifs = [
+        {label: "Abuse", value: "Abuse"},
+        {label: "Harassment", value: "Harassment"},
+        {label: "Racism", value: "Racism"},
+        {label: "Other", value: "Other"},
+    ];
+
+
+    return (
+        &lt;>
+            {loading &amp;&amp; &lt;LoadingModal loading={loading} text={"Sending your complain ..."}/> }
+                &lt;ScrollView style={styles.formContainer}>
+                    &lt;KeyboardAwareScrollView
+                        contentContainerStyle={styles.container}
+                    >
+
+                        &lt;Controller
+                            name="victimUserName"
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({field: {onChange, onBlur, value}}) => (&lt;View style={styles.inputContainer}>
+                                &lt;Text style={styles.label}>Signal this user&lt;/Text>
+                                &lt;TextInput
+                                    editable={false}
+                                    onBlur={onBlur}
+                                    value={value}
+                                    style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                />
+                            &lt;/View>)}
+                        />
+
+                        &lt;Controller
+                            name="currentUserName"
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({field: {onChange, onBlur, value}}) => (&lt;View style={styles.inputContainer}>
+                                &lt;Text style={styles.label}>Current User&lt;/Text>
+                                &lt;TextInput
+                                    editable={false}
+                                    onBlur={onBlur}
+                                    value={value}
+                                    style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                />
+                            &lt;/View>)}
+                        />
+
+                        &lt;Controller
+                            name="motif"
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({field: {onChange, onBlur, value}}) => (
+                                &lt;View style={styles.inputContainer}>
+                                    &lt;Text style={styles.label}>Motif :&lt;/Text>
+                                    &lt;MyPicker
+                                        label={"Motif"}
+                                        selectedValue={value}
+                                        onValueChange={onChange}
+                                        items={Motifs}
+                                        onBlur={onBlur}
+                                        errors={errors}
+                                    />
+                                    &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "Motif is required."}&lt;/Text>
+                                &lt;/View>
+                            )}
+                        />
+
+                        &lt;Controller
+                            name="message"
+                            control={control}
+                            rules={{
+                                required: false,
+                            }}
+                            render={({field: {onChange, onBlur, value}}) => (&lt;View style={styles.inputContainer}>
+                                &lt;Text style={styles.label}>Why do you warn to Signal this user :&lt;/Text>
+                                &lt;TextInput
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                />
+                                &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "message is required."}&lt;/Text>
+                            &lt;/View>)}
+                        />
+
+                        &lt;Button
+                            title="Signal this user"
+                            onPress={handleSubmit(onSubmit)}
+                            style={AppStyles.button}
+                        />
+                    &lt;/KeyboardAwareScrollView>
+                &lt;/ScrollView>
+        &lt;/>
+    );
+}
+
+export default SignalUser;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li></ul><h3>Classes</h3><ul><li><a href="DeletedUserError.html">DeletedUserError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutRoadysScreen">AboutRoadysScreen</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#EditProfileScreen">EditProfileScreen</a></li><li><a href="global.html#FeedbackScreen">FeedbackScreen</a></li><li><a href="global.html#ImageReader">ImageReader</a></li><li><a href="global.html#isCloseToBottom">isCloseToBottom</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoadingModal">LoadingModal</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MarkerCard">MarkerCard</a></li><li><a href="global.html#MoreCriteriaScreen">MoreCriteriaScreen</a></li><li><a href="global.html#MyCountryPicker">MyCountryPicker</a></li><li><a href="global.html#MyPicker">MyPicker</a></li><li><a href="global.html#MyRangeSlider">MyRangeSlider</a></li><li><a href="global.html#MySearchBar">MySearchBar</a></li><li><a href="global.html#PartnerScreen">PartnerScreen</a></li><li><a href="global.html#ProfileCard">ProfileCard</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#SignalUser">SignalUser</a></li><li><a href="global.html#SigninScreen">SigninScreen</a></li><li><a href="global.html#SignupScreen">SignupScreen</a></li><li><a href="global.html#TermsAndConditions">TermsAndConditions</a></li><li><a href="global.html#UserProfileScreen">UserProfileScreen</a></li><li><a href="global.html#WelcomeScreen">WelcomeScreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Sep 09 2022 20:07:53 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -28,6 +28,14 @@ export default {
         //     })
         // },
 
+        /**
+         * Get all users
+         * @param parent
+         * @param args - arguments
+         * @param auth - context
+         * @param info - graphql info
+         * @returns {*} - all users
+         */
         currentUser: (parent, args, {auth}, info) => {
             if (!auth) {
                 throw new Error('You have to be authenticated !');
@@ -35,6 +43,15 @@ export default {
             return auth
         },
 
+        /**
+         * Get all users
+         * @param parent
+         * @param data  - arguments
+         * @param prisma    - context
+         * @param auth  - context
+         * @param info  - graphql info
+         * @returns {*} - all users
+         */
         users: (parent, {data}, {prisma, auth}, info) => {
             let params = {
                 where: {
@@ -70,6 +87,14 @@ export default {
             })
         },
 
+        /**
+         * Reactivate a deleted user
+         * @param parent
+         * @param data  - arguments
+         * @param prisma   - context
+         * @param info  - graphql info
+         * @returns {Promise<*>} - the user
+         */
         reactivateDeletedUser: async (parent, {data}, {prisma}, info) => {
             const {email, ...other} = data;
 

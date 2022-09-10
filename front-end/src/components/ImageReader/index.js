@@ -7,11 +7,19 @@ import LoadingModal from "../LoadingModal";
 import AppStyles from '../../../assets/styles/main.scss';
 import Button from "../../components/Button";
 
+/**
+ * It's a button that when pressed, opens the image picker, and when an image is selected, it sends the image to the server
+ * @returns A button that when pressed will open the image picker and allow the user to select an image.
+ */
 const ImageReader = ({id}) => {
 
     const [updateImage, {l}] = useMutation(UPDATE_USER_IMAGE)
     const [loading, setLoading] = useState(false);
 
+    /**
+     * _pickImg() is an async function that launches the image picker, and if the user selects an image, it converts the
+     * image to base64 and sends it to the server
+     */
     const _pickImg = async () => {
         let res = await ImagePicker.launchImageLibraryAsync({
             base64: true,
@@ -31,6 +39,10 @@ const ImageReader = ({id}) => {
         }
     };
 
+    /**
+     * It takes a picker object as an argument, and then it uses the updateImage mutation to update the user's image
+     * @param picker - the image that was selected
+     */
     const sendImage = async (picker) => {
 
         const variables = {

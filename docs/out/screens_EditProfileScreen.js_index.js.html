@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/EditProfileScreen.js/index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/EditProfileScreen.js/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useCallback, useEffect, useState, useMemo} from 'react'
+import {
+    Text,
+    View,
+    ScrollView,
+    TextInput,
+    StyleSheet,
+} from "react-native";
+import {
+    useQuery,
+    useMutation
+} from "@apollo/client";
+import {useForm, Controller} from 'react-hook-form';
+import Constants from 'expo-constants';
+import {Switch} from 'react-native-elements';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {showMessage} from "react-native-flash-message";
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+
+import AppStyles from '../../../assets/styles/main.scss';
+import Loader from '../../components/Loader';
+import {GET_USER, UPDATE_USER} from './queries'
+import Button from "../../components/Button";
+import MyPicker from "../../components/MyPicker/MyPicker";
+import MyCountryPicker from "../../components/MyCountryPicker";
+
+/**
+ * It renders a form that allows the user to edit his profile
+ * @returns The return statement is used to return from a function with a value. If the expression is omitted, undefined is
+ * returned instead.
+ */
+const EditProfileScreen = ({route}) => {
+    const {id} = useMemo(() => route?.params, [route]);
+    const [user, setUser] = useState(null);
+    const {data, refetch} = useQuery(GET_USER, {variables: {id}});
+    const [updateUser, {loading}] = useMutation(UPDATE_USER);
+    const navigation = useNavigation();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch()
+        }, [refetch])
+    );
+
+    useEffect(() => {
+        const user = data?.user
+        if (user) {
+            const result = {
+                ...user,
+                age: user?.age ? `${user.age}` : ""
+            }
+            setUser(result)
+        }
+    }, [data]);
+
+    useEffect(() => {
+        reset(user);
+        // console.log(user)
+    }, [user]);
+
+    const {handleSubmit, formState: {errors}, reset, control} = useForm({
+        values: useMemo(() => user, [user])
+    });
+
+    /*  */
+    const onSubmit = useCallback(async formData => {
+        const variables = {id, ...formData, age: +formData.age}
+
+        console.log(variables)
+
+        try {
+            await updateUser({variables})
+            showMessage({
+                message: "Success",
+                description: "your data were updated",
+                type: "success",
+                duration: 10000
+            })
+            navigation.goBack();
+        } catch (err) {
+            showMessage({
+                message: "Error",
+                description: err.message,
+                type: "warning",
+                duration: 10000
+            });
+        }
+    }, [updateUser]);
+
+    /* Checking to see if the user is logged in. If the user is not logged in, it will redirect them to the login page. */
+    if (!user) {
+        return (
+            &lt;View style={AppStyles.container}>
+                &lt;Loader/>
+            &lt;/View>
+        )
+    }
+
+    const Sex = [
+        {
+            label: 'Man',
+            value: 'MAN'
+        },
+        {
+            label: 'Woman',
+            value: 'WOMAN'
+        },
+        {
+            label: 'Other',
+            value: 'OTHER'
+        }
+    ]
+
+    const TransportType = [
+        {
+            label: 'Bike',
+            value: 'BIKE'
+        },
+        {
+            label: 'Backpack',
+            value: 'BACKPACK'
+        },
+        {
+            label: 'Train',
+            value: 'TRAIN'
+        },
+        {
+            label: 'Car',
+            value: 'CAR'
+        },
+        {
+            label: 'Erasmus',
+            value: 'ERASMUS'
+        },
+        {
+            label: 'Nomad',
+            value: 'NOMAD'
+        },
+        {
+            label: 'Other',
+            value: 'OTHER'
+        }
+    ]
+
+
+    return (
+
+        &lt;ScrollView style={styles.formContainer}>
+            &lt;KeyboardAwareScrollView
+                contentContainerStyle={styles.container}
+            >
+                {/* isVisibled */}
+                &lt;Controller
+                    name="isVisibled"
+                    control={control}
+                    render={({field: {onChange, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Appear on the map&lt;/Text>
+                            &lt;Switch
+                                value={value}
+                                onValueChange={onChange}
+                            />
+                        &lt;/View>
+                    )}
+                />
+
+                {/* firstname */}
+                &lt;Controller
+                    name="firstname"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>First Name&lt;/Text>
+                            &lt;TextInput
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "first name is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+
+                {/* lastname */}
+                &lt;Controller
+                    name="lastname"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Last Name&lt;/Text>
+                            &lt;TextInput
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "last name is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+
+                {/* age */}
+                &lt;Controller
+                    name="age"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Age&lt;/Text>
+                            &lt;TextInput
+                                onBlur={onBlur}
+                                type='number'
+                                onChangeText={onChange}
+                                value={value}
+                                keyboardType="number-pad"
+                                style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "age is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+
+                {/* sex */}
+                &lt;Controller
+                    name="sex"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Gender&lt;/Text>
+                            &lt;MyPicker
+                                label={"Sex"}
+                                selectedValue={value}
+                                onValueChange={onChange}
+                                items={Sex}
+                                onBlur={onBlur}
+                                errors={errors}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "kind of trip is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+
+                {/* nationality */}
+                &lt;Controller
+                    name="nationality"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        //     &lt;TextInput
+                        //         onBlur={onBlur}
+                        //         onChangeText={onChange}
+                        //         value={value}
+                        //     />
+                        //     &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "nationality is required."}&lt;/Text>
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Nationality&lt;/Text>
+                            &lt;MyCountryPicker
+                                style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                                label={"Nationality"}
+                                selectedValue={value}
+                                onValueChange={onChange}
+                                // items={["France", "Germany", "Italy", "Spain", "United Kingdom"]}
+                                onBlur={onBlur}
+                                errors={errors}
+                            />
+                        &lt;/View>
+                    )}
+                />
+
+                {/* kindOfTrip */}
+                &lt;Controller
+                    name="kindOfTrip"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Kind of trip&lt;/Text>
+
+                            &lt;MyPicker
+                                label={"kind Of Trip"}
+                                selectedValue={value}
+                                onValueChange={onChange}
+                                items={TransportType}
+                                onBlur={onBlur}
+                                errors={errors}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "kind of trip is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+
+                {/* description */}
+                &lt;Controller
+                    name="description"
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({field: {onChange, onBlur, value}}) => (
+                        &lt;View style={styles.inputContainer}>
+                            &lt;Text style={styles.label}>Description&lt;/Text>
+                            &lt;TextInput
+                                onBlur={onBlur}
+                                onChangeText={onChange}
+                                value={value}
+                                style={[styles.input, {borderColor: errors?.test ? '#fc6d47' : '#c0cbd3'}]}
+                            />
+                            &lt;Text style={styles.textError}>{errors?.test &amp;&amp; "description is required."}&lt;/Text>
+                        &lt;/View>
+                    )}
+                />
+                {/*&lt;MyCountryPicker*/}
+                {/*    label={"Country"}*/}
+                {/*    selectedValue={"France"}*/}
+                {/*    onValueChange={(value) => {*/}
+                {/*        console.log("country changed " + value)*/}
+                {/*    }}*/}
+                {/*    items={["France", "Germany", "Italy", "Spain", "United Kingdom"]}*/}
+                {/*    onBlur={() => {*/}
+
+                {/*    }}*/}
+                {/*    errors={errors}*/}
+
+                {/*/>*/}
+                &lt;Button
+                    title="Edit profile"
+                    style={AppStyles.button}
+                    onPress={handleSubmit(onSubmit)}
+                />
+            &lt;/KeyboardAwareScrollView>
+        &lt;/ScrollView>
+
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        // flex: 1,
+        justifyContent: 'center',
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: 'white',
+        // margin:10,
+        padding: 20
+    },
+    formContainer: {
+        paddingBottom: 15,
+        // flex: 1,
+    },
+    button: {
+        backgroundColor: 'red',
+    },
+    inputContainer: {
+        marginVertical: 8,
+    },
+    input: {
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderRadius: 5,
+        paddingVertical: 5,
+        paddingLeft: 5,
+        fontSize: 16,
+        height: 40,
+        // color: '#c0cbd3',
+    },
+    label: {
+        paddingVertical: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    textError: {
+        color: '#fc6d47',
+        fontSize: 14,
+    },
+});
+
+export default EditProfileScreen;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="App.html">App</a></li></ul><h3>Classes</h3><ul><li><a href="DeletedUserError.html">DeletedUserError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutRoadysScreen">AboutRoadysScreen</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#EditProfileScreen">EditProfileScreen</a></li><li><a href="global.html#FeedbackScreen">FeedbackScreen</a></li><li><a href="global.html#ImageReader">ImageReader</a></li><li><a href="global.html#isCloseToBottom">isCloseToBottom</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoadingModal">LoadingModal</a></li><li><a href="global.html#Map">Map</a></li><li><a href="global.html#MarkerCard">MarkerCard</a></li><li><a href="global.html#MoreCriteriaScreen">MoreCriteriaScreen</a></li><li><a href="global.html#MyCountryPicker">MyCountryPicker</a></li><li><a href="global.html#MyPicker">MyPicker</a></li><li><a href="global.html#MyRangeSlider">MyRangeSlider</a></li><li><a href="global.html#MySearchBar">MySearchBar</a></li><li><a href="global.html#PartnerScreen">PartnerScreen</a></li><li><a href="global.html#ProfileCard">ProfileCard</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#SignalUser">SignalUser</a></li><li><a href="global.html#SigninScreen">SigninScreen</a></li><li><a href="global.html#SignupScreen">SignupScreen</a></li><li><a href="global.html#TermsAndConditions">TermsAndConditions</a></li><li><a href="global.html#UserProfileScreen">UserProfileScreen</a></li><li><a href="global.html#WelcomeScreen">WelcomeScreen</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Fri Sep 09 2022 20:07:53 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

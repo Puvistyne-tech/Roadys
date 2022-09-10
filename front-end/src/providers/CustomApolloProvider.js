@@ -9,10 +9,7 @@ import { setContext } from '@apollo/client/link/context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.1.89:6565',
-  // uri: 'http://192.168.1.15:6565',
-  // uri: 'http://172.20.10.2:8000',
-  // uri: 'http://192.168.1.15:8000',
+  uri: 'http://192.168.1.69:6565',
 })
 
 const authLink = setContext(async (_, { headers }) => {

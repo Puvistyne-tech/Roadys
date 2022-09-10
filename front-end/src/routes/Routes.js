@@ -4,6 +4,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from '../slices/app.slice'
 import Main from './navigation'
 
+/**
+ * > The function is a React Hook that renders the Main component if the user is logged in, otherwise it renders a loading
+ * screen
+ * @returns {JSX.Element}
+ * @constructor
+ * @category Components - React Hooks
+ * @subcategory App
+ * @namespace App
+ */
 const Routes = () => {
   const { checked, loggedIn } = useSelector((state) => state.app)
   const dispatch = useDispatch()

@@ -5,6 +5,10 @@ import Button from '../../../components/Button';
 import AppStyles from '../../../../assets/styles/main.scss';
 
 
+/**
+ * It returns a view with a title, an image, a text and a button
+ * @returns A view with a title, an image, a text and a button.
+ */
 const AboutRoadysScreen = () => {
 
    const onMoreInfosPress = () => {

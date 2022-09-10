@@ -14,6 +14,12 @@ const prisma = new PrismaClient({
 
 for (var a = [], i = 0; i < 40; ++i) a[i] = i;
 
+
+/**
+ * It takes an array and returns a shuffled version of that array
+ * @param array - The array to shuffle.
+ * @returns The array is being shuffled.
+ */
 function shuffle(array) {
     let tmp, current, top = array.length;
     if (top) while (--top) {
@@ -28,6 +34,7 @@ function shuffle(array) {
 a = shuffle(a);
 
 
+/* It's creating an array of 40 users with random data. */
 const users = a.map(
     (id) => ({
         pseudo: `${id}`,
@@ -53,22 +60,6 @@ const users = a.map(
 )
 console.log(users)
 
-// const users = [
-//     {
-//         "pseudo": "Nous",
-//         "email": "Bouchrajali@gmail.com",
-//         "password": "azer",
-//         "firstname": "Martin",
-//         "lastname": "Roan",
-//         "latitude": 48.82558263128961,
-//         "longitude": 2.335827558647471,
-//         "age": 23,
-//         "description": "J'aime les fraises",
-//         "nationality": "France",
-//         "kindOfTrip": "Jdjdjdnd",
-//         "isVisibled": true
-//     }
-// ]
 
 const main = async () => {
     const response = await Promise.all(users.map((user) => prisma.user.create({

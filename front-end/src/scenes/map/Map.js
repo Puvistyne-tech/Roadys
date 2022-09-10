@@ -24,6 +24,11 @@ import MoreCriteriaScreen from "../modal/MoreCriteriaScreen";
 
 
 
+/**
+ * It renders a map with a marker for the current user and a marker for each user in the database
+ * @returns A function that returns a view  with a map and a marker for the current user and a marker for each user in the database and a button to open the modal screen with more criteria to filter the users in the map and a button to open the modal screen with more criteria to filter the users in the map and a button to open the modal screen with more criteria to filter the users in the map
+ *
+ */
 const Map = () => {
     const [defaultLocation, setDefaultLocation] = useState({
         latitude: 48.86,
@@ -39,10 +44,12 @@ const Map = () => {
     const [idUserPressed, setIdUserPressed] = useState()
     const {theme} = useTheme()
 
+    /* Creating a state variable called listUsers and setting it to an empty React element. */
     const [listUsers, setListUsers] = useState(<></>);
 
 
     const {data, refetch} = useQuery(GET_USERS, {variables: {excludeCurrentUser: true}})
+    /* Using the useMutation hook to create a mutation function and an object with the mutation's data, loading, and error. */
     const [mutateUpdateLocation, {
         data: updateLocationData,
         loading: updateLocationLoading,
@@ -64,6 +71,7 @@ const Map = () => {
         currentUser = userData?.currentUser
     }, [userData, currentUser]);
 
+    /*  */
     const onLocationChange = useCallback((newLocation) => {
         const {longitude, latitude} = newLocation.coords
         refetch()
@@ -86,6 +94,7 @@ const Map = () => {
     }, [refetch])
 
 
+    /* A functional component that is used to display a card with the user's information. */
     const MarkerCard = useCallback(({elem}) => {
 
         return (
@@ -155,6 +164,7 @@ const Map = () => {
         )
     }, [])
 
+    /* A function that returns a view with a button that navigates to the user profile screen. */
     const MarkerActions = useCallback(() => {
         const navigation = useNavigation()
         return (
@@ -174,6 +184,8 @@ const Map = () => {
         )
     }, [idUserPressed])
 
+    /* Creating a state variable called filter and setting it to an object with the properties TransportType, nationality,
+    sex, and age. */
     const [filter, setFilter] = useState(
         {
             TransportType: "ALL",
@@ -186,6 +198,7 @@ const Map = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    /* A function that returns a view with a button. The button is used to open the modal. */
     const MoreCriteriaButton = useCallback(() => {
         const navigation = useNavigation()
         return (
@@ -210,6 +223,7 @@ const Map = () => {
         )
     }, [])
 
+    /* A custom marker that is being used in the map component. */
     const CustomMarker = useCallback(({elem}) => (
         <Marker
             coordinate={{latitude: elem.latitude, longitude: elem.longitude}}
@@ -248,6 +262,10 @@ const Map = () => {
     //     } else return <></>
     // }), [data, CustomMarker])
 
+    /**
+     * It takes an array of objects, and returns an array of CustomMarker components
+     * @param userData - Array of objects with user data
+     */
     const setUsersToCustomMarker = (userData) => {
 
         let r = userData?.map((elem, index) => {
@@ -264,6 +282,10 @@ const Map = () => {
     }
 
 
+    /**
+     * It filters the users array based on the filter object
+     *
+     */
     const filterUsers = () => {
         const res = data?.users
             .filter((elem) => {
@@ -302,6 +324,10 @@ const Map = () => {
         };
     }, [data, CustomMarker, filter, isOpen]);
 
+    /**
+     * It returns true if any of the filter properties are not equal to their default values
+     * @returns A boolean value.
+     */
     const isFilterApplied = () => {
         return filter.TransportType !== "ALL" ||
             filter.nationality !== "ALL" ||
@@ -309,6 +335,7 @@ const Map = () => {
             (filter.age[0] !== [1] && filter.age[1] !== 99)
     }
 
+    /* Creating a marker for the user's location. */
     const userMarker = useMemo(
         () => ({
             coordinate: {

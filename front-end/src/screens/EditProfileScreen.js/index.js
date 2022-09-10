@@ -21,12 +21,14 @@ import AppStyles from '../../../assets/styles/main.scss';
 import Loader from '../../components/Loader';
 import {GET_USER, UPDATE_USER} from './queries'
 import Button from "../../components/Button";
-// import {Picker} from "@react-native-picker/picker";
-// import IOSPicker from "react-native-ios-picker";
 import MyPicker from "../../components/MyPicker/MyPicker";
-import {Picker} from "@react-native-picker/picker";
 import MyCountryPicker from "../../components/MyCountryPicker";
 
+/**
+ * It renders a form that allows the user to edit his profile
+ * @returns The return statement is used to return from a function with a value. If the expression is omitted, undefined is
+ * returned instead.
+ */
 const EditProfileScreen = ({route}) => {
     const {id} = useMemo(() => route?.params, [route]);
     const [user, setUser] = useState(null);
@@ -60,6 +62,7 @@ const EditProfileScreen = ({route}) => {
         values: useMemo(() => user, [user])
     });
 
+    /*  */
     const onSubmit = useCallback(async formData => {
         const variables = {id, ...formData, age: +formData.age}
 
@@ -84,6 +87,7 @@ const EditProfileScreen = ({route}) => {
         }
     }, [updateUser]);
 
+    /* Checking to see if the user is logged in. If the user is not logged in, it will redirect them to the login page. */
     if (!user) {
         return (
             <View style={AppStyles.container}>

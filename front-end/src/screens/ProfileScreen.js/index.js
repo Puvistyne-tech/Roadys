@@ -15,6 +15,10 @@ import ImageReader from "../../components/ImageReader";
 import AppStyles from '../../../assets/styles/main.scss';
 import Button from "../../components/Button";
 
+/**
+ * It returns a view that contains a ProfileCard, a button to edit the profile, and an ImageReader
+ * @returns A view with a profile card and a button to edit the profile.
+ */
 const ProfileScreen = () => {
     const navigation = useNavigation();
     const {data, refetch, error} = useQuery(GET_CURRENT_USER);

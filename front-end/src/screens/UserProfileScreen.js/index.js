@@ -3,12 +3,15 @@ import {
     View
 } from "react-native";
 
-import Appstyles from '../../../assets/styles/main.scss';
 import ProfileCard from '../../components/ProfileCard';
 import Button from "../../components/Button";
 import AppStyles from '../../../assets/styles/main.scss';
 import {useNavigation} from "@react-navigation/native";
 
+/**
+ * It renders a profile card and two buttons
+ * @returns A view with a profile card and two buttons.
+ */
 const UserProfileScreen = ({route}) => {
     const navigation = useNavigation();
 
